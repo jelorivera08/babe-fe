@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import Background from '../../components/Background';
+import AdminDashboard from './components/Admin';
 
 
 const DashBoard = () => {
-  const [userType, setUserType] = useState('');
+  const accountTypeFromLocStorage = window.localStorage.getItem('accountType');
+  const [accountType, setUserType] = useState('');
 
   useEffect(() => {
-    const userTypeFromLocStorage = window.localStorage.getItem('userType');
-    if (userTypeFromLocStorage) {
-      setUserType(userTypeFromLocStorage);
+    if (accountTypeFromLocStorage) {
+      setUserType(accountTypeFromLocStorage);
     } else {
       setUserType(false);
     }
-  }, []);
+  }, [accountTypeFromLocStorage]);
 
 
   return (
     <div>
-      {userType === 'admin'
+      {accountType === 'admin'
         ? (
-          <Background>
-            <div>admin dashboard</div>
-          </Background>
+          <AdminDashboard />
         )
         : <div>random dashboard</div>}
     </div>

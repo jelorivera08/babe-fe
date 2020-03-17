@@ -15,7 +15,7 @@ const loginQuery = graphql`
       authenticateUser (username: $username, password: $password)  {
         _id
         isAuthenticated
-        userType
+        accountType
       }
     }
 `;
@@ -37,7 +37,7 @@ const LoginBox = () => {
     if (loginRes && loginRes.authenticateUser) {
       setError(false);
       window.localStorage.setItem('isAuthenticated', loginRes.authenticateUser.isAuthenticated);
-      window.localStorage.setItem('userType', loginRes.authenticateUser.userType);
+      window.localStorage.setItem('accountType', loginRes.authenticateUser.accountType);
       history.push('/dashboard');
     } else {
       setError(true);
@@ -100,7 +100,7 @@ const LoginBox = () => {
           >
             Sign In
           </button>
-          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+          <a href="/signup" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
             Not a babe yet? Sign up.
           </a>
         </div>

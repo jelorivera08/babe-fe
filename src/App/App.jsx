@@ -7,6 +7,7 @@ import {
 
 import Login from './containers/Login';
 import DashBoard from './containers/Dashboard';
+import SignUp from './containers/Signup';
 
 
 function App() {
@@ -31,9 +32,14 @@ function App() {
           <Login />
         </Route>
         {isAuthenticated && (
-          <Route exact path="/dashboard">
-            <DashBoard />
-          </Route>
+          <Switch>
+            <Route exact path="/dashboard">
+              <DashBoard />
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
+            </Route>
+          </Switch>
         )}
       </Switch>
 

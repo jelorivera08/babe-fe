@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ff1927c3ee15fe640699a80cf3d9cd79
+ * @relayHash d670b453ec6400092ddd3c4e789aef81
  */
 
 /* eslint-disable */
@@ -17,7 +17,7 @@ export type LoginBoxQueryResponse = {|
   +authenticateUser: ?{|
     +_id: ?string,
     +isAuthenticated: ?string,
-    +userType: ?string,
+    +accountType: ?string,
   |}
 |};
 export type LoginBoxQuery = {|
@@ -35,7 +35,7 @@ query LoginBoxQuery(
   authenticateUser(username: $username, password: $password) {
     _id
     isAuthenticated
-    userType
+    accountType
   }
 }
 */
@@ -93,7 +93,7 @@ v1 = [
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "userType",
+        "name": "accountType",
         "args": null,
         "storageKey": null
       }
@@ -120,12 +120,12 @@ return {
     "operationKind": "query",
     "name": "LoginBoxQuery",
     "id": null,
-    "text": "query LoginBoxQuery(\n  $username: String\n  $password: String\n) {\n  authenticateUser(username: $username, password: $password) {\n    _id\n    isAuthenticated\n    userType\n  }\n}\n",
+    "text": "query LoginBoxQuery(\n  $username: String\n  $password: String\n) {\n  authenticateUser(username: $username, password: $password) {\n    _id\n    isAuthenticated\n    accountType\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5e49c48750a94b5e3ac405da5f1bf090';
+(node/*: any*/).hash = '2a788208cd9e72bfbb9cb1cb8140cbcc';
 
 module.exports = node;

@@ -8,8 +8,13 @@ import {
   Route,
   useHistory,
 } from 'react-router-dom';
+
+import RegionalUsersList from '../sections/RegionalUsersList';
 import PendingRegistrations from '../sections/PendingRegistrations';
 import logo1 from '../../../../assets/images/logo1.PNG';
+import AppEnvironment from '../../../../environment';
+
+const { graphql, preloadQuery, usePreloadedQuery } = require('react-relay/hooks');
 
 const PrimaryBar = styled.div`
   background-color : #94c7c9;
@@ -19,10 +24,35 @@ const SecondaryBar = styled.div`
   box-shadow: 9px 4px 8px -7px rgba(138,128,138,1);
 `;
 
+const query = graphql`
+  query AdminQuery {
+    users {
+      username
+      firstName
+      facebookURL
+      instagramURL
+      surname
+      accountType
+      status
+    }
+  }
+`;
+
+// Note: call in an event-handler or similar, not during render
+const result = preloadQuery(
+  AppEnvironment,
+  query,
+);
+
 
 const Admin = () => {
-  const [selectedMenu, setSelectedMenu] = useState('Regional Stockists');
   const history = useHistory();
+
+
+  const [selectedMenu, setSelectedMenu] = useState(history.location.pathname.split('/')[2]);
+
+
+  const { users } = usePreloadedQuery(query, result);
 
 
   return (
@@ -41,10 +71,10 @@ const Admin = () => {
             tabIndex="0"
             role="button"
             onClick={() => {
-              setSelectedMenu('Regional Stockists');
+              setSelectedMenu('regionalStockists');
               history.push('/dashboard/regionalStockists');
             }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'Regional Stockists' })}
+            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'regionalStockists' })}
           >
             Regional Stockists
 
@@ -53,10 +83,10 @@ const Admin = () => {
             tabIndex="-1"
             role="button"
             onClick={() => {
-              setSelectedMenu('Order Tracker');
+              setSelectedMenu('orderTracker');
               history.push('/dashboard/orderTracker');
             }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'Order Tracker' })}
+            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'orderTracker' })}
           >
             Order Tracker
           </div>
@@ -64,10 +94,10 @@ const Admin = () => {
             tabIndex="-1"
             role="button"
             onClick={() => {
-              setSelectedMenu('Reseller Directory');
+              setSelectedMenu('resellerDirectory');
               history.push('/dashboard/resellerDirectory');
             }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'Reseller Directory' })}
+            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'resellerDirectory' })}
           >
             Reseller Directory
 
@@ -76,10 +106,10 @@ const Admin = () => {
             tabIndex="-1"
             role="button"
             onClick={() => {
-              setSelectedMenu('Pending Registrations');
+              setSelectedMenu('pendingRegistrations');
               history.push('/dashboard/pendingRegistrations');
             }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'Pending Registrations' })}
+            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'pendingRegistrations' })}
           >
             Pending Registrations
 
@@ -90,7 +120,7 @@ const Admin = () => {
 
       <Switch>
         <Route path="/dashboard/regionalStockists">
-          <div>regional stockists</div>
+          <RegionalUsersList />
         </Route>
         <Route path="/dashboard/orderTracker">
           <div>Order Tracker</div>
@@ -99,7 +129,7 @@ const Admin = () => {
           <div>Reseller Directory</div>
         </Route>
         <Route path="/dashboard/pendingRegistrations">
-          <PendingRegistrations />
+          <PendingRegistrations users={users} />
         </Route>
       </Switch>
     </div>

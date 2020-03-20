@@ -4,6 +4,7 @@ type Mutation {
 
 type Query {
   authenticateUser(username: String, password: String): UserAuthenticated
+  users: [userType]
 }
 
 type UserAuthenticated {
@@ -21,4 +22,16 @@ type UserRegistrationType {
   accountType: String
   facebookURL: String
   instagramURL: String
+}
+
+type userType {
+  _id: ID
+  username: String
+  password: String
+  firstName: String
+  surname: String
+  accountType: String
+  facebookURL: String
+  instagramURL: String
+  status: String
 }

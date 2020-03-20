@@ -3,21 +3,21 @@ import AdminDashboard from './components/Admin';
 
 
 const DashBoard = () => {
-  const accountTypeFromLocStorage = window.localStorage.getItem('accountType');
   const [accountType, setUserType] = useState('');
 
   useEffect(() => {
+    const accountTypeFromLocStorage = window.localStorage.getItem('accountType');
     if (accountTypeFromLocStorage) {
       setUserType(accountTypeFromLocStorage);
     } else {
       setUserType(false);
     }
-  }, [accountTypeFromLocStorage]);
+  }, [accountType]);
 
 
   return (
     <div>
-      {accountType === 'admin'
+      {accountType === 'ADMIN'
         ? (
           <AdminDashboard />
         )

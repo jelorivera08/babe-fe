@@ -46,7 +46,6 @@ const SignUp = () => {
   });
   const [error, setError] = useState('');
 
-
   const history = useHistory();
 
 

@@ -13,7 +13,7 @@ import environment from '../../../../environment';
 const loginQuery = graphql`
     query LoginBoxQuery ($username: String, $password: String) {
       authenticateUser (username: $username, password: $password)  {
-        _id
+        id
         isAuthenticated
         accountType
       }

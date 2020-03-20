@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c864db931ad1dbb69d75b24eb88e9799
+ * @relayHash f67850b52287256f6fb25900fa940206
  */
 
 /* eslint-disable */
@@ -42,6 +42,7 @@ mutation SignupMutation(
 ) {
   userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL) {
     username
+    id
   }
 }
 */
@@ -93,60 +94,48 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "LinkedField",
-    "alias": null,
-    "name": "userCreate",
-    "storageKey": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "accountType",
-        "variableName": "accountType"
-      },
-      {
-        "kind": "Variable",
-        "name": "facebookURL",
-        "variableName": "facebookURL"
-      },
-      {
-        "kind": "Variable",
-        "name": "firstName",
-        "variableName": "firstName"
-      },
-      {
-        "kind": "Variable",
-        "name": "instagramURL",
-        "variableName": "instagramURL"
-      },
-      {
-        "kind": "Variable",
-        "name": "password",
-        "variableName": "password"
-      },
-      {
-        "kind": "Variable",
-        "name": "surname",
-        "variableName": "surname"
-      },
-      {
-        "kind": "Variable",
-        "name": "username",
-        "variableName": "username"
-      }
-    ],
-    "concreteType": "UserRegistrationType",
-    "plural": false,
-    "selections": [
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "username",
-        "args": null,
-        "storageKey": null
-      }
-    ]
+    "kind": "Variable",
+    "name": "accountType",
+    "variableName": "accountType"
+  },
+  {
+    "kind": "Variable",
+    "name": "facebookURL",
+    "variableName": "facebookURL"
+  },
+  {
+    "kind": "Variable",
+    "name": "firstName",
+    "variableName": "firstName"
+  },
+  {
+    "kind": "Variable",
+    "name": "instagramURL",
+    "variableName": "instagramURL"
+  },
+  {
+    "kind": "Variable",
+    "name": "password",
+    "variableName": "password"
+  },
+  {
+    "kind": "Variable",
+    "name": "surname",
+    "variableName": "surname"
+  },
+  {
+    "kind": "Variable",
+    "name": "username",
+    "variableName": "username"
   }
-];
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "username",
+  "args": null,
+  "storageKey": null
+};
 return {
   "kind": "Request",
   "fragment": {
@@ -155,19 +144,52 @@ return {
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "userCreate",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "UserRegistrationType",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/)
+        ]
+      }
+    ]
   },
   "operation": {
     "kind": "Operation",
     "name": "SignupMutation",
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "userCreate",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "UserRegistrationType",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "id",
+            "args": null,
+            "storageKey": null
+          }
+        ]
+      }
+    ]
   },
   "params": {
     "operationKind": "mutation",
     "name": "SignupMutation",
     "id": null,
-    "text": "mutation SignupMutation(\n  $username: String!\n  $password: String!\n  $firstName: String!\n  $surname: String!\n  $accountType: String!\n  $facebookURL: String!\n  $instagramURL: String!\n) {\n  userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL) {\n    username\n  }\n}\n",
+    "text": "mutation SignupMutation(\n  $username: String!\n  $password: String!\n  $firstName: String!\n  $surname: String!\n  $accountType: String!\n  $facebookURL: String!\n  $instagramURL: String!\n) {\n  userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL) {\n    username\n    id\n  }\n}\n",
     "metadata": {}
   }
 };

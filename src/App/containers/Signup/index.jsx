@@ -21,7 +21,7 @@ const mutation = graphql`
   ) {
     userCreate(
       username: $username
-      password: $password
+      password: $password,
       firstName: $firstName,
       surname: $surname,
       accountType: $accountType,

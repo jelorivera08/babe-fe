@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { graphql, commitMutation } from 'react-relay';
+import styled from 'styled-components';
 import environment from '../../../../environment';
 
 const mutation = graphql`
@@ -10,6 +11,11 @@ const mutation = graphql`
       status
     }
   }
+`;
+
+const UsersContainer = styled.div`
+  overflow: scroll;
+  height: calc(100vh - 94px);
 `;
 
 
@@ -33,7 +39,7 @@ export default ({ users }) => {
   return (
     <div className="w-full">
       <div className="m-8 pt-4 text-xl">Review registered accounts</div>
-      <div className="w-full p-6">
+      <UsersContainer className="w-full p-6">
 
 
         {
@@ -116,7 +122,7 @@ export default ({ users }) => {
 
         ))
       }
-      </div>
+      </UsersContainer>
     </div>
   );
 };

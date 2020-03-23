@@ -9,7 +9,7 @@ import {
   useHistory,
 } from 'react-router-dom';
 
-import RegionalUsersList from '../sections/RegionalUsersList';
+import RegionalStockists from '../sections/RegionalStockists';
 import PendingRegistrations from '../sections/PendingRegistrations';
 import logo1 from '../../../../assets/images/logo1.PNG';
 import AppEnvironment from '../../../../environment';
@@ -120,7 +120,7 @@ const Admin = () => {
 
       <Switch>
         <Route path="/dashboard/regionalStockists">
-          <RegionalUsersList />
+          <RegionalStockists />
         </Route>
         <Route path="/dashboard/orderTracker">
           <div>Order Tracker</div>

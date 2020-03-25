@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import './assets/main.css';
+import './styles/global.css';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';

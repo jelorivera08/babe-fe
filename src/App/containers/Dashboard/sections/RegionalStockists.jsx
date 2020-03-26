@@ -67,7 +67,7 @@ export default () => {
                 tabIndex="0"
                 role="button"
                 onClick={() => history.push(`/dashboard/regionalStockists/${stockist.username}`)}
-                className="mb-8 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4 cursor-pointer"
+                className="mb-4 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4 cursor-pointer"
               >
                 <div className="flex">
                   <div>
@@ -89,7 +89,7 @@ export default () => {
           {
             regionalStockists.map((stockist) => (
               <Route key={stockist.username} path={`/dashboard/regionalStockists/${stockist.username}`}>
-                <StockistOrders orders={stockist.orders} />
+                <StockistOrders orders={stockist.orders} user={stockist.username} />
               </Route>
             ))
           }

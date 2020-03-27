@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -6,7 +7,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { commitMutation } from 'react-relay';
 import { graphql, preloadQuery, usePreloadedQuery } from 'react-relay/hooks';
-
 import { Select, Button } from 'semantic-ui-react';
 
 
@@ -34,6 +34,26 @@ const mutation = graphql`
       product : $productInput
     ) {
       name
+      amount  
+      quantity
+    }
+  }
+`;
+
+const updateMutation = graphql`
+  mutation StockistOrdersUpdateOrderMutation(
+    $user: String!
+    $dateOrdered: String!
+    $productInput: productInputType!
+    $productIndex: Int!
+  )  {
+    updateOrder (
+      user: $user
+      dateOrdered: $dateOrdered
+      product : $productInput
+      productIndex: $productIndex
+    ) {
+      name
       amount
       quantity
     }
@@ -55,6 +75,47 @@ const StockistOrders = ({ orders, user }) => {
   const [additionalOrder, setAdditionalOrder] = useState({
     name: '', quantity: '', amount: 0, editIndex: 0, currentOrder: '',
   });
+
+  const [editOrder, setEditOrder] = useState({
+    name: '', quantity: '', amount: 0, editIndex: 0, currentOrder: '', productIndex: -1,
+  });
+
+  const updateOrder = (values) => {
+    const variables = {
+      user: values.user,
+      dateOrdered: values.dateOrdered,
+      productInput: values.productInput,
+      productIndex: values.productIndex,
+    };
+
+    commitMutation(
+      AppEnvironment,
+      {
+        mutation: updateMutation,
+        variables,
+        updater: (store) => {
+          const payload = store.getRootField('updateOrder');
+          const root = store.getRoot();
+          const regionalStockistsProxy = root.getLinkedRecords('regionalStockists');
+          const regionalStockistProxy = regionalStockistsProxy.find((val) => val.getValue('username') === values.user);
+
+
+          const ordersProxy = regionalStockistProxy.getLinkedRecords('orders');
+          const orderProxy = ordersProxy.find((val) => val.getValue('dateOrdered') === values.dateOrdered);
+
+          const productsProxy = orderProxy.getLinkedRecords('products');
+
+          const updatedProduct = productsProxy[values.productIndex];
+
+          updatedProduct.setValue(payload.getValue('name'), 'name');
+          updatedProduct.setValue(payload.getValue('quantity'), 'quantity');
+          updatedProduct.setValue(payload.getValue('amount'), 'amount');
+        },
+        onCompleted: () => console.log('ok'),
+        onError: (err) => console.error(err),
+      },
+    );
+  };
 
   const addOrder = (values) => {
     const variables = {
@@ -84,6 +145,7 @@ const StockistOrders = ({ orders, user }) => {
 
           orderProxy.setLinkedRecords([...productsProxy, payload], 'products');
         },
+        onCompleted: () => console.log('ok'),
         onError: (err) => console.error(err),
       },
     );
@@ -97,7 +159,7 @@ const StockistOrders = ({ orders, user }) => {
 
   useEffect(() => {
     inputEl && inputEl.current && inputEl.current.focus();
-  }, [additionalOrder.editIndex]);
+  }, [additionalOrder.editIndex, editOrder.editIndex]);
 
   return (
     <div>
@@ -105,6 +167,7 @@ const StockistOrders = ({ orders, user }) => {
         orders.map((order) => {
           const formattedDateOrdered = dayjs(order.dateOrdered).format('MMMM DD, YYYY');
           let totalAmount = 0;
+
 
           return (
             <div
@@ -127,13 +190,124 @@ const StockistOrders = ({ orders, user }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {order.products.map((product) => {
+                      {order.products.map((product, i) => {
                         totalAmount += product.amount * product.quantity;
 
                         return (
-                          <tr key={product.name}>
-                            <td className="border border-black px-4 py-2 text-center">{product.name}</td>
-                            <td className="border border-black px-4 py-2 text-center">{product.quantity}</td>
+                          <tr
+                            key={product.name}
+                            className="cursor-pointer hover:bg-gray-400"
+                          >
+                            <td
+                              onClick={() => {
+                                setEditOrder({
+                                  ...editOrder,
+                                  editIndex: 1,
+                                  currentOrder: order.dateOrdered,
+                                  productIndex: i,
+                                  quantity: product.quantity,
+                                  amount: product.amount,
+                                  name: product.name,
+                                });
+                              }}
+                              className="border border-black px-4 py-2 text-center"
+                            >
+                              {
+                                (editOrder.currentOrder === order.dateOrdered
+                                  && editOrder.productIndex === i
+                                  && editOrder.editIndex > 0)
+                                  ? (
+                                    <Select
+                                      placeholder="Select Product"
+                                      options={products.map((prod) => {
+                                        if (order.products.find(
+                                          (orderProduct) => (orderProduct.name === prod.name)
+                                          && (orderProduct.name !== product.name),
+                                        )
+                                        ) {
+                                          return null;
+                                        }
+                                        return {
+                                          key: prod.name,
+                                          value: prod.name,
+                                          text: prod.name,
+                                        };
+                                      }).filter((v) => v !== null)}
+                                      value={editOrder.name}
+                                      onKeyDown={({ keyCode }) => {
+                                        if (keyCode === 9) {
+                                          setEditOrder({
+                                            ...editOrder,
+                                            editIndex: editOrder.editIndex + 1,
+                                          });
+                                        }
+                                      }}
+                                      onChange={
+                                        (e, { value }) => {
+                                          setEditOrder({
+                                            ...editOrder,
+                                            name: value,
+                                            amount: products.find(
+                                              (prod) => prod.name === value,
+                                            ).amount,
+                                          });
+                                        }
+                                      }
+                                    />
+                                  )
+                                  : <div>{product.name}</div>
+                              }
+                            </td>
+
+                            <td
+                              className="border border-black px-4 py-2 text-center cursor-text"
+                              onClick={() => {
+                                setEditOrder({
+                                  ...editOrder,
+                                  editIndex: 2,
+                                  currentOrder: order.dateOrdered,
+                                  productIndex: i,
+                                  quantity: product.quantity,
+                                  name: product.name,
+                                  amount: product.amount,
+                                });
+                              }}
+                            >
+                              {
+                            (editOrder.currentOrder === order.dateOrdered
+                              && editOrder.productIndex === i
+                              && editOrder.editIndex > 0)
+                              ? (
+                                <input
+                                  tabIndex="0"
+                                  ref={inputEl}
+                                  className="bg-transparent outline-none w-4"
+                                  value={editOrder.quantity}
+                                  onKeyDown={({ keyCode }) => {
+                                    if (keyCode === 9) {
+                                      return null;
+                                    }
+
+                                    return null;
+                                  }}
+                                  onChange={
+                                    (e) => {
+                                      setEditOrder({
+                                        ...editOrder,
+                                        quantity: e.target.value ? parseInt(e.target.value, 10) : '',
+                                      });
+                                    }
+                                  }
+                                />
+                              ) : (
+                                <div>
+                                  {product.quantity}
+                                </div>
+                              )
+                            }
+
+                            </td>
+
                             <td className="border border-black px-4 py-2 text-center">
 
                               {`₱ ${formatNumber((product.amount * product.quantity).toFixed(2))}`}
@@ -197,7 +371,15 @@ const StockistOrders = ({ orders, user }) => {
                                   )
                             }
                             </td>
-                            <td className="border border-black px-4 py-2 text-center">
+                            <td
+                              className="border border-black px-4 py-2 text-center cursor-text"
+                              onClick={() => {
+                                setAdditionalOrder({
+                                  ...additionalOrder,
+                                  editIndex: 2,
+                                });
+                              }}
+                            >
                               {
                             additionalOrder.editIndex === 2
                               ? (
@@ -250,9 +432,52 @@ const StockistOrders = ({ orders, user }) => {
 
               <div className="flex justify-end mt-4 mr-3">
 
+                { (additionalOrder.editIndex > 0
+                 && order.dateOrdered === additionalOrder.currentOrder)
+                 || (editOrder.editIndex > 0 && order.dateOrdered === editOrder.currentOrder)
+                  ? (
+                    <Button
+                      onClick={
+                        () => {
+                          if ((editOrder.editIndex > 0
+                            && order.dateOrdered === editOrder.currentOrder)) {
+                            setEditOrder({
+                              name: '', quantity: '', amount: 0, editIndex: 0, currentOrder: '',
+                            });
+                          } else {
+                            setAdditionalOrder({
+                              name: '', quantity: '', amount: 0, editIndex: 0, currentOrder: '',
+                            });
+                          }
+                        }
+                      }
+                      color="red"
+                    >
+                    Cancel
+
+                    </Button>
+                  ) : null}
+
                 <Button
                   tabIndex="-1"
                   onClick={() => {
+                    if (editOrder.editIndex > 0 && order.dateOrdered === editOrder.currentOrder) {
+                      updateOrder({
+                        user,
+                        dateOrdered: order.dateOrdered,
+                        productInput: {
+                          name: editOrder.name,
+                          quantity: editOrder.quantity,
+                          amount: editOrder.amount,
+                        },
+                        productIndex: editOrder.productIndex,
+                      });
+
+                      return setEditOrder({
+                        name: '', quantity: '', amount: 0, editIndex: 0, currentOrder: '', productIndex: -1,
+                      });
+                    }
+
                     if (additionalOrder.editIndex > 0) {
                       addOrder({
                         user,
@@ -274,10 +499,21 @@ const StockistOrders = ({ orders, user }) => {
                         currentOrder: order.dateOrdered,
                       });
                     }
+                    return null;
                   }}
-                  color={additionalOrder.editIndex > 0 && order.dateOrdered === additionalOrder.currentOrder ? 'green' : 'teal'}
+                  color={(additionalOrder.editIndex > 0
+                    && order.dateOrdered === additionalOrder.currentOrder)
+                  || (editOrder.editIndex > 0 && order.dateOrdered === editOrder.currentOrder) ? 'green' : 'teal'}
+                  disabled={
+                    (additionalOrder.editIndex > 0
+                    && order.dateOrdered === additionalOrder.currentOrder)
+                     && (additionalOrder.quantity === ''
+                      || additionalOrder.name === '')
+}
                 >
-                  { additionalOrder.editIndex > 0 && order.dateOrdered === additionalOrder.currentOrder ? 'Confirm' : 'Add Order'}
+                  { (additionalOrder.editIndex > 0
+                  && order.dateOrdered === additionalOrder.currentOrder)
+                  || (editOrder.editIndex > 0 && order.dateOrdered === editOrder.currentOrder) ? 'Confirm' : 'Add Product'}
                 </Button>
 
 

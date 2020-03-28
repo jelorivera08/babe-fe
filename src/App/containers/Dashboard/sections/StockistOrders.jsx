@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-expressions */
@@ -107,11 +108,14 @@ const StockistOrders = ({ orders, user }) => {
 
           const updatedProduct = productsProxy[values.productIndex];
 
-          updatedProduct.setValue(payload.getValue('name'), 'name');
-          updatedProduct.setValue(payload.getValue('quantity'), 'quantity');
-          updatedProduct.setValue(payload.getValue('amount'), 'amount');
+          if (payload.getValue('quantity') === 0) {
+            orderProxy.setLinkedRecords([...productsProxy.filter((v, i) => i !== values.productIndex)], 'products');
+          } else {
+            updatedProduct.setValue(payload.getValue('name'), 'name');
+            updatedProduct.setValue(payload.getValue('quantity'), 'quantity');
+            updatedProduct.setValue(payload.getValue('amount'), 'amount');
+          }
         },
-        onCompleted: () => console.log('ok'),
         onError: (err) => console.error(err),
       },
     );
@@ -292,6 +296,7 @@ const StockistOrders = ({ orders, user }) => {
                                   }}
                                   onChange={
                                     (e) => {
+                                      if (Number.isNaN(parseInt(e.target.value, 10)) && e.target.value !== '') return;
                                       setEditOrder({
                                         ...editOrder,
                                         quantity: e.target.value ? parseInt(e.target.value, 10) : '',
@@ -397,6 +402,7 @@ const StockistOrders = ({ orders, user }) => {
                                   }}
                                   onChange={
                                     (e) => {
+                                      if (Number.isNaN(parseInt(e.target.value, 10)) && e.target.value !== '') return;
                                       setAdditionalOrder({
                                         ...additionalOrder, quantity: e.target.value ? parseInt(e.target.value, 10) : '',
                                       });
@@ -507,7 +513,7 @@ const StockistOrders = ({ orders, user }) => {
                   disabled={
                     (additionalOrder.editIndex > 0
                     && order.dateOrdered === additionalOrder.currentOrder)
-                     && (additionalOrder.quantity === ''
+                     && (additionalOrder.quantity === '' || additionalOrder.quantity <= 0
                       || additionalOrder.name === '')
 }
                 >

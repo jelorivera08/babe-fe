@@ -9,9 +9,14 @@ import dayjs from 'dayjs';
 import { commitMutation } from 'react-relay';
 import { graphql, preloadQuery, usePreloadedQuery } from 'react-relay/hooks';
 import { Select, Button } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 
 import AppEnvironment from '../../../../environment';
+
+const OrdersContainer = styled.div`
+  height: calc(100% - 2rem);
+`;
 
 
 const query = graphql`
@@ -163,7 +168,7 @@ const StockistOrders = ({ orders, user }) => {
   }, [additionalOrder.editIndex, editOrder.editIndex]);
 
   return (
-    <div>
+    <OrdersContainer className="h-full overflow-y-scroll pr-4">
       {
         orders.map((order) => {
           const formattedDateOrdered = dayjs(order.dateOrdered).format('MMMM DD, YYYY (h:mm:ss A)');
@@ -527,7 +532,7 @@ const StockistOrders = ({ orders, user }) => {
           );
         })
       }
-    </div>
+    </OrdersContainer>
   );
 };
 

@@ -15,7 +15,7 @@ const mutation = graphql`
 `;
 
 const UsersContainer = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
   height: calc(100vh - 94px);
 `;
 
@@ -55,7 +55,7 @@ export default ({ users }) => {
         }, i) => (
 
 
-          <div key={username} className="mb-8 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4">
+          <div key={username} className="mb-8 w-full  border bg-gray-200 border-gray-400 border-solid rounded p-4">
             <div className="flex mb-2">
               <div className="font-semibold">Username: </div>
               <div className="ml-2">{username}</div>

@@ -9,11 +9,15 @@ import {
 } from 'react-router-dom';
 import { graphql, preloadQuery, usePreloadedQuery } from 'react-relay/hooks';
 import { Button } from 'semantic-ui-react';
+import styled from 'styled-components';
 import StockistOrders from './StockistOrders';
-
 import CreateOrderContainer from './CreateOrderContainer';
 
 import environment from '../../../../environment';
+
+const RegionalStockistsContainer = styled.div`
+  height: calc(100% - 5rem);
+`;
 
 
 const query = graphql`
@@ -51,7 +55,7 @@ export default () => {
 
 
   return (
-    <div className="w-full">
+    <div className="w-full h-screen">
       <div className="mt-8 mx-6 pt-4 text-xl flex">
         <div>Regional Stockists</div>
         {headerTitle.map((title) => (
@@ -63,7 +67,7 @@ export default () => {
       </div>
 
 
-      <div className="w-full p-6">
+      <RegionalStockistsContainer className="w-full h-full p-6">
         <Switch>
           <Route exact path="/dashboard/regionalStockists">
             {
@@ -110,7 +114,7 @@ export default () => {
         </Switch>
 
 
-      </div>
+      </RegionalStockistsContainer>
     </div>
   );
 };

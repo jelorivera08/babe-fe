@@ -17,7 +17,7 @@ const Background = ({ children }) => (
   <BackgroundContainer className="w-full bg-teal-600 h-screen flex justify-center items-center">
     {children}
     <ImageLogo
-      className="fixed h-12"
+      className="fixed h-12 bg-transparent"
       src={logo}
       alt="logo"
     />

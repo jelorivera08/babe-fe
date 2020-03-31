@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 426327705eb96b983739ccf9ee6d0cfc
+ * @relayHash 5e34fa67d712ce8cec8eda901245f6bb
  */
 
 /* eslint-disable */
@@ -16,6 +16,7 @@ export type ResllerDirectoryQueryResponse = {|
     +facebookURL: ?string,
     +instagramURL: ?string,
     +surname: ?string,
+    +description: ?string,
   |}>
 |};
 export type ResllerDirectoryQuery = {|
@@ -32,6 +33,7 @@ query ResllerDirectoryQuery {
     facebookURL
     instagramURL
     surname
+    description
     id
   }
 }
@@ -65,6 +67,13 @@ v3 = {
   "name": "surname",
   "args": null,
   "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "description",
+  "args": null,
+  "storageKey": null
 };
 return {
   "kind": "Request",
@@ -87,7 +96,8 @@ return {
           (v0/*: any*/),
           (v1/*: any*/),
           (v2/*: any*/),
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/)
         ]
       }
     ]
@@ -110,6 +120,7 @@ return {
           (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -125,12 +136,12 @@ return {
     "operationKind": "query",
     "name": "ResllerDirectoryQuery",
     "id": null,
-    "text": "query ResllerDirectoryQuery {\n  activeResellers {\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    id\n  }\n}\n",
+    "text": "query ResllerDirectoryQuery {\n  activeResellers {\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    description\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'b817b36f85e8723557397207f271be1c';
+(node/*: any*/).hash = 'd4f3af74fd024fe5193562eab3011c67';
 
 module.exports = node;

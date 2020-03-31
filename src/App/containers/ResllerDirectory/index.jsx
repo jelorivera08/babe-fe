@@ -20,6 +20,7 @@ const query = graphql`
       facebookURL
       instagramURL
       surname
+      description
     }
   }
 `;
@@ -44,7 +45,7 @@ const ResllerDirectory = () => {
         <ResellersContainer className="mt-12 p-32 flex flex-wrap overflow-y-scroll relative z-10">
 
           { activeResellers.map(({
-            firstName, surname, facebookURL, instagramURL,
+            firstName, surname, facebookURL, instagramURL, description,
           }) => (
             <div key={facebookURL} className="m-2">
               <Card>
@@ -54,8 +55,8 @@ const ResllerDirectory = () => {
                   <Card.Meta>
                     <span className="date">Reseller</span>
                   </Card.Meta>
-                  <Card.Description>
-                Matthew is a musician living in Nashville.
+                  <Card.Description className="h-8 flex items-center">
+                    {description}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra className="flex justify-between">

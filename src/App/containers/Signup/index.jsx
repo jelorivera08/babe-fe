@@ -20,6 +20,7 @@ const mutation = graphql`
     $accountType: String!
     $facebookURL: String!
     $instagramURL: String!
+    $description: String!
   ) {
     userCreate(
       username: $username
@@ -29,6 +30,7 @@ const mutation = graphql`
       accountType: $accountType,
       facebookURL: $facebookURL,
       instagramURL: $instagramURL
+      description: $description
       ) {
       username
     }
@@ -62,6 +64,7 @@ const SignUp = () => {
     accountType: 'Reseller',
     facebookURL: '',
     instagramURL: '',
+    description: '',
 
   });
   const [error, setError] = useState('');
@@ -251,6 +254,21 @@ const SignUp = () => {
             </div>
 
 
+          </div>
+
+
+          <div className="mb-6 mr-2 w-full">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            Description
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="facebookURL"
+              type="text"
+              placeholder="Brief description of yourself"
+              value={credentials.description}
+              onChange={(e) => setCredentials({ ...credentials, description: e.target.value })}
+            />
           </div>
 
 

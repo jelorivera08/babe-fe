@@ -14,6 +14,7 @@ import PendingRegistrations from '../sections/PendingRegistrations';
 import logo1 from '../../../../assets/images/logo1.PNG';
 import AppEnvironment from '../../../../environment';
 
+
 const { graphql, preloadQuery, usePreloadedQuery } = require('react-relay/hooks');
 
 const PrimaryBar = styled.div`
@@ -83,29 +84,6 @@ const Admin = () => {
             tabIndex="-1"
             role="button"
             onClick={() => {
-              setSelectedMenu('orderTracker');
-              history.push('/dashboard/orderTracker');
-            }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'orderTracker' })}
-          >
-            Order Tracker
-          </div>
-          <div
-            tabIndex="-1"
-            role="button"
-            onClick={() => {
-              setSelectedMenu('resellerDirectory');
-              history.push('/dashboard/resellerDirectory');
-            }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'resellerDirectory' })}
-          >
-            Reseller Directory
-
-          </div>
-          <div
-            tabIndex="-1"
-            role="button"
-            onClick={() => {
               setSelectedMenu('pendingRegistrations');
               history.push('/dashboard/pendingRegistrations');
             }}
@@ -122,15 +100,10 @@ const Admin = () => {
         <Route path="/dashboard/regionalStockists">
           <RegionalStockists />
         </Route>
-        <Route path="/dashboard/orderTracker">
-          <div>Order Tracker</div>
-        </Route>
-        <Route path="/dashboard/resellerDIrectory">
-          <div>Reseller Directory</div>
-        </Route>
         <Route path="/dashboard/pendingRegistrations">
           <PendingRegistrations users={users} />
         </Route>
+
       </Switch>
     </div>
   );

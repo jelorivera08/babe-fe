@@ -2,6 +2,7 @@
 import React from 'react';
 import { graphql, commitMutation } from 'react-relay';
 import styled from 'styled-components';
+import { Select } from 'semantic-ui-react';
 import environment from '../../../../environment';
 
 const mutation = graphql`
@@ -17,6 +18,12 @@ const UsersContainer = styled.div`
   overflow: scroll;
   height: calc(100vh - 94px);
 `;
+
+const options = [
+  { key: 'ACTIVE', value: 'ACTIVE', text: 'Active' },
+  { key: 'PENDING', value: 'PENDING', text: 'Pending' },
+  { key: 'INACTIVE', value: 'INACTIVE', text: 'Inactive' },
+];
 
 
 export default ({ users }) => {
@@ -97,20 +104,13 @@ export default ({ users }) => {
 
               <div className="flex w-1/2">
                 <div className="font-semibold">Status:</div>
-                <div className="inline-block relative w-32 ml-2">
-                  <select
-                    value={status}
-                    onChange={(e) => handleStatusChange({ username, status: e.target.value }, i)}
-                    className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                  >
-                    <option value="ACTIVE">Active</option>
-                    <option value="PENDING">Pending</option>
-                    <option value="INACTIVE">Inactive</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                  </div>
-                </div>
+                <Select
+                  className="ml-2"
+                  onChange={(e, { value }) => handleStatusChange({ username, status: value }, i)}
+                  value={status}
+                  placeholder="Select Status"
+                  options={options}
+                />
 
 
               </div>

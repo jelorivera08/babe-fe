@@ -60,7 +60,7 @@ const Admin = () => {
       <PrimaryBar className="h-screen w-16 p-2">
         <img src={logo1} alt="logo1" />
       </PrimaryBar>
-      <SecondaryBar className="h-screen w-56 bg-gray-200 p-4">
+      <SecondaryBar className="h-screen w-64 bg-gray-200 p-4">
         <div className="flex items-center">
           <MdMenu size="1.5em" />
           <p className="text-xl ml-2 text-center">  Menu</p>

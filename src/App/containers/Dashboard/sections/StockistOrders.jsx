@@ -67,9 +67,7 @@ const result = preloadQuery(
   query,
 );
 
-function formatNumber(num) {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+const formatNumber = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 
 
 const StockistOrders = ({ orders, user }) => {
@@ -149,7 +147,6 @@ const StockistOrders = ({ orders, user }) => {
 
           orderProxy.setLinkedRecords([...productsProxy, payload], 'products');
         },
-        onCompleted: () => console.log('ok'),
         onError: (err) => console.error(err),
       },
     );
@@ -169,7 +166,7 @@ const StockistOrders = ({ orders, user }) => {
     <div>
       {
         orders.map((order) => {
-          const formattedDateOrdered = dayjs(order.dateOrdered).format('MMMM DD, YYYY');
+          const formattedDateOrdered = dayjs(order.dateOrdered).format('MMMM DD, YYYY (h:mm:ss A)');
           let totalAmount = 0;
 
 
@@ -184,8 +181,8 @@ const StockistOrders = ({ orders, user }) => {
                   <div className="ml-2">{formattedDateOrdered}</div>
                 </div>
 
-                <div className="w-1/2 flex justify-center">
-                  <table className="table-auto">
+                <div className="w-1/2 flex justify-end">
+                  <table className="table-auto w-full">
                     <thead>
                       <tr>
                         <th className="border border-black  px-4 py-2">Product</th>
@@ -425,7 +422,7 @@ const StockistOrders = ({ orders, user }) => {
                       }
                       <tr>
                         <td colSpan="2" className="border border-black px-4 py-2">Total Amount</td>
-                        <td className="border border-black px-4 py-2">
+                        <td className="border border-black px-4 py-2 text-center">
                           {`₱ ${formatNumber(totalAmount.toFixed(2))}`}
                         </td>
                       </tr>
@@ -436,7 +433,7 @@ const StockistOrders = ({ orders, user }) => {
                 </div>
               </div>
 
-              <div className="flex justify-end mt-4 mr-3">
+              <div className="flex justify-end mt-4">
 
                 { (additionalOrder.editIndex > 0
                  && order.dateOrdered === additionalOrder.currentOrder)
@@ -533,6 +530,5 @@ const StockistOrders = ({ orders, user }) => {
     </div>
   );
 };
-
 
 export default StockistOrders;

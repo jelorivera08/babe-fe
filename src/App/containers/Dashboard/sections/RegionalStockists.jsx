@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-named-as-default */
-import React from 'react';
+import React, { useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import {
   useHistory,
@@ -8,8 +8,10 @@ import {
   Route,
 } from 'react-router-dom';
 import { graphql, preloadQuery, usePreloadedQuery } from 'react-relay/hooks';
+import { Button } from 'semantic-ui-react';
 import StockistOrders from './StockistOrders';
 
+import CreateOrderContainer from './CreateOrderContainer';
 
 import environment from '../../../../environment';
 
@@ -45,10 +47,12 @@ export default () => {
 
   const headerTitle = history.location.pathname.split('/').filter((v, i) => i > 2);
 
+  const [createOrderOpen, setCreateOrderOpen] = useState(false);
+
 
   return (
     <div className="w-full">
-      <div className="m-8 pt-4 text-xl flex">
+      <div className="mt-8 mx-6 pt-4 text-xl flex">
         <div>Regional Stockists</div>
         {headerTitle.map((title) => (
           <div key={title} className="flex items-center">
@@ -57,6 +61,8 @@ export default () => {
           </div>
         ))}
       </div>
+
+
       <div className="w-full p-6">
         <Switch>
           <Route exact path="/dashboard/regionalStockists">
@@ -89,6 +95,14 @@ export default () => {
           {
             regionalStockists.map((stockist) => (
               <Route key={stockist.username} path={`/dashboard/regionalStockists/${stockist.username}`}>
+                <CreateOrderContainer
+                  open={createOrderOpen}
+                  handleClose={setCreateOrderOpen}
+                  user={stockist.username}
+                />
+                <div className="flex justify-end mb-4">
+                  <Button onClick={() => setCreateOrderOpen(true)}>Create Order</Button>
+                </div>
                 <StockistOrders orders={stockist.orders} user={stockist.username} />
               </Route>
             ))

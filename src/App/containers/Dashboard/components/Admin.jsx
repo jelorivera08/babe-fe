@@ -67,6 +67,17 @@ const Admin = () => {
             history.push('/dashboard');
           }}
         />
+        <div
+          role="button"
+          tabIndex="0"
+          onClick={() => history.push('/')}
+          className="mt-1 w-full flex justify-center items-center cursor-pointer"
+
+        >
+          <Icon
+            name="log out"
+          />
+        </div>
       </PrimaryBar>
       <SecondaryBar className={cx('h-screen bg-gray-200 p-4', { 'show-menu': showMenu })}>
         <div className="flex items-center cursor-pointer">

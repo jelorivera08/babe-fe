@@ -21,7 +21,7 @@ const RegionalStockistsContainer = styled.div`
 
 
 const query = graphql`
-  query RegionalStockistsQuery {
+  query OrderTrackerQuery {
     regionalStockists {
       firstName
       surname

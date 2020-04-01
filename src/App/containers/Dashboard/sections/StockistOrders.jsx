@@ -66,11 +66,11 @@ const updateMutation = graphql`
   }
 `;
 
-// Note: call in an event-handler or similar, not during render
 const result = preloadQuery(
   AppEnvironment,
   query,
 );
+
 
 const formatNumber = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 
@@ -83,6 +83,7 @@ const StockistOrders = ({ orders, user }) => {
   const [editOrder, setEditOrder] = useState({
     name: '', quantity: '', amount: 0, editIndex: 0, currentOrder: '', productIndex: -1,
   });
+
 
   const updateOrder = (values) => {
     const variables = {

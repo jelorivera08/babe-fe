@@ -5,8 +5,31 @@ import styled from 'styled-components';
 import { Select } from 'semantic-ui-react';
 import environment from '../../../../environment';
 
+
+const { preloadQuery, usePreloadedQuery } = require('react-relay/hooks');
+
+const query = graphql`
+  query UsersListQuery {
+    users {
+      username
+      firstName
+      facebookURL
+      instagramURL
+      surname
+      accountType
+      status
+    }
+  }
+`;
+
+const result = preloadQuery(
+  environment,
+  query,
+);
+
+
 const mutation = graphql`
-  mutation PendingRegistrationsMutation($username: String! $status: String!)  {
+  mutation UsersListMutation($username: String! $status: String!)  {
     changeUserStatus(username: $username status: $status) {
       username
       status
@@ -26,7 +49,9 @@ const options = [
 ];
 
 
-export default ({ users }) => {
+export default () => {
+  const { users } = usePreloadedQuery(query, result);
+
   const handleStatusChange = (values, i) => {
     commitMutation(environment, {
       mutation,

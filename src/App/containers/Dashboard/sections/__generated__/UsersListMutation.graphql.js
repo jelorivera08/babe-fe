@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cb1c38f7bbabdb9b4eb7ff29dcabb556
+ * @relayHash 2e39905f2def8f4268f73809d2fbf50d
  */
 
 /* eslint-disable */
@@ -9,25 +9,25 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type PendingRegistrationsMutationVariables = {|
+export type UsersListMutationVariables = {|
   username: string,
   status: string,
 |};
-export type PendingRegistrationsMutationResponse = {|
+export type UsersListMutationResponse = {|
   +changeUserStatus: ?{|
     +username: ?string,
     +status: ?string,
   |}
 |};
-export type PendingRegistrationsMutation = {|
-  variables: PendingRegistrationsMutationVariables,
-  response: PendingRegistrationsMutationResponse,
+export type UsersListMutation = {|
+  variables: UsersListMutationVariables,
+  response: UsersListMutationResponse,
 |};
 */
 
 
 /*
-mutation PendingRegistrationsMutation(
+mutation UsersListMutation(
   $username: String!
   $status: String!
 ) {
@@ -84,7 +84,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "PendingRegistrationsMutation",
+    "name": "UsersListMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -106,7 +106,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "PendingRegistrationsMutation",
+    "name": "UsersListMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -133,14 +133,14 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "PendingRegistrationsMutation",
+    "name": "UsersListMutation",
     "id": null,
-    "text": "mutation PendingRegistrationsMutation(\n  $username: String!\n  $status: String!\n) {\n  changeUserStatus(username: $username, status: $status) {\n    username\n    status\n    id\n  }\n}\n",
+    "text": "mutation UsersListMutation(\n  $username: String!\n  $status: String!\n) {\n  changeUserStatus(username: $username, status: $status) {\n    username\n    status\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'f08dbf67482237299ad9e3709924940c';
+(node/*: any*/).hash = 'd21971c2aac066e8b997beb2c4b43c98';
 
 module.exports = node;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1750540fd2b412713a60c211f1aa593c
+ * @relayHash 2285065987aaa09e67e976672f599aa3
  */
 
 /* eslint-disable */
@@ -9,8 +9,8 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type RegionalStockistsQueryVariables = {||};
-export type RegionalStockistsQueryResponse = {|
+export type OrderTrackerQueryVariables = {||};
+export type OrderTrackerQueryResponse = {|
   +regionalStockists: ?$ReadOnlyArray<?{|
     +firstName: ?string,
     +surname: ?string,
@@ -26,15 +26,15 @@ export type RegionalStockistsQueryResponse = {|
     |}>,
   |}>
 |};
-export type RegionalStockistsQuery = {|
-  variables: RegionalStockistsQueryVariables,
-  response: RegionalStockistsQueryResponse,
+export type OrderTrackerQuery = {|
+  variables: OrderTrackerQueryVariables,
+  response: OrderTrackerQueryResponse,
 |};
 */
 
 
 /*
-query RegionalStockistsQuery {
+query OrderTrackerQuery {
   regionalStockists {
     firstName
     surname
@@ -136,7 +136,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "RegionalStockistsQuery",
+    "name": "OrderTrackerQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -160,7 +160,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "RegionalStockistsQuery",
+    "name": "OrderTrackerQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -189,14 +189,14 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "RegionalStockistsQuery",
+    "name": "OrderTrackerQuery",
     "id": null,
-    "text": "query RegionalStockistsQuery {\n  regionalStockists {\n    firstName\n    surname\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query OrderTrackerQuery {\n  regionalStockists {\n    firstName\n    surname\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ca0b3c25d1fd1319c49059326f163d1b';
+(node/*: any*/).hash = '0a24ba7317fe41e33c1cf0078cbfc1ff';
 
 module.exports = node;

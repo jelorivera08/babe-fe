@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
@@ -12,13 +13,11 @@ import {
 } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
-import RegionalStockists from '../sections/RegionalStockists';
+import OrderTracker from '../sections/OrderTracker';
+import ProductsList from '../sections/ProductsList';
 import UsersList from '../sections/UsersList';
 import logo1 from '../../../../assets/images/logo1.PNG';
-import AppEnvironment from '../../../../environment';
 
-
-const { graphql, preloadQuery, usePreloadedQuery } = require('react-relay/hooks');
 
 const PrimaryBar = styled.div`
   background-color : #94c7c9;
@@ -47,26 +46,6 @@ animation: mymove 5s infinite ease;
 }
 `;
 
-const query = graphql`
-  query AdminQuery {
-    users {
-      username
-      firstName
-      facebookURL
-      instagramURL
-      surname
-      accountType
-      status
-    }
-  }
-`;
-
-// Note: call in an event-handler or similar, not during render
-const result = preloadQuery(
-  AppEnvironment,
-  query,
-);
-
 
 const Admin = () => {
   const history = useHistory();
@@ -74,9 +53,6 @@ const Admin = () => {
 
 
   const [selectedMenu, setSelectedMenu] = useState(history.location.pathname.split('/')[2]);
-
-
-  const { users } = usePreloadedQuery(query, result);
 
 
   return (
@@ -113,13 +89,14 @@ const Admin = () => {
             }}
             className={cx('m-2 text-base rounded cursor-pointer outline-none',
               { 'p-2': showMenu },
+              { 'pb-2': !showMenu },
               { 'bg-gray-400': selectedMenu === 'orders' })}
           >
             {showMenu ? 'Order Tracker' : <Icon name="address card" />}
 
           </div>
           <div
-            tabIndex="-1"
+            tabIndex="0"
             role="button"
             onClick={() => {
               setSelectedMenu('users');
@@ -128,10 +105,30 @@ const Admin = () => {
             className={
               cx('m-2 text-base rounded cursor-pointer outline-none',
                 { 'p-2': showMenu },
+                { 'pb-2': !showMenu },
                 { 'bg-gray-400': selectedMenu === 'users' })
-}
+              }
           >
             {showMenu ? 'Users' : <Icon name="users" />}
+
+
+          </div>
+
+          <div
+            tabIndex="0"
+            role="button"
+            onClick={() => {
+              setSelectedMenu('products');
+              history.push('/dashboard/products');
+            }}
+            className={
+              cx('m-2 text-base rounded cursor-pointer outline-none',
+                { 'p-2': showMenu },
+                { 'pb-2': !showMenu },
+                { 'bg-gray-400': selectedMenu === 'products' })
+            }
+          >
+            {showMenu ? 'Products' : <Icon name="add to cart" />}
 
 
           </div>
@@ -141,10 +138,14 @@ const Admin = () => {
 
       <Switch>
         <Route path="/dashboard/orders">
-          <RegionalStockists />
+          <OrderTracker />
         </Route>
         <Route path="/dashboard/users">
-          <UsersList users={users} />
+          <UsersList />
+        </Route>
+
+        <Route path="/dashboard/products">
+          <ProductsList />
         </Route>
 
         <Route>

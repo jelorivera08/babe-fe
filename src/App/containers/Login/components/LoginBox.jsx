@@ -38,7 +38,7 @@ const LoginBox = () => {
       setError(false);
       window.localStorage.setItem('isAuthenticated', loginRes.authenticateUser.isAuthenticated);
       window.localStorage.setItem('accountType', loginRes.authenticateUser.accountType);
-      history.push('/dashboard/regionalStockists');
+      history.push('/dashboard');
     } else {
       setError(true);
     }

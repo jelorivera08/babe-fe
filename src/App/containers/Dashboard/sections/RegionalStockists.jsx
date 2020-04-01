@@ -69,14 +69,14 @@ export default () => {
 
       <RegionalStockistsContainer className="w-full h-full p-6">
         <Switch>
-          <Route exact path="/dashboard/regionalStockists">
+          <Route exact path="/dashboard/orders">
             {
             regionalStockists.map((stockist) => (
               <div
                 key={stockist.username}
                 tabIndex="0"
                 role="button"
-                onClick={() => history.push(`/dashboard/regionalStockists/${stockist.username}`)}
+                onClick={() => history.push(`/dashboard/orders/${stockist.username}`)}
                 className="mb-4 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4 cursor-pointer"
               >
                 <div className="flex">
@@ -98,7 +98,7 @@ export default () => {
           </Route>
           {
             regionalStockists.map((stockist) => (
-              <Route key={stockist.username} path={`/dashboard/regionalStockists/${stockist.username}`}>
+              <Route key={stockist.username} path={`/dashboard/orders/${stockist.username}`}>
                 <CreateOrderContainer
                   open={createOrderOpen}
                   handleClose={setCreateOrderOpen}

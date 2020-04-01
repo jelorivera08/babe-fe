@@ -104,7 +104,7 @@ export default () => {
                   handleClose={setCreateOrderOpen}
                   user={stockist.username}
                 />
-                <div className="flex justify-end mb-4">
+                <div className="flex justify-end mb-4 mr-6">
                   <Button onClick={() => setCreateOrderOpen(true)}>Create Order</Button>
                 </div>
                 <StockistOrders orders={stockist.orders} user={stockist.username} />

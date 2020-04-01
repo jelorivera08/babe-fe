@@ -4,8 +4,7 @@
 import React, { useState } from 'react';
 import { graphql, commitMutation } from 'react-relay';
 import { useHistory } from 'react-router-dom';
-import { Select } from 'semantic-ui-react';
-
+import { Select, Card, Button } from 'semantic-ui-react';
 import Background from '../../components/Background';
 import Header from '../../components/Header';
 import environment from '../../../environment';
@@ -68,6 +67,7 @@ const SignUp = () => {
 
   });
   const [error, setError] = useState('');
+  const [registrationSucess, setRegistrationSucess] = useState(false);
 
   const history = useHistory();
 
@@ -96,7 +96,7 @@ const SignUp = () => {
       variables: { ...values },
       onCompleted: (response, errors) => {
         if (response && response.userCreate && response.userCreate.username) {
-          history.push('/dashboard');
+          setRegistrationSucess(true);
         }
 
         if (errors) {
@@ -110,183 +110,242 @@ const SignUp = () => {
   return (
     <Background>
       <Header history={history} />
-      <div className="w-full max-w-2xl">
 
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(credentials);
-          }}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        >
-          <div className="flex">
-            <div className="mb-4 mr-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+      {
+          registrationSucess
+            ? (
+              <Card style={{
+                width: '40rem',
+                height: '12rem',
+              }}
+              >
+                <Card.Content>
+
+                  <Card.Header>Registration Success!</Card.Header>
+                  <Card.Description>
+                    <div className="mb-1">  Please wait until your account is reviewed by our staff.</div>
+                    <div>  You will be contacted accordingly.</div>
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra className="flex justify-end">
+                  <Button
+                    primary
+                    onClick={() => {
+                      setRegistrationSucess(false);
+                      history.push('/');
+                    }}
+                  >
+                    Okay
+                  </Button>
+                </Card.Content>
+              </Card>
+
+            )
+
+            : (
+              <div className="w-full max-w-2xl">
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit(credentials);
+                  }}
+                  className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                >
+                  <div className="flex">
+                    <div className="mb-4 mr-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             First name
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Babe"
-                value={credentials.firstName}
-                onChange={(e) => setCredentials({ ...credentials, firstName: e.target.value })}
-              />
-            </div>
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="username"
+                        type="text"
+                        placeholder="Babe"
+                        value={credentials.firstName}
+                        onChange={
+                          (e) => setCredentials({ ...credentials, firstName: e.target.value })
+}
+                      />
+                    </div>
 
 
-            <div className="mb-4 ml-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                    <div className="mb-4 ml-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Surname
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="surname"
-                type="text"
-                placeholder="Dela Cruz"
-                value={credentials.surname}
-                onChange={(e) => setCredentials({ ...credentials, surname: e.target.value })}
-              />
-            </div>
-          </div>
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="surname"
+                        type="text"
+                        placeholder="Dela Cruz"
+                        value={credentials.surname}
+                        onChange={
+                          (e) => setCredentials({ ...credentials, surname: e.target.value })
+}
+                      />
+                    </div>
+                  </div>
 
-          <div className="flex">
+                  <div className="flex">
 
-            <div className="mb-4 w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                    <div className="mb-4 w-1/2 mr-2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Username
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-                value={credentials.username}
-                onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-              />
-            </div>
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="username"
+                        type="text"
+                        placeholder="Username"
+                        value={credentials.username}
+                        onChange={
+                          (e) => setCredentials({ ...credentials, username: e.target.value })
+}
+                      />
+                    </div>
 
 
-            <div className="mb-4 ml-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                    <div className="mb-4 ml-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Account type
-              </label>
+                      </label>
 
-              <Select
-                className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                onChange={(e, { value }) => setCredentials({ ...credentials, accountType: value })}
-                value={credentials.accountType}
-                placeholder="Account type"
-                options={options}
-              />
-
-
-            </div>
-
-
-          </div>
+                      <Select
+                        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                        onChange={
+                          (e, { value }) => setCredentials({ ...credentials, accountType: value })
+}
+                        value={credentials.accountType}
+                        placeholder="Account type"
+                        options={options}
+                      />
 
 
-          <div className="flex">
-            <div className="mb-6 mr-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                    </div>
+
+
+                  </div>
+
+
+                  <div className="flex">
+                    <div className="mb-6 mr-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="********"
-                value={credentials.password}
-                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-              />
-            </div>
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="password"
+                        type="password"
+                        placeholder="********"
+                        value={credentials.password}
+                        onChange={
+                          (e) => setCredentials({ ...credentials, password: e.target.value })
+}
+                      />
+                    </div>
 
 
-            <div className="mb-4 ml-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                    <div className="mb-4 ml-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Confirm password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="confirmPassword"
-                type="password"
-                placeholder="********"
-                value={credentials.confirmPassword}
-                onChange={
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="********"
+                        value={credentials.confirmPassword}
+                        onChange={
                   (e) => setCredentials({ ...credentials, confirmPassword: e.target.value })
                 }
-              />
-            </div>
+                      />
+                    </div>
 
-          </div>
+                  </div>
 
 
-          <div className="flex">
-            <div className="mb-6 mr-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                  <div className="flex">
+                    <div className="mb-6 mr-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Facebook URL
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="facebookURL"
-                type="text"
-                placeholder="BabeDelaCruz"
-                value={credentials.facebookURL}
-                onChange={(e) => setCredentials({ ...credentials, facebookURL: e.target.value })}
-              />
-            </div>
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="facebookURL"
+                        type="text"
+                        placeholder="BabeDelaCruz"
+                        value={credentials.facebookURL}
+                        onChange={
+                          (e) => setCredentials({ ...credentials, facebookURL: e.target.value })
+}
+                      />
+                    </div>
 
 
-            <div className="mb-4 ml-2 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                    <div className="mb-4 ml-2 w-1/2">
+                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Instagram URL
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="instagramURL"
-                type="text"
-                placeholder="BabeDelaCruz"
-                value={credentials.instagramURL}
-                onChange={(e) => setCredentials({ ...credentials, instagramURL: e.target.value })}
-              />
-            </div>
+                      </label>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="instagramURL"
+                        type="text"
+                        placeholder="BabeDelaCruz"
+                        value={credentials.instagramURL}
+                        onChange={
+                          (e) => setCredentials({ ...credentials, instagramURL: e.target.value })
+}
+                      />
+                    </div>
 
 
-          </div>
+                  </div>
 
 
-          <div className="mb-6 mr-2 w-full">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-            Description
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="facebookURL"
-              type="text"
-              placeholder="Brief description of yourself"
-              value={credentials.description}
-              onChange={(e) => setCredentials({ ...credentials, description: e.target.value })}
-            />
-          </div>
+                  <div className="mb-6 mr-2 w-full">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                      Description
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="facebookURL"
+                      type="text"
+                      placeholder="Brief description of yourself"
+                      value={credentials.description}
+                      onChange={(
+                        e,
+                      ) => {
+                        if (credentials.description.length >= 100) return null;
+
+                        return setCredentials({ ...credentials, description: e.target.value });
+                      }}
+                    />
+                  </div>
 
 
-          <div className="flex justify-between mt-4">
-            {error ? <p className="text-red-500 text-m italic">{error}</p> : <div />}
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
+                  <div className="flex justify-between mt-4">
+                    {error ? <p className="text-red-500 text-m italic">{error}</p> : <div />}
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      type="submit"
+                    >
            Submit
-            </button>
+                    </button>
 
-          </div>
-        </form>
-        <p className="text-center text-gray-500 text-xs">
+                  </div>
+                </form>
+                <p className="text-center text-gray-500 text-xs">
         &copy;2020 Babe Inc. All rights reserved.
-        </p>
-      </div>
+                </p>
+              </div>
+            )
+
+
+        }
+
+
     </Background>
   );
 };

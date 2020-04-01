@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import RegionalStockists from '../sections/RegionalStockists';
-import PendingRegistrations from '../sections/PendingRegistrations';
+import UsersList from '../sections/UsersList';
 import logo1 from '../../../../assets/images/logo1.PNG';
 import AppEnvironment from '../../../../environment';
 
@@ -84,12 +84,12 @@ const Admin = () => {
             tabIndex="-1"
             role="button"
             onClick={() => {
-              setSelectedMenu('pendingRegistrations');
-              history.push('/dashboard/pendingRegistrations');
+              setSelectedMenu('users');
+              history.push('/dashboard/users');
             }}
-            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'pendingRegistrations' })}
+            className={cx('m-2 p-2 text-base rounded cursor-pointer outline-none', { 'bg-gray-400': selectedMenu === 'users' })}
           >
-            Pending Registrations
+            Users
 
           </div>
         </div>
@@ -100,8 +100,8 @@ const Admin = () => {
         <Route path="/dashboard/regionalStockists">
           <RegionalStockists />
         </Route>
-        <Route path="/dashboard/pendingRegistrations">
-          <PendingRegistrations users={users} />
+        <Route path="/dashboard/users">
+          <UsersList users={users} />
         </Route>
 
       </Switch>

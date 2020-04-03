@@ -1,32 +1,32 @@
-import React from 'react';
-import {
-  Switch,
-  Route, useHistory,
-} from 'react-router-dom';
+import React from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
 
-import Login from './containers/Login';
-import DashBoard from './containers/Dashboard';
-import ResllerDirectory from './containers/ResllerDirectory/index';
-import SignUp from './containers/Signup';
-import Background from './components/Background';
-import Header from './components/Header/index';
+import Login from "./containers/Login";
+import Background from "./components/Background";
+import Header from "./components/Header/index";
 
+const DashBoardComponent = React.lazy(() => import("./containers/Dashboard"));
+
+const ResllerDirectoryComponent = React.lazy(() =>
+  import("./containers/ResllerDirectory")
+);
+
+const SignUpComponent = React.lazy(() => import("./containers/Signup"));
 
 function App() {
   const history = useHistory();
 
   return (
-
     <Switch>
       <Route exact path="/">
         <Header history={history} />
         <Login />
       </Route>
       <Route exact path="/signup">
-        <SignUp />
+        <SignUpComponent />
       </Route>
       <Route path="/dashboard">
-        <DashBoard />
+        <DashBoardComponent />
       </Route>
       <Route path="/aboutUs">
         <Background>
@@ -36,12 +36,12 @@ function App() {
             tabIndex="0"
             className="text-3xl cursor-pointer"
           >
-              More about us
+            More about us
           </div>
         </Background>
       </Route>
       <Route path="/resellers">
-        <ResllerDirectory />
+        <ResllerDirectoryComponent />
       </Route>
       <Route>
         <Background>
@@ -49,15 +49,14 @@ function App() {
             onKeyDown={() => {}}
             role="button"
             tabIndex="0"
-            onClick={() => history.push('/')}
+            onClick={() => history.push("/")}
             className="text-3xl cursor-pointer"
           >
-                Hi, Babe. Are you lost? Click here to go back home.
+            Hi, Babe. Are you lost? Click here to go back home.
           </div>
         </Background>
       </Route>
     </Switch>
-
   );
 }
 

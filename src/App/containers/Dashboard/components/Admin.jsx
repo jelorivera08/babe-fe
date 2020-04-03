@@ -2,33 +2,28 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-unresolved */
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import cx from 'classnames';
-import { MdMenu } from 'react-icons/md';
-import {
-  Switch,
-  Route,
-  useHistory,
-} from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
+import React, { useState } from "react";
+import styled from "styled-components";
+import cx from "classnames";
+import { MdMenu } from "react-icons/md";
+import { Switch, Route, useHistory } from "react-router-dom";
+import { Icon, Dropdown } from "semantic-ui-react";
 
-import OrderTracker from '../sections/OrderTracker';
-import ProductsList from '../sections/ProductsList';
-import UsersList from '../sections/UsersList';
-import logo1 from '../../../../assets/images/logo1.PNG';
+import logo1 from "../../../../assets/images/logo1.PNG";
 
+const OrderTracker = React.lazy(() => import("../sections/OrderTracker"));
+const UsersList = React.lazy(() => import("../sections/UsersList"));
+const ProductsList = React.lazy(() => import("../sections/ProductsList"));
 
 const PrimaryBar = styled.div`
-  background-color : #94c7c9;
+  background-color: #94c7c9;
   min-width: 4rem;
 `;
 
 const SecondaryBar = styled.div`
-  box-shadow: 9px 4px 8px -7px rgba(138,128,138,1);
+  box-shadow: 9px 4px 8px -7px rgba(138, 128, 138, 1);
   width: 4rem;
   transition: width 1s;
-
 
   &.show-menu {
     width: 16rem;
@@ -36,24 +31,29 @@ const SecondaryBar = styled.div`
 `;
 
 const BreadText = styled.div`
-color: #f6e7ea;
-animation: mymove 5s infinite ease;
+  color: #f6e7ea;
+  animation: mymove 5s infinite ease;
 
-@keyframes mymove {
-  0% {color: #d5dcec;}\
-  50% {color: #96c7c9;}
-  100% {color: #eedef2;}
-}
+  @keyframes mymove {
+    0% {
+      color: #d5dcec;
+    }
+    \ 50% {
+      color: #96c7c9;
+    }
+    100% {
+      color: #eedef2;
+    }
+  }
 `;
-
 
 const Admin = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(true);
 
-
-  const [selectedMenu, setSelectedMenu] = useState(history.location.pathname.split('/')[2]);
-
+  const [selectedMenu, setSelectedMenu] = useState(
+    history.location.pathname.split("/")[2]
+  );
 
   return (
     <div className="w-full flex">
@@ -63,23 +63,25 @@ const Admin = () => {
           src={logo1}
           alt="logo1"
           onClick={() => {
-            setSelectedMenu('');
-            history.push('/dashboard');
+            setSelectedMenu("");
+            history.push("/dashboard");
           }}
         />
         <div
           role="button"
           tabIndex="0"
-          onClick={() => history.push('/')}
-          className="mt-1 w-full flex justify-center items-center cursor-pointer"
-
+          className="flex justify-center items-center mt-1"
         >
-          <Icon
-            name="log out"
-          />
+          <Dropdown pointing="left" icon="user circle">
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => history.push("/")} text="Log out" />
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </PrimaryBar>
-      <SecondaryBar className={cx('h-screen bg-gray-200 p-4', { 'show-menu': showMenu })}>
+      <SecondaryBar
+        className={cx("h-screen bg-gray-200 p-4", { "show-menu": showMenu })}
+      >
         <div className="flex items-center cursor-pointer">
           <MdMenu
             size="1.5em"
@@ -87,7 +89,7 @@ const Admin = () => {
               setShowMenu(!showMenu);
             }}
           />
-          {showMenu ? <p className="text-xl ml-2 text-center">  Menu</p> : null}
+          {showMenu ? <p className="text-xl ml-2 text-center"> Menu</p> : null}
         </div>
 
         <div className="mt-8">
@@ -95,56 +97,52 @@ const Admin = () => {
             tabIndex="0"
             role="button"
             onClick={() => {
-              setSelectedMenu('orders');
-              history.push('/dashboard/orders');
+              setSelectedMenu("orders");
+              history.push("/dashboard/orders");
             }}
-            className={cx('m-2 text-base rounded cursor-pointer outline-none',
-              { 'p-2': showMenu },
-              { 'pb-2': !showMenu },
-              { 'bg-gray-400': selectedMenu === 'orders' })}
+            className={cx(
+              "m-2 text-base rounded cursor-pointer outline-none",
+              { "p-2": showMenu },
+              { "pb-2": !showMenu },
+              { "bg-gray-400": selectedMenu === "orders" }
+            )}
           >
-            {showMenu ? 'Order Tracker' : <Icon name="address card" />}
-
+            {showMenu ? "Order Tracker" : <Icon name="address card" />}
           </div>
           <div
             tabIndex="0"
             role="button"
             onClick={() => {
-              setSelectedMenu('users');
-              history.push('/dashboard/users');
+              setSelectedMenu("users");
+              history.push("/dashboard/users");
             }}
-            className={
-              cx('m-2 text-base rounded cursor-pointer outline-none',
-                { 'p-2': showMenu },
-                { 'pb-2': !showMenu },
-                { 'bg-gray-400': selectedMenu === 'users' })
-              }
+            className={cx(
+              "m-2 text-base rounded cursor-pointer outline-none",
+              { "p-2": showMenu },
+              { "pb-2": !showMenu },
+              { "bg-gray-400": selectedMenu === "users" }
+            )}
           >
-            {showMenu ? 'Users' : <Icon name="users" />}
-
-
+            {showMenu ? "Users" : <Icon name="users" />}
           </div>
 
           <div
             tabIndex="0"
             role="button"
             onClick={() => {
-              setSelectedMenu('products');
-              history.push('/dashboard/products');
+              setSelectedMenu("products");
+              history.push("/dashboard/products");
             }}
-            className={
-              cx('m-2 text-base rounded cursor-pointer outline-none',
-                { 'p-2': showMenu },
-                { 'pb-2': !showMenu },
-                { 'bg-gray-400': selectedMenu === 'products' })
-            }
+            className={cx(
+              "m-2 text-base rounded cursor-pointer outline-none",
+              { "p-2": showMenu },
+              { "pb-2": !showMenu },
+              { "bg-gray-400": selectedMenu === "products" }
+            )}
           >
-            {showMenu ? 'Products' : <Icon name="add to cart" />}
-
-
+            {showMenu ? "Products" : <Icon name="add to cart" />}
           </div>
         </div>
-
       </SecondaryBar>
 
       <Switch>
@@ -164,12 +162,9 @@ const Admin = () => {
             <BreadText className="text-2xl">Let's get this bread.</BreadText>
           </div>
         </Route>
-
-
       </Switch>
     </div>
   );
 };
-
 
 export default Admin;

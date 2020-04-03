@@ -139,6 +139,19 @@ const ProductsList = () => {
             <Table.Row>
               <Table.HeaderCell colSpan="3">
                 <Menu floated="right">
+
+                  {isAddingProduct ? (
+                    <Button
+                      color="red"
+                      onClick={() => {
+                        setProductToBeAdded({ });
+                      }}
+                      style={{ marginRight: '1rem' }}
+                    >
+                    Cancel
+                    </Button>
+                  ) : null}
+
                   <Button
                     color={isAddingProduct ? 'green' : 'blue'}
                     onClick={() => {
@@ -149,11 +162,9 @@ const ProductsList = () => {
                       }
                     }}
                     style={{ marginRight: '0px' }}
-
                   >
                     { isAddingProduct ? 'Confirm' : 'Add Product'}
                   </Button>
-
                 </Menu>
               </Table.HeaderCell>
             </Table.Row>

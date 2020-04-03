@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eb9bf1c0d8d45f430317a8462f682a54
+ * @relayHash 2c9a3f8e13838aa8f899894d9e26a1bd
  */
 
 /* eslint-disable */
@@ -14,11 +14,7 @@ export type LoginBoxQueryVariables = {|
   password?: ?string,
 |};
 export type LoginBoxQueryResponse = {|
-  +authenticateUser: ?{|
-    +id: ?string,
-    +isAuthenticated: ?string,
-    +accountType: ?string,
-  |}
+  +authenticateUser: ?string
 |};
 export type LoginBoxQuery = {|
   variables: LoginBoxQueryVariables,
@@ -32,11 +28,7 @@ query LoginBoxQuery(
   $username: String
   $password: String
 ) {
-  authenticateUser(username: $username, password: $password) {
-    id
-    isAuthenticated
-    accountType
-  }
+  authenticateUser(username: $username, password: $password)
 }
 */
 
@@ -57,10 +49,9 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "LinkedField",
+    "kind": "ScalarField",
     "alias": null,
     "name": "authenticateUser",
-    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -73,31 +64,7 @@ v1 = [
         "variableName": "username"
       }
     ],
-    "concreteType": "UserAuthenticated",
-    "plural": false,
-    "selections": [
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "id",
-        "args": null,
-        "storageKey": null
-      },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "isAuthenticated",
-        "args": null,
-        "storageKey": null
-      },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "accountType",
-        "args": null,
-        "storageKey": null
-      }
-    ]
+    "storageKey": null
   }
 ];
 return {
@@ -120,12 +87,12 @@ return {
     "operationKind": "query",
     "name": "LoginBoxQuery",
     "id": null,
-    "text": "query LoginBoxQuery(\n  $username: String\n  $password: String\n) {\n  authenticateUser(username: $username, password: $password) {\n    id\n    isAuthenticated\n    accountType\n  }\n}\n",
+    "text": "query LoginBoxQuery(\n  $username: String\n  $password: String\n) {\n  authenticateUser(username: $username, password: $password)\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd502fcb3bacc9add1862a0ec82ac91aa';
+(node/*: any*/).hash = '4da4f33bdb81178f8215bf1689e8a2bb';
 
 module.exports = node;

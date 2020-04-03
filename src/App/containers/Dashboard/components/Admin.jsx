@@ -74,7 +74,13 @@ const Admin = () => {
         >
           <Dropdown pointing="left" icon="user circle">
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => history.push("/")} text="Log out" />
+              <Dropdown.Item
+                onClick={() => {
+                  window.localStorage.removeItem("accessToken");
+                  history.push("/");
+                }}
+                text="Log out"
+              />
             </Dropdown.Menu>
           </Dropdown>
         </div>

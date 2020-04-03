@@ -13,8 +13,10 @@ const ResllerDirectoryComponent = React.lazy(() =>
 
 const SignUpComponent = React.lazy(() => import("./containers/Signup"));
 
+export let history = {};
+
 function App() {
-  const history = useHistory();
+  history = useHistory();
 
   return (
     <Switch>

@@ -23,6 +23,7 @@ const PrimaryBar = styled.div`
 const SecondaryBar = styled.div`
   box-shadow: 9px 4px 8px -7px rgba(138, 128, 138, 1);
   width: 4rem;
+  max-width: 16rem;
   transition: width 1s;
 
   &.show-menu {
@@ -153,7 +154,7 @@ const Admin = () => {
 
       <Switch>
         <Route path="/dashboard/orders">
-          <OrderTracker />
+          <OrderTracker accountType="Regional Stockist" />
         </Route>
         <Route path="/dashboard/users">
           <UsersList />

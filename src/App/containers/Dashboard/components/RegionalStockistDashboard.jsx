@@ -114,7 +114,7 @@ const Admin = () => {
 
       <Switch>
         <Route path="/dashboard/orders">
-          <OrderTracker />
+          <OrderTracker accountType="Provincial Stockist" />
         </Route>
 
         <Route>

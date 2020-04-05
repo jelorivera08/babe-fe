@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2285065987aaa09e67e976672f599aa3
+ * @relayHash bb02f2dbe68aa5570228d937036da0ab
  */
 
 /* eslint-disable */
@@ -9,9 +9,11 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type OrderTrackerQueryVariables = {||};
+export type OrderTrackerQueryVariables = {|
+  accountType: string
+|};
 export type OrderTrackerQueryResponse = {|
-  +regionalStockists: ?$ReadOnlyArray<?{|
+  +stockists: ?$ReadOnlyArray<?{|
     +firstName: ?string,
     +surname: ?string,
     +username: ?string,
@@ -34,8 +36,10 @@ export type OrderTrackerQuery = {|
 
 
 /*
-query OrderTrackerQuery {
-  regionalStockists {
+query OrderTrackerQuery(
+  $accountType: String!
+) {
+  stockists(accountType: $accountType) {
     firstName
     surname
     username
@@ -54,28 +58,43 @@ query OrderTrackerQuery {
 */
 
 const node/*: ConcreteRequest*/ = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "accountType",
+    "type": "String!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "accountType",
+    "variableName": "accountType"
+  }
+],
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "firstName",
   "args": null,
   "storageKey": null
 },
-v1 = {
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "surname",
   "args": null,
   "storageKey": null
 },
-v2 = {
+v4 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "username",
   "args": null,
   "storageKey": null
 },
-v3 = {
+v5 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "orders",
@@ -139,21 +158,21 @@ return {
     "name": "OrderTrackerQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "regionalStockists",
+        "name": "stockists",
         "storageKey": null,
-        "args": null,
+        "args": (v1/*: any*/),
         "concreteType": "userType",
         "plural": true,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
           (v2/*: any*/),
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/)
         ]
       }
     ]
@@ -161,21 +180,21 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "OrderTrackerQuery",
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "regionalStockists",
+        "name": "stockists",
         "storageKey": null,
-        "args": null,
+        "args": (v1/*: any*/),
         "concreteType": "userType",
         "plural": true,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -191,12 +210,12 @@ return {
     "operationKind": "query",
     "name": "OrderTrackerQuery",
     "id": null,
-    "text": "query OrderTrackerQuery {\n  regionalStockists {\n    firstName\n    surname\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query OrderTrackerQuery(\n  $accountType: String!\n) {\n  stockists(accountType: $accountType) {\n    firstName\n    surname\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0a24ba7317fe41e33c1cf0078cbfc1ff';
+(node/*: any*/).hash = '4544c76e5b9549b9a66163721c6223c2';
 
 module.exports = node;

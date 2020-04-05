@@ -1,9 +1,31 @@
 type Mutation {
-  userCreate(username: String!, password: String!, firstName: String!, surname: String!, accountType: String!, facebookURL: String!, instagramURL: String!, description: String!): UserRegistrationType
+  userCreate(
+    username: String!
+    password: String!
+    firstName: String!
+    surname: String!
+    accountType: String!
+    facebookURL: String!
+    instagramURL: String!
+    description: String!
+  ): UserRegistrationType
   changeUserStatus(username: String!, status: String!): userType
-  addOrder(user: String!, dateOrdered: String!, product: productInputType!): productType
-  updateOrder(user: String!, dateOrdered: String!, product: productInputType!, productIndex: Int!): productType
-  createOrder(user: String!, products: [productInputType]!, dateOrdered: String!): [orderType]
+  addOrder(
+    user: String!
+    dateOrdered: String!
+    product: productInputType!
+  ): productType
+  updateOrder(
+    user: String!
+    dateOrdered: String!
+    product: productInputType!
+    productIndex: Int!
+  ): productType
+  createOrder(
+    user: String!
+    products: [productInputType]!
+    dateOrdered: String!
+  ): [orderType]
   createProduct(name: String!, amount: Int!): [productType]
 }
 
@@ -28,7 +50,7 @@ type productType {
 type Query {
   authenticateUser(username: String, password: String): String
   users: [userType]
-  regionalStockists: [userType]
+  stockists(accountType: String): [userType]
   products: [productType]
   activeResellers: [userType]
 }

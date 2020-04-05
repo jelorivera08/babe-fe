@@ -15,7 +15,7 @@ import CreateOrderContainer from "./CreateOrderContainer";
 import environment from "../../../../environment";
 
 const RegionalStockistsContainer = styled.div`
-  height: calc(100% - 5rem);
+  height: calc(100% - 7rem);
 `;
 
 const query = graphql`
@@ -23,6 +23,7 @@ const query = graphql`
     stockists(accountType: $accountType) {
       firstName
       surname
+      accountType
       username
       orders {
         user
@@ -70,6 +71,20 @@ export default ({ accountType }) => {
                 ))}
               </div>
 
+              <CreateOrderContainer
+                open={createOrderOpen}
+                handleClose={setCreateOrderOpen}
+                users={stockists.map((stockist) => ({
+                  name: stockist.username,
+                  accountType: stockist.accountType,
+                }))}
+              />
+              <div className="flex justify-end mr-6">
+                <Button onClick={() => setCreateOrderOpen(true)}>
+                  Create Order
+                </Button>
+              </div>
+
               <RegionalStockistsContainer className="w-full h-full p-6">
                 <Switch>
                   <Route exact path="/dashboard/orders">
@@ -100,19 +115,10 @@ export default ({ accountType }) => {
                       key={stockist.username}
                       path={`/dashboard/orders/${stockist.username}`}
                     >
-                      <CreateOrderContainer
-                        open={createOrderOpen}
-                        handleClose={setCreateOrderOpen}
-                        user={stockist.username}
-                      />
-                      <div className="flex justify-end mb-4 mr-6">
-                        <Button onClick={() => setCreateOrderOpen(true)}>
-                          Create Order
-                        </Button>
-                      </div>
                       <StockistOrders
                         orders={stockist.orders}
                         user={stockist.username}
+                        accountType={stockist.accountType}
                       />
                     </Route>
                   ))}

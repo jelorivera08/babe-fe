@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bb02f2dbe68aa5570228d937036da0ab
+ * @relayHash 00c7eb300b9e7f961b8167caa136c6d6
  */
 
 /* eslint-disable */
@@ -16,6 +16,7 @@ export type OrderTrackerQueryResponse = {|
   +stockists: ?$ReadOnlyArray<?{|
     +firstName: ?string,
     +surname: ?string,
+    +accountType: ?string,
     +username: ?string,
     +orders: ?$ReadOnlyArray<?{|
       +user: ?string,
@@ -42,6 +43,7 @@ query OrderTrackerQuery(
   stockists(accountType: $accountType) {
     firstName
     surname
+    accountType
     username
     orders {
       user
@@ -90,11 +92,18 @@ v3 = {
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "username",
+  "name": "accountType",
   "args": null,
   "storageKey": null
 },
 v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "username",
+  "args": null,
+  "storageKey": null
+},
+v6 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "orders",
@@ -172,7 +181,8 @@ return {
           (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
-          (v5/*: any*/)
+          (v5/*: any*/),
+          (v6/*: any*/)
         ]
       }
     ]
@@ -195,6 +205,7 @@ return {
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -210,12 +221,12 @@ return {
     "operationKind": "query",
     "name": "OrderTrackerQuery",
     "id": null,
-    "text": "query OrderTrackerQuery(\n  $accountType: String!\n) {\n  stockists(accountType: $accountType) {\n    firstName\n    surname\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query OrderTrackerQuery(\n  $accountType: String!\n) {\n  stockists(accountType: $accountType) {\n    firstName\n    surname\n    accountType\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4544c76e5b9549b9a66163721c6223c2';
+(node/*: any*/).hash = '9b8fa55fad15f6f254ebb967f7a28f7c';
 
 module.exports = node;

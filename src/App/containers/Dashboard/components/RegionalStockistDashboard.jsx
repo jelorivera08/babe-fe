@@ -41,7 +41,7 @@ const BreadText = styled.div`
   }
 `;
 
-const Admin = () => {
+const Regional = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(true);
 
@@ -127,4 +127,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Regional;

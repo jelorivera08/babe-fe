@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import AdminDashboard from './components/Admin';
-
+import React, { useState, useEffect } from "react";
+import AdminDashboard from "./components/Admin";
+import RegionalStockistDashboard from "./components/RegionalStockistDashboard";
 
 const DashBoard = () => {
-  const [accountType, setUserType] = useState('');
+  const [accountType, setUserType] = useState("");
 
   useEffect(() => {
-    const accountTypeFromLocStorage = window.localStorage.getItem('accountType');
+    const accountTypeFromLocStorage = window.localStorage.getItem(
+      "accountType"
+    );
     if (accountTypeFromLocStorage) {
       setUserType(accountTypeFromLocStorage);
     } else {
@@ -14,18 +16,18 @@ const DashBoard = () => {
     }
   }, [accountType]);
 
+  const renderDashboard = (type) => {
+    switch (type) {
+      case "ADMIN":
+        return <AdminDashboard />;
+      case "Regional Stockist":
+        return <RegionalStockistDashboard />;
+      default:
+        return <div>random dashboard</div>;
+    }
+  };
 
-  return (
-    <div>
-      {accountType === 'ADMIN'
-        ? (
-          <AdminDashboard />
-        )
-        : <div>random dashboard</div>}
-    </div>
-
-  );
+  return <div>{renderDashboard(accountType)}</div>;
 };
-
 
 export default DashBoard;

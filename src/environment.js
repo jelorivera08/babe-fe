@@ -3,16 +3,17 @@ import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { history } from "./App/App";
 
 export function fetchQuery(operation, variables) {
-  const isLoggingInOrSigningUp =
+  const noAuthNeeded =
     operation.text.includes("authenticateUser") ||
-    operation.text.includes("userCreate");
+    operation.text.includes("userCreate") ||
+    operation.text.includes("activeResellers");
 
   return fetch("http://localhost:4000/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: window.localStorage.getItem("accessToken"),
-      isLoggingInOrSigningUp: isLoggingInOrSigningUp
+      noAuthNeeded
     },
     body: JSON.stringify({
       query: operation.text,

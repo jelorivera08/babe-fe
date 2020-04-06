@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import cx from "classnames";
 import { MdMenu } from "react-icons/md";
@@ -7,6 +7,7 @@ import { Icon, Dropdown } from "semantic-ui-react";
 import YourOrders from "../sections/YourOrders";
 
 import logo1 from "../../../../assets/images/logo1.PNG";
+import AppContext from "../../../context";
 
 const PrimaryBar = styled.div`
   background-color: #94c7c9;
@@ -40,9 +41,10 @@ const BreadText = styled.div`
   }
 `;
 
-const Provincial = ({ username }) => {
+const Provincial = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(true);
+  const { username } = useContext(AppContext);
 
   const [selectedMenu, setSelectedMenu] = useState(
     history.location.pathname.split("/")[2]

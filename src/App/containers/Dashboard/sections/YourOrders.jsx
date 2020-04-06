@@ -26,7 +26,7 @@ const query = graphql`
   }
 `;
 
-export default ({ username = "pstockist" }) => {
+export default ({ username }) => {
   return (
     <QueryRenderer
       environment={environment}

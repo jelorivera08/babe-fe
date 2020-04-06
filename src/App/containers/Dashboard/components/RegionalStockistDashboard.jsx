@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import cx from "classnames";
 import { MdMenu } from "react-icons/md";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { Icon, Dropdown } from "semantic-ui-react";
-
+import YourOrders from "../sections/YourOrders";
 import logo1 from "../../../../assets/images/logo1.PNG";
+import AppContext from "../../../context";
 
 const OrderTracker = React.lazy(() => import("../sections/OrderTracker"));
 
@@ -44,6 +45,7 @@ const BreadText = styled.div`
 const Regional = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(true);
+  const { username } = useContext(AppContext);
 
   const [selectedMenu, setSelectedMenu] = useState(
     history.location.pathname.split("/")[2]
@@ -110,11 +112,34 @@ const Regional = () => {
             {showMenu ? "Order Tracker" : <Icon name="address card" />}
           </div>
         </div>
+
+        <div>
+          <div
+            tabIndex="0"
+            role="button"
+            onClick={() => {
+              setSelectedMenu("yourOrders");
+              history.push("/dashboard/yourOrders");
+            }}
+            className={cx(
+              "m-2 text-base rounded cursor-pointer outline-none",
+              { "p-2": showMenu },
+              { "pb-2": !showMenu },
+              { "bg-gray-400": selectedMenu === "yourOrders" }
+            )}
+          >
+            {showMenu ? "Your Orders" : <Icon name="shopping cart" />}
+          </div>
+        </div>
       </SecondaryBar>
 
       <Switch>
         <Route path="/dashboard/orders">
           <OrderTracker accountType="Provincial Stockist" />
+        </Route>
+
+        <Route path="/dashboard/yourOrders">
+          <YourOrders username={username} />
         </Route>
 
         <Route>

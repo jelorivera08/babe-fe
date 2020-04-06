@@ -17,6 +17,7 @@ const RegionalStockistsContainer = styled.div`
 const query = graphql`
   query YourOrdersQuery($username: String) {
     yourOrders(username: $username) {
+      dateOrdered
       products {
         name
         quantity
@@ -39,6 +40,10 @@ export default ({ username }) => {
           return <div>{error.message}</div>;
         } else if (props) {
           const { yourOrders } = props;
+
+          if (!yourOrders) {
+            return null;
+          }
 
           return (
             <div className="w-full h-screen">

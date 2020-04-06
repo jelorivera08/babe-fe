@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash e7477ebdf9496a800e0ebb3413baeab6
+ * @relayHash fc0d5db43706a85e6d33abab5ee2a74a
  */
 
 /* eslint-disable */
@@ -14,11 +14,12 @@ export type YourOrdersQueryVariables = {|
 |};
 export type YourOrdersQueryResponse = {|
   +yourOrders: ?$ReadOnlyArray<?{|
+    +dateOrdered: ?string,
     +products: ?$ReadOnlyArray<?{|
       +name: ?string,
       +quantity: ?number,
       +amount: ?number,
-    |}>
+    |}>,
   |}>
 |};
 export type YourOrdersQuery = {|
@@ -33,6 +34,7 @@ query YourOrdersQuery(
   $username: String
 ) {
   yourOrders(username: $username) {
+    dateOrdered
     products {
       name
       quantity
@@ -67,6 +69,13 @@ v1 = [
     "concreteType": "orderType",
     "plural": true,
     "selections": [
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "dateOrdered",
+        "args": null,
+        "storageKey": null
+      },
       {
         "kind": "LinkedField",
         "alias": null,
@@ -122,12 +131,12 @@ return {
     "operationKind": "query",
     "name": "YourOrdersQuery",
     "id": null,
-    "text": "query YourOrdersQuery(\n  $username: String\n) {\n  yourOrders(username: $username) {\n    products {\n      name\n      quantity\n      amount\n    }\n  }\n}\n",
+    "text": "query YourOrdersQuery(\n  $username: String\n) {\n  yourOrders(username: $username) {\n    dateOrdered\n    products {\n      name\n      quantity\n      amount\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '538afae92c9eaf0d944ffd2176c244fe';
+(node/*: any*/).hash = 'ec0d12f91a1b9312e2f0624ef68865d3';
 
 module.exports = node;

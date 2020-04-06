@@ -108,7 +108,7 @@ const Provincial = () => {
               { "bg-gray-400": selectedMenu === "yourOrders" }
             )}
           >
-            {showMenu ? "Your Orders" : <Icon name="address card" />}
+            {showMenu ? "Your Orders" : <Icon name="shopping cart" />}
           </div>
         </div>
       </SecondaryBar>

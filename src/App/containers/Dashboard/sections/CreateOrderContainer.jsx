@@ -8,7 +8,7 @@ import { commitMutation } from "react-relay";
 
 import AppEnvironment from "../../../../environment";
 
-const formatNumber = (num) =>
+export const formatNumber = (num) =>
   num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
 const query = graphql`

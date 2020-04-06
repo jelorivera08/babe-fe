@@ -18,15 +18,15 @@ const loginQuery = graphql`
 const LoginBox = () => {
   const [credentials, setCredentials] = useState({
     username: "",
-    password: ""
+    password: "",
   });
   const [error, setError] = useState(false);
 
   const history = useHistory();
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     const loginRes = await fetchQuery(environment, loginQuery, {
-      ...values
+      ...values,
     });
 
     if (loginRes && loginRes.authenticateUser) {
@@ -47,7 +47,7 @@ const LoginBox = () => {
   return (
     <div className="w-full max-w-xs">
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           handleSubmit(credentials);
         }}
@@ -66,7 +66,7 @@ const LoginBox = () => {
             type="text"
             placeholder="Username"
             value={credentials.username}
-            onChange={e =>
+            onChange={(e) =>
               setCredentials({ ...credentials, username: e.target.value })
             }
           />
@@ -80,7 +80,7 @@ const LoginBox = () => {
           </label>
           <input
             value={credentials.password}
-            onChange={e =>
+            onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
             className={cx(

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminDashboard from "./components/Admin";
 import RegionalStockistDashboard from "./components/RegionalStockistDashboard";
+import ProvincialStockistDashboard from "./components/ProvincialStockistDashboard";
 
 const DashBoard = () => {
   const [accountType, setUserType] = useState("");
@@ -22,6 +23,8 @@ const DashBoard = () => {
         return <AdminDashboard />;
       case "Regional Stockist":
         return <RegionalStockistDashboard />;
+      case "Provincial Stockist":
+        return <ProvincialStockistDashboard />;
       default:
         return <div>random dashboard</div>;
     }

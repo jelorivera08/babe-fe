@@ -22,11 +22,15 @@ function App() {
   const [username, setUsername] = useState("");
 
   history = useHistory();
+  const token = window.localStorage.getItem("accessToken");
 
   useEffect(() => {
-    const tokenData = jwtDecode(window.localStorage.getItem("accessToken"));
-    setUsername(tokenData.username);
-  }, []);
+    if (token) {
+      const tokenData = jwtDecode(token);
+
+      setUsername(tokenData.username);
+    }
+  }, [token]);
 
   return (
     <AppContext.Provider

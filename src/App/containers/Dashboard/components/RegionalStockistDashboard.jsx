@@ -11,7 +11,9 @@ import AppContext from "../../../context";
 const OrderTracker = React.lazy(() => import("../sections/OrderTracker"));
 
 const PrimaryBar = styled.div`
-  background-color: #94c7c9;
+  background-color: #f9c5d1;
+  background-image: linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%);
+
   min-width: 4rem;
 `;
 
@@ -19,6 +21,7 @@ const SecondaryBar = styled.div`
   box-shadow: 9px 4px 8px -7px rgba(138, 128, 138, 1);
   width: 4rem;
   transition: width 1s;
+  max-width: 13rem;
 
   &.show-menu {
     width: 16rem;
@@ -33,7 +36,7 @@ const BreadText = styled.div`
     0% {
       color: #d5dcec;
     }
-    \ 50% {
+    50% {
       color: #96c7c9;
     }
     100% {
@@ -53,7 +56,7 @@ const Regional = () => {
 
   return (
     <div className="w-full flex">
-      <PrimaryBar className="h-screen w-16 p-2">
+      <PrimaryBar className="h-screen w-16 p-2 flex flex-col justify-between">
         <img
           className="cursor-pointer"
           src={logo1}
@@ -66,7 +69,7 @@ const Regional = () => {
         <div
           role="button"
           tabIndex="0"
-          className="flex justify-center items-center mt-1"
+          className="flex justify-center items-center mt-1 mb-2"
         >
           <Dropdown pointing="left" icon="user circle">
             <Dropdown.Menu>

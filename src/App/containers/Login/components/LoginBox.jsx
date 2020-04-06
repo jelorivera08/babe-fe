@@ -122,7 +122,7 @@ const LoginBox = () => {
           </a>
         </div>
       </form>
-      <p className="text-center text-gray-500 text-xs">
+      <p className="text-center text-gray-200 text-xs">
         &copy;2020 Babe Inc. All rights reserved.
       </p>
     </div>

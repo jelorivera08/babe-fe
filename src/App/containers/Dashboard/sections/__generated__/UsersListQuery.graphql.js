@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1a1742c30d8e6dd9a0031f882d01b5ee
+ * @relayHash 85c9151c8cbae4a4da38962eb6d36a30
  */
 
 /* eslint-disable */
@@ -19,6 +19,7 @@ export type UsersListQueryResponse = {|
     +surname: ?string,
     +accountType: ?string,
     +status: ?string,
+    +region: ?string,
   |}>
 |};
 export type UsersListQuery = {|
@@ -38,6 +39,7 @@ query UsersListQuery {
     surname
     accountType
     status
+    region
     id
   }
 }
@@ -92,6 +94,13 @@ v6 = {
   "name": "status",
   "args": null,
   "storageKey": null
+},
+v7 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "region",
+  "args": null,
+  "storageKey": null
 };
 return {
   "kind": "Request",
@@ -117,7 +126,8 @@ return {
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/)
         ]
       }
     ]
@@ -143,6 +153,7 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
+          (v7/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -158,12 +169,12 @@ return {
     "operationKind": "query",
     "name": "UsersListQuery",
     "id": null,
-    "text": "query UsersListQuery {\n  users {\n    username\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    accountType\n    status\n    id\n  }\n}\n",
+    "text": "query UsersListQuery {\n  users {\n    username\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    accountType\n    status\n    region\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c212bf08203226afb4917f1011d9f537';
+(node/*: any*/).hash = 'ef93c34a9a835d5fa00b05202a0c2a0b';
 
 module.exports = node;

@@ -8,6 +8,7 @@ type Mutation {
     facebookURL: String!
     instagramURL: String!
     description: String!
+    region: String!
   ): UserRegistrationType
   changeUserStatus(username: String!, status: String!): userType
   addOrder(
@@ -82,4 +83,5 @@ type userType {
   status: String
   orders: [orderType]
   description: String
+  region: String
 }

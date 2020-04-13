@@ -60,6 +60,18 @@ const updateMutation = graphql`
   }
 `;
 
+const updateNotesMutation = graphql`
+  mutation StockistOrdersUpdateNotesMutation(
+    $dateOrdered: String!
+    $note: String!
+    $user: String!
+  ) {
+    updateOrderNote(dateOrdered: $dateOrdered, note: $note, user: $user) {
+      notes
+    }
+  }
+`;
+
 const result = preloadQuery(AppEnvironment, query);
 
 const formatNumber = (num) =>
@@ -170,8 +182,54 @@ const StockistOrders = ({ orders, user, accountType }) => {
     inputEl && inputEl.current && inputEl.current.focus();
   }, [additionalOrder.editIndex, editOrder.editIndex]);
 
+  const handleChangeUpdateNotes = (dateOrdered, editedNotes, user) => {
+    const variables = {
+      dateOrdered: dateOrdered,
+      note: editedNotes,
+      user,
+    };
+
+    commitMutation(AppEnvironment, {
+      mutation: updateNotesMutation,
+      variables,
+      updater: (store) => {
+        const payload = store.getRootField("updateOrderNote");
+        const newNote = payload.getValue("notes");
+        const root = store.getRoot();
+        const stockistsProxy = root.getLinkedRecords(
+          `stockists(accountType:"${accountType}")`
+        );
+        const stockistProxy = stockistsProxy.find(
+          (val) => val.getValue("username") === user
+        );
+        const ordersProxy = stockistProxy.getLinkedRecords("orders");
+        const orderProxy = ordersProxy.find(
+          (val) => val.getValue("dateOrdered") === dateOrdered
+        );
+
+        orderProxy.setValue(newNote, "notes");
+      },
+      optimisticUpdater: (store) => {
+        const root = store.getRoot();
+        const stockistsProxy = root.getLinkedRecords(
+          `stockists(accountType:"${accountType}")`
+        );
+        const stockistProxy = stockistsProxy.find(
+          (val) => val.getValue("username") === user
+        );
+        const ordersProxy = stockistProxy.getLinkedRecords("orders");
+        const orderProxy = ordersProxy.find(
+          (val) => val.getValue("dateOrdered") === dateOrdered
+        );
+
+        orderProxy.setValue(editedNotes, "notes");
+      },
+      onError: (err) => console.error(err),
+    });
+  };
+
   return (
-    <OrdersContainer className="h-full overflow-y-scroll pr-4">
+    <OrdersContainer className="h-full overflow-y-auto pr-4">
       {orders.map((order) => {
         const formattedDateOrdered = dayjs(order.dateOrdered).format(
           "MMMM DD, YYYY (h:mm:ss A)"
@@ -184,9 +242,30 @@ const StockistOrders = ({ orders, user, accountType }) => {
             className="mb-8 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4"
           >
             <div className="flex justify-between">
-              <div className="flex">
-                <div>Order Date:</div>
-                <div className="ml-2">{formattedDateOrdered}</div>
+              <div className="w-1/2">
+                <div className="flex">
+                  <div>Order Date:</div>
+                  <div className="ml-2">{formattedDateOrdered}</div>
+                </div>
+
+                <div className="w-full pt-8 pr-20 pl-4 h-full">
+                  <div className="bg-white h-full border border-gray-400 rounded">
+                    <div className="mt-2 ml-2 mb-1 relative">Notes</div>
+                    <textarea
+                      className="pl-2 outline-none resize-none w-full overflow-hidden"
+                      rows={5}
+                      cols={5}
+                      onChange={(e) => {
+                        handleChangeUpdateNotes(
+                          order.dateOrdered,
+                          e.target.value,
+                          order.user
+                        );
+                      }}
+                      value={order.notes}
+                    ></textarea>
+                  </div>
+                </div>
               </div>
 
               <div className="w-1/2 flex justify-end">

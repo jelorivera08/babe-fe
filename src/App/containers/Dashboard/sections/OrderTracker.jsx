@@ -27,6 +27,7 @@ const query = graphql`
       username
       orders {
         user
+        notes
         dateOrdered
         products {
           name

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 00c7eb300b9e7f961b8167caa136c6d6
+ * @relayHash 95f00d453162af1a510f927aea4de576
  */
 
 /* eslint-disable */
@@ -20,6 +20,7 @@ export type OrderTrackerQueryResponse = {|
     +username: ?string,
     +orders: ?$ReadOnlyArray<?{|
       +user: ?string,
+      +notes: ?string,
       +dateOrdered: ?string,
       +products: ?$ReadOnlyArray<?{|
         +name: ?string,
@@ -47,6 +48,7 @@ query OrderTrackerQuery(
     username
     orders {
       user
+      notes
       dateOrdered
       products {
         name
@@ -116,6 +118,13 @@ v6 = {
       "kind": "ScalarField",
       "alias": null,
       "name": "user",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "notes",
       "args": null,
       "storageKey": null
     },
@@ -221,12 +230,12 @@ return {
     "operationKind": "query",
     "name": "OrderTrackerQuery",
     "id": null,
-    "text": "query OrderTrackerQuery(\n  $accountType: String!\n) {\n  stockists(accountType: $accountType) {\n    firstName\n    surname\n    accountType\n    username\n    orders {\n      user\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query OrderTrackerQuery(\n  $accountType: String!\n) {\n  stockists(accountType: $accountType) {\n    firstName\n    surname\n    accountType\n    username\n    orders {\n      user\n      notes\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9b8fa55fad15f6f254ebb967f7a28f7c';
+(node/*: any*/).hash = 'b50eaca9a57fc5fb9f0b7b81d315a2f4';
 
 module.exports = node;

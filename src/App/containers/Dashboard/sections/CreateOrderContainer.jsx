@@ -25,13 +25,16 @@ const createOrderMutation = graphql`
     $user: String!
     $productInput: [productInputType]!
     $dateOrdered: String!
+    $notes: String!
   ) {
     createOrder(
       user: $user
       products: $productInput
       dateOrdered: $dateOrdered
+      notes: $notes
     ) {
       user
+      notes
       dateOrdered
       products {
         name
@@ -48,6 +51,7 @@ const CreateOrderContainer = ({ open, handleClose, users }) => {
   const [orderDate, setOrderDate] = useState(new Date());
   const [selectedUser, setSelectedUser] = useState("");
   const [orderProducts, setOrderProducts] = useState({});
+  const [orderNotes, setOrderNotes] = useState("");
 
   let totalAmount = 0;
 
@@ -57,6 +61,7 @@ const CreateOrderContainer = ({ open, handleClose, users }) => {
     const variables = {
       user: selectedUser,
       dateOrdered: values.orderDate,
+      notes: orderNotes,
       productInput: Object.values(values.products)
         .filter((v) => parseInt(v.quantity, 10) > 0)
         .map((v) => ({ ...v, quantity: parseInt(v.quantity, 10) })),
@@ -94,7 +99,7 @@ const CreateOrderContainer = ({ open, handleClose, users }) => {
       <Modal.Header>{`Create an Order`}</Modal.Header>
       <Modal.Content>
         <div className="flex items-center justify-between">
-          <div>
+          <div className="w-1/2">
             <div>
               <div className="mb-1">Select Stockist</div>
               <div className="mb-2">
@@ -118,6 +123,21 @@ const CreateOrderContainer = ({ open, handleClose, users }) => {
                 onChange={setOrderDate}
                 dateFormat="MMMM d, yyyy"
               />
+
+              <div className="w-full pt-8 pr-20 h-full">
+                <div className="bg-white h-full border border-gray-600 rounded">
+                  <div className="mt-2 ml-2 mb-1 relative">Notes</div>
+                  <textarea
+                    className="pl-2 outline-none resize-none w-full overflow-hidden"
+                    rows={5}
+                    cols={5}
+                    onChange={(e) => {
+                      setOrderNotes(e.target.value);
+                    }}
+                    value={orderNotes}
+                  ></textarea>
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-1/2">

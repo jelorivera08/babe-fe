@@ -25,6 +25,7 @@ type Mutation {
     user: String!
     products: [productInputType]!
     dateOrdered: String!
+    notes: String!
   ): [orderType]
   createProduct(name: String!, amount: Int!): [productType]
   updateOrderNote(dateOrdered: String!, note: String!, user: String!): orderType

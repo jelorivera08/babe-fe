@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7afec182c17c37c05b04f018112b1695
+ * @relayHash 0cf90ef54a5cc45d6ed41dc20aa3635e
  */
 
 /* eslint-disable */
@@ -18,10 +18,12 @@ export type CreateOrderContainerMutationVariables = {|
   user: string,
   productInput: $ReadOnlyArray<?productInputType>,
   dateOrdered: string,
+  notes: string,
 |};
 export type CreateOrderContainerMutationResponse = {|
   +createOrder: ?$ReadOnlyArray<?{|
     +user: ?string,
+    +notes: ?string,
     +dateOrdered: ?string,
     +products: ?$ReadOnlyArray<?{|
       +name: ?string,
@@ -42,9 +44,11 @@ mutation CreateOrderContainerMutation(
   $user: String!
   $productInput: [productInputType]!
   $dateOrdered: String!
+  $notes: String!
 ) {
-  createOrder(user: $user, products: $productInput, dateOrdered: $dateOrdered) {
+  createOrder(user: $user, products: $productInput, dateOrdered: $dateOrdered, notes: $notes) {
     user
+    notes
     dateOrdered
     products {
       name
@@ -74,6 +78,12 @@ var v0 = [
     "name": "dateOrdered",
     "type": "String!",
     "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "notes",
+    "type": "String!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -87,6 +97,11 @@ v1 = [
         "kind": "Variable",
         "name": "dateOrdered",
         "variableName": "dateOrdered"
+      },
+      {
+        "kind": "Variable",
+        "name": "notes",
+        "variableName": "notes"
       },
       {
         "kind": "Variable",
@@ -106,6 +121,13 @@ v1 = [
         "kind": "ScalarField",
         "alias": null,
         "name": "user",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "notes",
         "args": null,
         "storageKey": null
       },
@@ -171,12 +193,12 @@ return {
     "operationKind": "mutation",
     "name": "CreateOrderContainerMutation",
     "id": null,
-    "text": "mutation CreateOrderContainerMutation(\n  $user: String!\n  $productInput: [productInputType]!\n  $dateOrdered: String!\n) {\n  createOrder(user: $user, products: $productInput, dateOrdered: $dateOrdered) {\n    user\n    dateOrdered\n    products {\n      name\n      amount\n      quantity\n    }\n  }\n}\n",
+    "text": "mutation CreateOrderContainerMutation(\n  $user: String!\n  $productInput: [productInputType]!\n  $dateOrdered: String!\n  $notes: String!\n) {\n  createOrder(user: $user, products: $productInput, dateOrdered: $dateOrdered, notes: $notes) {\n    user\n    notes\n    dateOrdered\n    products {\n      name\n      amount\n      quantity\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd9642455e363c216480dd1f138815de9';
+(node/*: any*/).hash = 'dbffe021d825a423e2195fabfad889e1';
 
 module.exports = node;

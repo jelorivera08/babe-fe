@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 160602e6995ce1ef5292cf73cbf6bc39
+ * @relayHash 433bd830ff8f1cc9915a9dd8a94a380f
  */
 
 /* eslint-disable */
@@ -13,7 +13,9 @@ export type ProductsListQueryVariables = {||};
 export type ProductsListQueryResponse = {|
   +products: ?$ReadOnlyArray<?{|
     +name: ?string,
-    +amount: ?number,
+    +regionalAmount: ?number,
+    +provincialAmount: ?number,
+    +resellerAmount: ?number,
   |}>
 |};
 export type ProductsListQuery = {|
@@ -27,7 +29,9 @@ export type ProductsListQuery = {|
 query ProductsListQuery {
   products {
     name
-    amount
+    regionalAmount
+    provincialAmount
+    resellerAmount
   }
 }
 */
@@ -53,7 +57,21 @@ var v0 = [
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "amount",
+        "name": "regionalAmount",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "provincialAmount",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "resellerAmount",
         "args": null,
         "storageKey": null
       }
@@ -80,12 +98,12 @@ return {
     "operationKind": "query",
     "name": "ProductsListQuery",
     "id": null,
-    "text": "query ProductsListQuery {\n  products {\n    name\n    amount\n  }\n}\n",
+    "text": "query ProductsListQuery {\n  products {\n    name\n    regionalAmount\n    provincialAmount\n    resellerAmount\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a1ba0626de47dc53e5009b1578f63f87';
+(node/*: any*/).hash = '52e7ffb2200c7edafe51f26bb21b104a';
 
 module.exports = node;

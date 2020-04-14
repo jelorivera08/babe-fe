@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 17c5a2533f837794ed1351fe19c13007
+ * @relayHash b6e075d459f65012b0a885ee2bf5088b
  */
 
 /* eslint-disable */
@@ -11,12 +11,16 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type ProductsListMutationVariables = {|
   name: string,
-  amount: number,
+  regionalAmount: number,
+  provincialAmount: number,
+  resellerAmount: number,
 |};
 export type ProductsListMutationResponse = {|
   +createProduct: ?$ReadOnlyArray<?{|
     +name: ?string,
-    +amount: ?number,
+    +regionalAmount: ?number,
+    +provincialAmount: ?number,
+    +resellerAmount: ?number,
   |}>
 |};
 export type ProductsListMutation = {|
@@ -29,11 +33,15 @@ export type ProductsListMutation = {|
 /*
 mutation ProductsListMutation(
   $name: String!
-  $amount: Int!
+  $regionalAmount: Int!
+  $provincialAmount: Int!
+  $resellerAmount: Int!
 ) {
-  createProduct(name: $name, amount: $amount) {
+  createProduct(name: $name, regionalAmount: $regionalAmount, provincialAmount: $provincialAmount, resellerAmount: $resellerAmount) {
     name
-    amount
+    regionalAmount
+    provincialAmount
+    resellerAmount
   }
 }
 */
@@ -48,7 +56,19 @@ var v0 = [
   },
   {
     "kind": "LocalArgument",
-    "name": "amount",
+    "name": "regionalAmount",
+    "type": "Int!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "provincialAmount",
+    "type": "Int!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "resellerAmount",
     "type": "Int!",
     "defaultValue": null
   }
@@ -62,13 +82,23 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "amount",
-        "variableName": "amount"
+        "name": "name",
+        "variableName": "name"
       },
       {
         "kind": "Variable",
-        "name": "name",
-        "variableName": "name"
+        "name": "provincialAmount",
+        "variableName": "provincialAmount"
+      },
+      {
+        "kind": "Variable",
+        "name": "regionalAmount",
+        "variableName": "regionalAmount"
+      },
+      {
+        "kind": "Variable",
+        "name": "resellerAmount",
+        "variableName": "resellerAmount"
       }
     ],
     "concreteType": "productType",
@@ -84,7 +114,21 @@ v1 = [
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "amount",
+        "name": "regionalAmount",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "provincialAmount",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "resellerAmount",
         "args": null,
         "storageKey": null
       }
@@ -111,12 +155,12 @@ return {
     "operationKind": "mutation",
     "name": "ProductsListMutation",
     "id": null,
-    "text": "mutation ProductsListMutation(\n  $name: String!\n  $amount: Int!\n) {\n  createProduct(name: $name, amount: $amount) {\n    name\n    amount\n  }\n}\n",
+    "text": "mutation ProductsListMutation(\n  $name: String!\n  $regionalAmount: Int!\n  $provincialAmount: Int!\n  $resellerAmount: Int!\n) {\n  createProduct(name: $name, regionalAmount: $regionalAmount, provincialAmount: $provincialAmount, resellerAmount: $resellerAmount) {\n    name\n    regionalAmount\n    provincialAmount\n    resellerAmount\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c1b960db53b7a4b7e421ada3daa50f87';
+(node/*: any*/).hash = '8fb5e219b7311275949b6088a646a9cb';
 
 module.exports = node;

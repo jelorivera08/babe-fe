@@ -9,8 +9,6 @@ import YourOrders from "../sections/YourOrders";
 import logo1 from "../../../../assets/images/logo1.PNG";
 import AppContext from "../../../context";
 
-const OrderTracker = React.lazy(() => import("../sections/OrderTracker"));
-
 const PrimaryBar = styled.div`
   background-color: #f9c5d1;
   background-image: linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%);

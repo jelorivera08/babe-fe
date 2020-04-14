@@ -28,7 +28,12 @@ type Mutation {
     dateOrdered: String!
     notes: String!
   ): [orderType]
-  createProduct(name: String!, amount: Int!): [productType]
+  createProduct(
+    name: String!
+    regionalAmount: Int!
+    provincialAmount: Int!
+    resellerAmount: Int!
+  ): [productType]
   updateOrderNote(dateOrdered: String!, note: String!, user: String!): orderType
 }
 
@@ -48,6 +53,9 @@ input productInputType {
 type productType {
   name: String
   amount: Int
+  regionalAmount: Int
+  provincialAmount: Int
+  resellerAmount: Int
   quantity: Int
 }
 

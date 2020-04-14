@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-named-as-default */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useHistory, Switch, Route } from "react-router-dom";
 import { graphql } from "react-relay/hooks";
@@ -12,6 +12,7 @@ import styled from "styled-components";
 import StockistOrders from "./StockistOrders";
 import CreateOrderContainer from "./CreateOrderContainer";
 
+import AppContext from "../../../context";
 import environment from "../../../../environment";
 
 const RegionalStockistsContainer = styled.div`
@@ -19,8 +20,8 @@ const RegionalStockistsContainer = styled.div`
 `;
 
 const query = graphql`
-  query OrderTrackerQuery($accountType: String!) {
-    stockists(accountType: $accountType) {
+  query OrderTrackerQuery($accountType: String!, $region: String) {
+    stockists(accountType: $accountType, region: $region) {
       firstName
       surname
       accountType
@@ -41,6 +42,7 @@ const query = graphql`
 
 export default ({ accountType }) => {
   const history = useHistory();
+  const { region } = useContext(AppContext);
 
   const headerTitle = history.location.pathname
     .split("/")
@@ -54,6 +56,7 @@ export default ({ accountType }) => {
       query={query}
       variables={{
         accountType,
+        region,
       }}
       render={({ error, props }) => {
         if (error) {
@@ -79,6 +82,8 @@ export default ({ accountType }) => {
                   name: stockist.username,
                   accountType: stockist.accountType,
                 }))}
+                accountType={accountType}
+                region={region}
               />
               <div className="flex justify-end mr-6">
                 <Button onClick={() => setCreateOrderOpen(true)}>
@@ -119,7 +124,8 @@ export default ({ accountType }) => {
                       <StockistOrders
                         orders={stockist.orders}
                         user={stockist.username}
-                        accountType={stockist.accountType}
+                        region={region}
+                        accountType={accountType}
                       />
                     </Route>
                   ))}

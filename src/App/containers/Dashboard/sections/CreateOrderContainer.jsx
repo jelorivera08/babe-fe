@@ -47,7 +47,13 @@ const createOrderMutation = graphql`
 
 const result = preloadQuery(AppEnvironment, query);
 
-const CreateOrderContainer = ({ open, handleClose, users }) => {
+const CreateOrderContainer = ({
+  open,
+  handleClose,
+  users,
+  accountType,
+  region,
+}) => {
   const [orderDate, setOrderDate] = useState(new Date());
   const [selectedUser, setSelectedUser] = useState("");
   const [orderProducts, setOrderProducts] = useState({});
@@ -75,9 +81,7 @@ const CreateOrderContainer = ({ open, handleClose, users }) => {
         const root = store.getRoot();
 
         const stockistsProxy = root.getLinkedRecords(
-          `stockists(accountType:"${
-            users.find((user) => user.name === selectedUser).accountType
-          }")`
+          `stockists(accountType:"${accountType}",region:"${region}")`
         );
 
         const stockistProxy = stockistsProxy.find(

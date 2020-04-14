@@ -103,42 +103,22 @@ const Provincial = () => {
             tabIndex="0"
             role="button"
             onClick={() => {
-              setSelectedMenu("orders");
-              history.push("/dashboard/orders");
+              setSelectedMenu("yourOrders");
+              history.push("/dashboard/yourOrders");
             }}
             className={cx(
               "m-2 text-base rounded cursor-pointer outline-none",
               { "p-2": showMenu },
               { "pb-2": !showMenu },
-              { "bg-gray-400": selectedMenu === "orders" }
+              { "bg-gray-400": selectedMenu === "yourOrders" }
             )}
           >
-            {showMenu ? "Order Tracker" : <Icon name="address card" />}
+            {showMenu ? "Your Orders" : <Icon name="shopping cart" />}
           </div>
-        </div>
-
-        <div
-          tabIndex="0"
-          role="button"
-          onClick={() => {
-            setSelectedMenu("yourOrders");
-            history.push("/dashboard/yourOrders");
-          }}
-          className={cx(
-            "m-2 text-base rounded cursor-pointer outline-none",
-            { "p-2": showMenu },
-            { "pb-2": !showMenu },
-            { "bg-gray-400": selectedMenu === "yourOrders" }
-          )}
-        >
-          {showMenu ? "Your Orders" : <Icon name="shopping cart" />}
         </div>
       </SecondaryBar>
 
       <Switch>
-        <Route path="/dashboard/orders">
-          <OrderTracker accountType="Reseller" />
-        </Route>
         <Route path="/dashboard/yourOrders">
           <YourOrders username={username} />
         </Route>

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 95f00d453162af1a510f927aea4de576
+ * @relayHash c33c8673a88d73c2eccecdc15f62cf07
  */
 
 /* eslint-disable */
@@ -10,7 +10,8 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type OrderTrackerQueryVariables = {|
-  accountType: string
+  accountType: string,
+  region?: ?string,
 |};
 export type OrderTrackerQueryResponse = {|
   +stockists: ?$ReadOnlyArray<?{|
@@ -40,8 +41,9 @@ export type OrderTrackerQuery = {|
 /*
 query OrderTrackerQuery(
   $accountType: String!
+  $region: String
 ) {
-  stockists(accountType: $accountType) {
+  stockists(accountType: $accountType, region: $region) {
     firstName
     surname
     accountType
@@ -68,6 +70,12 @@ var v0 = [
     "name": "accountType",
     "type": "String!",
     "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "region",
+    "type": "String",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -75,6 +83,11 @@ v1 = [
     "kind": "Variable",
     "name": "accountType",
     "variableName": "accountType"
+  },
+  {
+    "kind": "Variable",
+    "name": "region",
+    "variableName": "region"
   }
 ],
 v2 = {
@@ -230,12 +243,12 @@ return {
     "operationKind": "query",
     "name": "OrderTrackerQuery",
     "id": null,
-    "text": "query OrderTrackerQuery(\n  $accountType: String!\n) {\n  stockists(accountType: $accountType) {\n    firstName\n    surname\n    accountType\n    username\n    orders {\n      user\n      notes\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query OrderTrackerQuery(\n  $accountType: String!\n  $region: String\n) {\n  stockists(accountType: $accountType, region: $region) {\n    firstName\n    surname\n    accountType\n    username\n    orders {\n      user\n      notes\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'b50eaca9a57fc5fb9f0b7b81d315a2f4';
+(node/*: any*/).hash = '7eab922e4dc45e74fcd04684e186f0fd';
 
 module.exports = node;

@@ -20,6 +20,7 @@ export let history = {};
 
 function App() {
   const [username, setUsername] = useState("");
+  const [region, setRegion] = useState("");
 
   history = useHistory();
   const token = window.localStorage.getItem("accessToken");
@@ -28,6 +29,7 @@ function App() {
     if (token) {
       const tokenData = jwtDecode(token);
 
+      setRegion(tokenData.region);
       setUsername(tokenData.username);
     }
   }, [token]);
@@ -36,6 +38,7 @@ function App() {
     <AppContext.Provider
       value={{
         username,
+        region,
       }}
     >
       <Switch>

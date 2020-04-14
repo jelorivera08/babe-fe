@@ -13,13 +13,13 @@ export function fetchQuery(operation, variables) {
     headers: {
       "Content-Type": "application/json",
       Authorization: window.localStorage.getItem("accessToken"),
-      noAuthNeeded
+      noAuthNeeded,
     },
     body: JSON.stringify({
       query: operation.text,
-      variables
-    })
-  }).then(async response => {
+      variables,
+    }),
+  }).then(async (response) => {
     const jsonResponse = await response.json();
 
     if (jsonResponse.invalidToken) {
@@ -32,7 +32,7 @@ export function fetchQuery(operation, variables) {
 
 const environment = new Environment({
   network: Network.create(fetchQuery),
-  store: new Store(new RecordSource())
+  store: new Store(new RecordSource()),
 });
 
 export default environment;

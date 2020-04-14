@@ -76,6 +76,7 @@ const Provincial = () => {
                 onClick={() => {
                   window.localStorage.removeItem("accessToken");
                   history.push("/");
+                  window.location.reload();
                 }}
                 text="Log out"
               />

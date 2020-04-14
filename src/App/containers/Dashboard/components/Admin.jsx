@@ -8,7 +8,6 @@ import cx from "classnames";
 import { MdMenu } from "react-icons/md";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { Icon, Dropdown } from "semantic-ui-react";
-
 import logo1 from "../../../../assets/images/logo1.PNG";
 
 const OrderTracker = React.lazy(() => import("../sections/OrderTracker"));
@@ -80,6 +79,7 @@ const Admin = () => {
                 onClick={() => {
                   window.localStorage.removeItem("accessToken");
                   history.push("/");
+                  window.location.reload();
                 }}
                 text="Log out"
               />

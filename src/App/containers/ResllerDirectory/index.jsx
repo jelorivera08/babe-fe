@@ -20,6 +20,7 @@ const query = graphql`
       instagramURL
       surname
       description
+      imageURL
     }
   }
 `;
@@ -43,17 +44,20 @@ const ResllerDirectory = () => {
               surname,
               facebookURL,
               instagramURL,
+              imageURL,
               description,
             }) => (
               <div key={facebookURL} className="m-2">
                 <Card>
-                  <Image
-                    src={`https://react.semantic-ui.com/images/avatar/large/${
-                      Math.random() > 0.5 ? "matthew.png" : "rachel.png"
-                    }`}
-                    wrapped
-                    ui={false}
-                  />
+                  <div
+                    style={{
+                      height: "26rem",
+                    }}
+                    className="flex justify-center items-center  overflow-hidden bg-black"
+                  >
+                    <Image src={imageURL} wrapped ui={false} />
+                  </div>
+
                   <Card.Content>
                     <Card.Header>{`${firstName} ${surname}`}</Card.Header>
                     <Card.Meta>

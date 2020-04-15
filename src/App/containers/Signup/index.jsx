@@ -8,6 +8,9 @@ import { Select, Card, Button } from "semantic-ui-react";
 import Background from "../../components/Background";
 import Header from "../../components/Header";
 import environment from "../../../environment";
+import axios from "axios";
+
+import { options, regionOptions } from "./constants";
 
 const mutation = graphql`
   mutation SignupMutation(
@@ -37,67 +40,6 @@ const mutation = graphql`
   }
 `;
 
-const options = [
-  {
-    key: "Reseller",
-    value: "Reseller",
-    text: "Reseller",
-  },
-  {
-    key: "Regional Stockist",
-    value: "Regional Stockist",
-    text: "Regional Stockist",
-  },
-  {
-    key: "Provincial Stockist",
-    value: "Provincial Stockist",
-    text: "Provincial Stockist",
-  },
-];
-
-const regionOptions = [
-  {
-    key: "Illocos Region",
-    value: "Illocos Region",
-    text: "Illocos Region",
-  },
-  {
-    key: "Cagayan Valley",
-    value: "Cagayan Valley",
-    text: "Cagayan Valley",
-  },
-  {
-    key: "Central Luzon",
-    value: "Central Luzon",
-    text: "Central Luzon",
-  },
-  {
-    key: "CALABARZON",
-    value: "CALABARZON",
-    text: "CALABARZON",
-  },
-  {
-    key: "Bicol Region",
-    value: "Bicol Region",
-    text: "Bicol Region",
-  },
-  {
-    key: "NCR",
-    value: "NCR",
-    text: "NCR",
-  },
-  {
-    key: "Cordillera Region",
-    value: "Cordillera Region",
-    text: "Cordillera Region",
-  },
-  {
-    key: "MIMAROPA Region",
-    value: "MIMAROPA Region",
-    text: "MIMAROPA Region",
-  },
-];
-
 const SignUp = () => {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -112,6 +54,7 @@ const SignUp = () => {
   });
   const [error, setError] = useState("");
   const [registrationSucess, setRegistrationSucess] = useState(false);
+  const [imgFile, setImgFile] = useState("");
 
   const history = useHistory();
 
@@ -138,7 +81,16 @@ const SignUp = () => {
       variables: { ...values },
       onCompleted: (response, errors) => {
         if (response && response.userCreate && response.userCreate.username) {
-          setRegistrationSucess(true);
+          const formData = new FormData();
+          formData.append("image", imgFile);
+          formData.append("username", credentials.username);
+
+          axios
+            .post("http://localhost:4000/upload", formData, {})
+            .then(() => {
+              setRegistrationSucess(true);
+            })
+            .catch((err) => setError(err));
         }
 
         if (errors) {
@@ -190,23 +142,41 @@ const SignUp = () => {
             }}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           >
-            <div className="mb-4 w-1/2 mr-2">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="username"
-              >
-                Username
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-                value={credentials.username}
-                onChange={(e) =>
-                  setCredentials({ ...credentials, username: e.target.value })
-                }
-              />
+            <div className="flex">
+              <div className="mb-4 w-1/2 mr-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="username"
+                >
+                  Username
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="username"
+                  type="text"
+                  placeholder="Username"
+                  value={credentials.username}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, username: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-4 w-1/2 mr-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="photo"
+                >
+                  Upload your photo
+                </label>
+                <input
+                  className="appearance-none w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline"
+                  name="userPhoto"
+                  type="file"
+                  onChange={(e) => {
+                    setImgFile(e.target.files[0]);
+                  }}
+                />
+              </div>
             </div>
 
             <div className="flex">

@@ -2,7 +2,7 @@
 import React from "react";
 import { graphql, commitMutation } from "react-relay";
 import styled from "styled-components";
-import { Select } from "semantic-ui-react";
+import { Select, Table } from "semantic-ui-react";
 import environment from "../../../../environment";
 
 const { preloadQuery, usePreloadedQuery } = require("react-relay/hooks");
@@ -67,82 +67,59 @@ export default () => {
     <div className="w-full">
       <div className="m-8 pt-4 text-xl">Review registered accounts</div>
       <UsersContainer className="w-full p-6">
-        {users.map(
-          (
-            {
-              firstName,
-              username,
-              surname,
-              accountType,
-              facebookURL,
-              status,
-              instagramURL,
-              region,
-            },
-            i
-          ) => (
-            <div
-              key={username}
-              className="mb-8 w-full  border bg-gray-200 border-gray-400 border-solid rounded p-4"
-            >
-              <div className="flex mb-2">
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Username:</div>
-                  <div className="ml-2">{username}</div>
-                </div>
+        <Table celled selectable striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Account Type</Table.HeaderCell>
+              <Table.HeaderCell>Username</Table.HeaderCell>
+              <Table.HeaderCell>First Name</Table.HeaderCell>
+              <Table.HeaderCell>Surname</Table.HeaderCell>
+              <Table.HeaderCell>Region</Table.HeaderCell>
+              <Table.HeaderCell>Instagram</Table.HeaderCell>
+              <Table.HeaderCell>Facebook</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Region:</div>
-                  <div className="ml-2">{region}</div>
-                </div>
-              </div>
-
-              <div className="flex mb-2">
-                <div className="flex w-1/2">
-                  <div className="font-semibold">First Name:</div>
-                  <div className="ml-2">{firstName}</div>
-                </div>
-
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Surname:</div>
-                  <div className="ml-2">{surname}</div>
-                </div>
-              </div>
-
-              <div className="flex  mb-2">
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Instagram URL:</div>
-                  <div className="ml-2">{instagramURL}</div>
-                </div>
-
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Facebook URL:</div>
-                  <div className="ml-2">{facebookURL}</div>
-                </div>
-              </div>
-
-              <div className="flex mb-2">
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Account Type:</div>
-                  <div className="ml-2">{accountType}</div>
-                </div>
-
-                <div className="flex w-1/2">
-                  <div className="font-semibold">Status:</div>
-                  <Select
-                    className="ml-2"
-                    onChange={(e, { value }) =>
-                      handleStatusChange({ username, status: value }, i)
-                    }
-                    value={status}
-                    placeholder="Select Status"
-                    options={options}
-                  />
-                </div>
-              </div>
-            </div>
-          )
-        )}
+          <Table.Body>
+            {users.map(
+              (
+                {
+                  firstName,
+                  username,
+                  surname,
+                  accountType,
+                  facebookURL,
+                  status,
+                  instagramURL,
+                  region,
+                },
+                i
+              ) => (
+                <Table.Row key={username}>
+                  <Table.Cell>{accountType}</Table.Cell>
+                  <Table.Cell>{username}</Table.Cell>
+                  <Table.Cell>{firstName}</Table.Cell>
+                  <Table.Cell>{surname}</Table.Cell>
+                  <Table.Cell>{region || "NA"}</Table.Cell>
+                  <Table.Cell>{instagramURL}</Table.Cell>
+                  <Table.Cell>{facebookURL}</Table.Cell>
+                  <Table.Cell>
+                    <Select
+                      className="ml-2"
+                      onChange={(e, { value }) =>
+                        handleStatusChange({ username, status: value }, i)
+                      }
+                      value={status}
+                      placeholder="Select Status"
+                      options={options}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              )
+            )}
+          </Table.Body>
+        </Table>
       </UsersContainer>
     </div>
   );

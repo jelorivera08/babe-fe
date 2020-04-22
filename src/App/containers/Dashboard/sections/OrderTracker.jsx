@@ -4,6 +4,7 @@ import React, { useState, useContext } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useHistory, Switch, Route } from "react-router-dom";
 import { graphql } from "react-relay/hooks";
+import { Table } from "semantic-ui-react";
 
 import { QueryRenderer } from "react-relay";
 import { Button } from "semantic-ui-react";
@@ -24,6 +25,7 @@ const query = graphql`
     stockists(accountType: $accountType, region: $region) {
       firstName
       surname
+      region
       accountType
       username
       orders {
@@ -94,27 +96,34 @@ export default ({ accountType }) => {
               <RegionalStockistsContainer className="w-full h-full p-6">
                 <Switch>
                   <Route exact path="/dashboard/orders">
-                    {stockists.map((stockist) => (
-                      <div
-                        key={stockist.username}
-                        tabIndex="0"
-                        role="button"
-                        onClick={() =>
-                          history.push(`/dashboard/orders/${stockist.username}`)
-                        }
-                        className="mb-4 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4 cursor-pointer"
-                      >
-                        <div className="flex">
-                          <div>{stockist.firstName}</div>
-                          <div className="ml-2">{stockist.surname}</div>
-                        </div>
-
-                        <div className="flex justify-end items-center text-gray-600">
-                          <div>See orders</div>
-                          <IoIosArrowForward className="ml-2" />
-                        </div>
-                      </div>
-                    ))}
+                    <Table celled selectable striped>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Username</Table.HeaderCell>
+                          <Table.HeaderCell>Firstname</Table.HeaderCell>
+                          <Table.HeaderCell>Surname</Table.HeaderCell>
+                          <Table.HeaderCell>Region</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {stockists.map((stockist) => (
+                          <Table.Row
+                            key={stockist.username}
+                            onClick={() =>
+                              history.push(
+                                `/dashboard/orders/${stockist.username}`
+                              )
+                            }
+                            className="cursor-pointer"
+                          >
+                            <Table.Cell>{stockist.username}</Table.Cell>
+                            <Table.Cell>{stockist.surname}</Table.Cell>
+                            <Table.Cell>{stockist.surname}</Table.Cell>
+                            <Table.Cell>{stockist.region}</Table.Cell>
+                          </Table.Row>
+                        ))}
+                      </Table.Body>
+                    </Table>
                   </Route>
                   {stockists.map((stockist) => (
                     <Route

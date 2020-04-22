@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c33c8673a88d73c2eccecdc15f62cf07
+ * @relayHash 8c7229d61a31329c67f02be16c00d206
  */
 
 /* eslint-disable */
@@ -17,6 +17,7 @@ export type OrderTrackerQueryResponse = {|
   +stockists: ?$ReadOnlyArray<?{|
     +firstName: ?string,
     +surname: ?string,
+    +region: ?string,
     +accountType: ?string,
     +username: ?string,
     +orders: ?$ReadOnlyArray<?{|
@@ -46,6 +47,7 @@ query OrderTrackerQuery(
   stockists(accountType: $accountType, region: $region) {
     firstName
     surname
+    region
     accountType
     username
     orders {
@@ -107,18 +109,25 @@ v3 = {
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "accountType",
+  "name": "region",
   "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "username",
+  "name": "accountType",
   "args": null,
   "storageKey": null
 },
 v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "username",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "orders",
@@ -204,7 +213,8 @@ return {
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/)
         ]
       }
     ]
@@ -228,6 +238,7 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
+          (v7/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -243,12 +254,12 @@ return {
     "operationKind": "query",
     "name": "OrderTrackerQuery",
     "id": null,
-    "text": "query OrderTrackerQuery(\n  $accountType: String!\n  $region: String\n) {\n  stockists(accountType: $accountType, region: $region) {\n    firstName\n    surname\n    accountType\n    username\n    orders {\n      user\n      notes\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query OrderTrackerQuery(\n  $accountType: String!\n  $region: String\n) {\n  stockists(accountType: $accountType, region: $region) {\n    firstName\n    surname\n    region\n    accountType\n    username\n    orders {\n      user\n      notes\n      dateOrdered\n      products {\n        name\n        amount\n        quantity\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7eab922e4dc45e74fcd04684e186f0fd';
+(node/*: any*/).hash = '092e4188b455ff387375bd38f7382e68';
 
 module.exports = node;

@@ -196,9 +196,13 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
         const payload = store.getRootField("updateOrderNote");
         const newNote = payload.getValue("notes");
         const root = store.getRoot();
-        const stockistsProxy = root.getLinkedRecords(
-          `stockists(accountType:"${accountType}",region:"${region}")`
-        );
+
+        const stockistProxyQueryString =
+          accountType === "Regional Stockist"
+            ? `stockists(accountType:"${accountType}")`
+            : `stockists(accountType:"${accountType}",region:"${region}")`;
+
+        const stockistsProxy = root.getLinkedRecords(stockistProxyQueryString);
         const stockistProxy = stockistsProxy.find(
           (val) => val.getValue("username") === user
         );
@@ -211,9 +215,13 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
       },
       optimisticUpdater: (store) => {
         const root = store.getRoot();
-        const stockistsProxy = root.getLinkedRecords(
-          `stockists(accountType:"${accountType}",region:"${region}")`
-        );
+
+        const stockistProxyQueryString =
+          accountType === "Regional Stockist"
+            ? `stockists(accountType:"${accountType}")`
+            : `stockists(accountType:"${accountType}",region:"${region}")`;
+
+        const stockistsProxy = root.getLinkedRecords(stockistProxyQueryString);
         const stockistProxy = stockistsProxy.find(
           (val) => val.getValue("username") === user
         );

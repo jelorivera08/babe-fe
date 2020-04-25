@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { graphql, commitMutation } from "react-relay";
 import styled from "styled-components";
-import { Select, Table } from "semantic-ui-react";
+import { Select, Table, Input } from "semantic-ui-react";
 import environment from "../../../../environment";
 
 const { preloadQuery, usePreloadedQuery } = require("react-relay/hooks");
@@ -44,8 +44,30 @@ const options = [
   { key: "INACTIVE", value: "INACTIVE", text: "Inactive" },
 ];
 
+const tableHeaders = [
+  { key: "Account Type", value: "accountType", text: "Account Type" },
+  { key: "Username", value: "username", text: "Username" },
+  { key: "First Name", value: "firstName", text: "First Name" },
+  { key: "Surname", value: "surname", text: "Surname" },
+  { key: "Region", value: "region", text: "Region" },
+  { key: "Instagram", value: "instagramURL", text: "Instagram" },
+  { key: "Facebook", value: "facebookURL", text: "Facebook" },
+  { key: "Status", value: "status", text: "Status" },
+];
+
 export default () => {
   const { users } = usePreloadedQuery(query, result);
+  const [searchType, setSearchType] = useState("accountType");
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+  useEffect(() => {
+    setFilteredUsers(
+      users.filter((user) =>
+        user[searchType].toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    );
+  }, [searchKeyword, users, searchType]);
 
   const handleStatusChange = (values, i) => {
     commitMutation(environment, {
@@ -64,25 +86,43 @@ export default () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="m-8 pt-4 text-xl">Review registered accounts</div>
-      <UsersContainer className="w-full p-6">
+    <div className='w-full'>
+      <div className='m-8 pt-4 text-xl flex justify-between items-center'>
+        <div>Review registered accounts</div>
+
+        <div>
+          <Select
+            className='mr-1'
+            placeholder='Select Search Type'
+            style={{
+              minWidth: "10rem",
+              fontSize: "1rem",
+              minHeight: "2.5rem",
+            }}
+            value={searchType}
+            onChange={(e, { value }) => setSearchType(value)}
+            options={tableHeaders}
+          />
+          <Input
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            icon='search'
+            size='mini'
+            placeholder='Search...'
+          />
+        </div>
+      </div>
+      <UsersContainer className='w-full p-6'>
         <Table celled selectable striped>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Account Type</Table.HeaderCell>
-              <Table.HeaderCell>Username</Table.HeaderCell>
-              <Table.HeaderCell>First Name</Table.HeaderCell>
-              <Table.HeaderCell>Surname</Table.HeaderCell>
-              <Table.HeaderCell>Region</Table.HeaderCell>
-              <Table.HeaderCell>Instagram</Table.HeaderCell>
-              <Table.HeaderCell>Facebook</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
+              {tableHeaders.map((v) => (
+                <Table.HeaderCell key={v.key}>{v.text}</Table.HeaderCell>
+              ))}
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
-            {users.map(
+            {filteredUsers.map(
               (
                 {
                   firstName,
@@ -106,18 +146,23 @@ export default () => {
                   <Table.Cell>{facebookURL}</Table.Cell>
                   <Table.Cell>
                     <Select
-                      className="ml-2"
+                      className='ml-2'
                       onChange={(e, { value }) =>
                         handleStatusChange({ username, status: value }, i)
                       }
                       value={status}
-                      placeholder="Select Status"
+                      placeholder='Select Status'
                       options={options}
                     />
                   </Table.Cell>
                 </Table.Row>
               )
             )}
+            {filteredUsers.length <= 0 ? (
+              <Table.Row className='cursor-pointer'>
+                <Table.Cell colSpan={7}>No results found</Table.Cell>
+              </Table.Row>
+            ) : null}
           </Table.Body>
         </Table>
       </UsersContainer>

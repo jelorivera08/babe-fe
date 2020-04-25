@@ -4,7 +4,7 @@ import React, { useState, useContext } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useHistory, Switch, Route } from "react-router-dom";
 import { graphql } from "react-relay/hooks";
-import { Table } from "semantic-ui-react";
+import { Table, Select, Input } from "semantic-ui-react";
 
 import { QueryRenderer } from "react-relay";
 import { Button } from "semantic-ui-react";
@@ -42,9 +42,19 @@ const query = graphql`
   }
 `;
 
+const tableHeaders = [
+  { key: "Account Type", value: "accountType", text: "Account Type" },
+  { key: "Username", value: "username", text: "Username" },
+  { key: "First Name", value: "firstName", text: "First Name" },
+  { key: "Surname", value: "surname", text: "Surname" },
+  { key: "Region", value: "region", text: "Region" },
+];
+
 export default ({ accountType }) => {
   const history = useHistory();
   const { region } = useContext(AppContext);
+  const [searchType, setSearchType] = useState("username");
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const headerTitle = history.location.pathname
     .split("/")
@@ -65,16 +75,48 @@ export default ({ accountType }) => {
           return <div>{error.message}</div>;
         } else if (props) {
           const { stockists } = props;
+
+          let filteredStockists = stockists.filter((stockist) =>
+            stockist[searchType]
+              .toLowerCase()
+              .includes(searchKeyword.toLocaleLowerCase())
+          );
+
           return (
-            <div className="w-full h-screen">
-              <div className="mt-8 mx-6 pt-4 text-xl flex">
-                <div>Stockists</div>
-                {headerTitle.map((title) => (
-                  <div key={title} className="flex items-center">
-                    <IoIosArrowForward className="ml-2" />
-                    <div className="ml-2">{title}</div>
-                  </div>
-                ))}
+            <div className='w-full h-screen'>
+              <div className='mt-8 mx-6 pt-4 text-xl flex justify-between items-center'>
+                <div>
+                  <div> Stockists</div>
+
+                  {headerTitle.map((title) => (
+                    <div key={title} className='flex items-center'>
+                      <IoIosArrowForward className='ml-2' />
+                      <div className='ml-2'>{title}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className='mb-4'>
+                  <Select
+                    className='mr-1'
+                    placeholder='Select Search Type'
+                    style={{
+                      minWidth: "10rem",
+                      fontSize: "1rem",
+                      minHeight: "2.5rem",
+                    }}
+                    value={searchType}
+                    onChange={(e, { value }) => setSearchType(value)}
+                    options={tableHeaders}
+                  />
+                  <Input
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                    icon='search'
+                    size='mini'
+                    placeholder='Search...'
+                  />
+                </div>
               </div>
 
               <CreateOrderContainer
@@ -87,26 +129,27 @@ export default ({ accountType }) => {
                 accountType={accountType}
                 region={region}
               />
-              <div className="flex justify-end mr-6">
+              <div className='flex justify-end mr-6'>
                 <Button onClick={() => setCreateOrderOpen(true)}>
                   Create Order
                 </Button>
               </div>
 
-              <RegionalStockistsContainer className="w-full h-full p-6">
+              <RegionalStockistsContainer className='w-full h-full p-6'>
                 <Switch>
-                  <Route exact path="/dashboard/orders">
+                  <Route exact path='/dashboard/orders'>
                     <Table celled selectable striped>
                       <Table.Header>
                         <Table.Row>
-                          <Table.HeaderCell>Username</Table.HeaderCell>
-                          <Table.HeaderCell>Firstname</Table.HeaderCell>
-                          <Table.HeaderCell>Surname</Table.HeaderCell>
-                          <Table.HeaderCell>Region</Table.HeaderCell>
+                          {tableHeaders.map((theader) => (
+                            <Table.HeaderCell key={theader.key}>
+                              {theader.text}
+                            </Table.HeaderCell>
+                          ))}
                         </Table.Row>
                       </Table.Header>
                       <Table.Body>
-                        {stockists.map((stockist) => (
+                        {filteredStockists.map((stockist) => (
                           <Table.Row
                             key={stockist.username}
                             onClick={() =>
@@ -114,18 +157,26 @@ export default ({ accountType }) => {
                                 `/dashboard/orders/${stockist.username}`
                               )
                             }
-                            className="cursor-pointer"
+                            className='cursor-pointer'
                           >
+                            <Table.Cell>{stockist.accountType}</Table.Cell>
                             <Table.Cell>{stockist.username}</Table.Cell>
-                            <Table.Cell>{stockist.surname}</Table.Cell>
+                            <Table.Cell>{stockist.firstName}</Table.Cell>
                             <Table.Cell>{stockist.surname}</Table.Cell>
                             <Table.Cell>{stockist.region}</Table.Cell>
                           </Table.Row>
                         ))}
+                        {filteredStockists.length <= 0 ? (
+                          <Table.Row className='cursor-pointer'>
+                            <Table.Cell colSpan={5}>
+                              No results found
+                            </Table.Cell>
+                          </Table.Row>
+                        ) : null}
                       </Table.Body>
                     </Table>
                   </Route>
-                  {stockists.map((stockist) => (
+                  {filteredStockists.map((stockist) => (
                     <Route
                       key={stockist.username}
                       path={`/dashboard/orders/${stockist.username}`}

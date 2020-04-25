@@ -14,9 +14,9 @@ const ImageLogo = styled.div`
 `;
 
 const Background = ({ children }) => (
-  <BackgroundContainer className="w-full bg-teal-600 h-screen flex justify-center items-center">
+  <BackgroundContainer className='w-full bg-teal-600 h-screen flex justify-center items-center'>
     {children}
-    <ImageLogo className="fixed h-12 bg-transparent text-5xl">babe.</ImageLogo>
+    <ImageLogo className='fixed h-12 bg-transparent text-5xl'>babe.</ImageLogo>
   </BackgroundContainer>
 );
 

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 
 import Login from "./containers/Login";
+import AboutUs from "./containers/AboutUs";
 import Background from "./components/Background";
 import Header from "./components/Header/index";
+
 import jwtDecode from "jwt-decode";
 
 import AppContext from "./context";
@@ -42,39 +44,30 @@ function App() {
       }}
     >
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Header history={history} />
           <Login />
         </Route>
-        <Route exact path="/signup">
+        <Route exact path='/signup'>
           <SignUpComponent />
         </Route>
-        <Route path="/dashboard">
+        <Route path='/dashboard'>
           <DashBoardComponent />
         </Route>
-        <Route path="/aboutUs">
-          <Background>
-            <div
-              onKeyDown={() => {}}
-              role="button"
-              tabIndex="0"
-              className="text-3xl cursor-pointer"
-            >
-              More about us
-            </div>
-          </Background>
+        <Route path='/aboutUs'>
+          <AboutUs />
         </Route>
-        <Route path="/resellers">
+        <Route path='/resellers'>
           <ResllerDirectoryComponent />
         </Route>
         <Route>
           <Background>
             <div
               onKeyDown={() => {}}
-              role="button"
-              tabIndex="0"
+              role='button'
+              tabIndex='0'
               onClick={() => history.push("/")}
-              className="text-3xl cursor-pointer"
+              className='text-3xl cursor-pointer'
             >
               Hi, Babe. Are you lost? Click here to go back home.
             </div>

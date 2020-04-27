@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Suspense } from "react";
 import styled from "styled-components";
 import cx from "classnames";
 import { MdMenu } from "react-icons/md";
@@ -56,23 +56,23 @@ const Provincial = () => {
   );
 
   return (
-    <div className="w-full flex">
-      <PrimaryBar className="h-screen w-16 p-2 flex flex-col justify-between">
+    <div className='w-full flex'>
+      <PrimaryBar className='h-screen w-16 p-2 flex flex-col justify-between'>
         <img
-          className="cursor-pointer"
+          className='cursor-pointer'
           src={logo1}
-          alt="logo1"
+          alt='logo1'
           onClick={() => {
             setSelectedMenu("");
             history.push("/dashboard");
           }}
         />
         <div
-          role="button"
-          tabIndex="0"
-          className="flex justify-center items-center mt-1 mb-2"
+          role='button'
+          tabIndex='0'
+          className='flex justify-center items-center mt-1 mb-2'
         >
-          <Dropdown pointing="left" icon="user circle">
+          <Dropdown pointing='left' icon='user circle'>
             <Dropdown.Menu>
               <Dropdown.Item
                 onClick={() => {
@@ -80,7 +80,7 @@ const Provincial = () => {
                   history.push("/");
                   window.location.reload();
                 }}
-                text="Log out"
+                text='Log out'
               />
             </Dropdown.Menu>
           </Dropdown>
@@ -89,20 +89,20 @@ const Provincial = () => {
       <SecondaryBar
         className={cx("h-screen bg-gray-200 p-4", { "show-menu": showMenu })}
       >
-        <div className="flex items-center cursor-pointer">
+        <div className='flex items-center cursor-pointer'>
           <MdMenu
-            size="1.5em"
+            size='1.5em'
             onClick={() => {
               setShowMenu(!showMenu);
             }}
           />
-          {showMenu ? <p className="text-xl ml-2 text-center"> Menu</p> : null}
+          {showMenu ? <p className='text-xl ml-2 text-center'> Menu</p> : null}
         </div>
 
-        <div className="mt-8">
+        <div className='mt-8'>
           <div
-            tabIndex="0"
-            role="button"
+            tabIndex='0'
+            role='button'
             onClick={() => {
               setSelectedMenu("orders");
               history.push("/dashboard/orders");
@@ -114,13 +114,13 @@ const Provincial = () => {
               { "bg-gray-400": selectedMenu === "orders" }
             )}
           >
-            {showMenu ? "Order Tracker" : <Icon name="address card" />}
+            {showMenu ? "Order Tracker" : <Icon name='address card' />}
           </div>
         </div>
 
         <div
-          tabIndex="0"
-          role="button"
+          tabIndex='0'
+          role='button'
           onClick={() => {
             setSelectedMenu("yourOrders");
             history.push("/dashboard/yourOrders");
@@ -132,24 +132,25 @@ const Provincial = () => {
             { "bg-gray-400": selectedMenu === "yourOrders" }
           )}
         >
-          {showMenu ? "Your Orders" : <Icon name="shopping cart" />}
+          {showMenu ? "Your Orders" : <Icon name='shopping cart' />}
         </div>
       </SecondaryBar>
+      <Suspense fallbacke={<div>loading</div>}>
+        <Switch>
+          <Route path='/dashboard/orders'>
+            <OrderTracker accountType='Reseller' />
+          </Route>
+          <Route path='/dashboard/yourOrders'>
+            <YourOrders username={username} />
+          </Route>
 
-      <Switch>
-        <Route path="/dashboard/orders">
-          <OrderTracker accountType="Reseller" />
-        </Route>
-        <Route path="/dashboard/yourOrders">
-          <YourOrders username={username} />
-        </Route>
-
-        <Route>
-          <div className="body-gradient w-full h-screen flex justify-center items-center">
-            <BreadText className="text-2xl">Let's get this bread.</BreadText>
-          </div>
-        </Route>
-      </Switch>
+          <Route>
+            <div className='body-gradient w-full h-screen flex justify-center items-center'>
+              <BreadText className='text-2xl'>Let's get this bread.</BreadText>
+            </div>
+          </Route>
+        </Switch>
+      </Suspense>
     </div>
   );
 };

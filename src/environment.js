@@ -2,13 +2,18 @@ import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
 import { history } from "./App/App";
 
+import {
+  DEV_API,
+  // PROD_API
+} from "./constants";
+
 export function fetchQuery(operation, variables) {
   const noAuthNeeded =
     operation.text.includes("authenticateUser") ||
     operation.text.includes("userCreate") ||
     operation.text.includes("activeResellers");
 
-  return fetch("http://localhost:4000/graphql", {
+  return fetch(`${DEV_API}/graphql`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

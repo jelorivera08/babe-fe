@@ -3,8 +3,8 @@ import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { history } from "./App/App";
 
 import {
-  DEV_API,
-  // PROD_API
+  // DEV_API,
+  PROD_API,
 } from "./constants";
 
 export function fetchQuery(operation, variables) {
@@ -13,7 +13,7 @@ export function fetchQuery(operation, variables) {
     operation.text.includes("userCreate") ||
     operation.text.includes("activeResellers");
 
-  return fetch(`${DEV_API}/graphql`, {
+  return fetch(`${PROD_API}/graphql`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

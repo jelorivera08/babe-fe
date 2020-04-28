@@ -8,14 +8,17 @@ import App from "./App/App";
 import * as serviceWorker from "./serviceWorker";
 import environment from "./environment";
 import Background from "./App/components/Background";
+import HttpsRedirect from "react-https-redirect";
 
 ReactDOM.render(
   <RelayEnvironmentProvider environment={environment}>
-    <Router>
-      <Suspense fallback={<Background>loading...</Background>}>
-        <App />
-      </Suspense>
-    </Router>
+    <HttpsRedirect>
+      <Router>
+        <Suspense fallback={<Background>loading...</Background>}>
+          <App />
+        </Suspense>
+      </Router>
+    </HttpsRedirect>
   </RelayEnvironmentProvider>,
   document.getElementById("root")
 );

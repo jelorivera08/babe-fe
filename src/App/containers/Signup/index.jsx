@@ -10,7 +10,7 @@ import Header from "../../components/Header";
 import environment from "../../../environment";
 import axios from "axios";
 
-import { PROD_API } from "../../../constants";
+import { DEV_API } from "../../../constants";
 
 import { options, regionOptions } from "./constants";
 
@@ -83,21 +83,20 @@ const SignUp = () => {
       variables: { ...values },
       onCompleted: (response, errors) => {
         if (response && response.userCreate && response.userCreate.username) {
-          return setRegistrationSucess(true);
-          //   const formData = new FormData();
-          //   formData.append("image", imgFile);
-          //   formData.append("username", credentials.username);
+          const formData = new FormData();
+          formData.append("file", imgFile);
+          formData.append("username", credentials.username);
 
-          //   axios
-          //     .post(`${PROD_API}/upload`, formData, {})
-          //     .then(() => {
-          //       setRegistrationSucess(true);
-          //     })
-          //     .catch((err) => setError(err));
-          // }
+          axios
+            .post(`${DEV_API}/upload`, formData, {})
+            .then(() => {
+              setRegistrationSucess(true);
+            })
+            .catch((err) => setError(err));
+        }
 
-          // if (errors) {
-          //   setError(errors[0].message);
+        if (errors) {
+          setError(errors[0].message);
         }
       },
       onError: (err) => setError(err),

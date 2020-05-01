@@ -20,7 +20,7 @@ const query = graphql`
       instagramURL
       surname
       description
-      imageURL
+      imageUrl
     }
   }
 `;
@@ -34,46 +34,46 @@ const ResllerDirectory = () => {
 
   return (
     <Background>
-      <div className="h-full w-full bg-transparent">
+      <div className='h-full w-full bg-transparent'>
         <Header history={history} />
 
-        <ResellersContainer className="mt-12 p-32 flex justify-center flex-wrap overflow-y-scroll relative z-10">
+        <ResellersContainer className='mt-12 p-32 flex justify-center flex-wrap overflow-y-scroll relative z-10'>
           {activeResellers.map(
             ({
               firstName,
               surname,
               facebookURL,
               instagramURL,
-              imageURL,
+              imageUrl,
               description,
             }) => (
-              <div key={facebookURL} className="m-2">
+              <div key={facebookURL} className='m-2'>
                 <Card>
                   <div
                     style={{
                       height: "26rem",
                     }}
-                    className="flex justify-center items-center  overflow-hidden bg-black"
+                    className='flex justify-center items-center  overflow-hidden bg-black'
                   >
-                    <Image src={imageURL} wrapped ui={false} />
+                    <Image src={imageUrl} wrapped ui={false} />
                   </div>
 
                   <Card.Content>
                     <Card.Header>{`${firstName} ${surname}`}</Card.Header>
                     <Card.Meta>
-                      <span className="date">Reseller</span>
+                      <span className='date'>Reseller</span>
                     </Card.Meta>
-                    <Card.Description className="h-8 flex items-center">
+                    <Card.Description className='h-8 flex items-center'>
                       {description}
                     </Card.Description>
                   </Card.Content>
-                  <Card.Content extra className="flex justify-between">
-                    <div className="w-1/2 text-center">
-                      <Icon name="instagram" />
+                  <Card.Content extra className='flex justify-between'>
+                    <div className='w-1/2 text-center'>
+                      <Icon name='instagram' />
                       {instagramURL}
                     </div>
-                    <div className="w-1/2 text-center">
-                      <Icon name="facebook" />
+                    <div className='w-1/2 text-center'>
+                      <Icon name='facebook' />
                       {facebookURL}
                     </div>
                   </Card.Content>

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 85c9151c8cbae4a4da38962eb6d36a30
+ * @relayHash 93c63cc32a5ad67fa36bda5659426398
  */
 
 /* eslint-disable */
@@ -15,6 +15,7 @@ export type UsersListQueryResponse = {|
     +username: ?string,
     +firstName: ?string,
     +facebookURL: ?string,
+    +imageUrl: ?string,
     +instagramURL: ?string,
     +surname: ?string,
     +accountType: ?string,
@@ -35,6 +36,7 @@ query UsersListQuery {
     username
     firstName
     facebookURL
+    imageUrl
     instagramURL
     surname
     accountType
@@ -70,32 +72,39 @@ v2 = {
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "instagramURL",
+  "name": "imageUrl",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "surname",
+  "name": "instagramURL",
   "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "accountType",
+  "name": "surname",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "status",
+  "name": "accountType",
   "args": null,
   "storageKey": null
 },
 v7 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "status",
+  "args": null,
+  "storageKey": null
+},
+v8 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "region",
@@ -127,7 +136,8 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
-          (v7/*: any*/)
+          (v7/*: any*/),
+          (v8/*: any*/)
         ]
       }
     ]
@@ -154,6 +164,7 @@ return {
           (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
+          (v8/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -169,12 +180,12 @@ return {
     "operationKind": "query",
     "name": "UsersListQuery",
     "id": null,
-    "text": "query UsersListQuery {\n  users {\n    username\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    accountType\n    status\n    region\n    id\n  }\n}\n",
+    "text": "query UsersListQuery {\n  users {\n    username\n    firstName\n    facebookURL\n    imageUrl\n    instagramURL\n    surname\n    accountType\n    status\n    region\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ef93c34a9a835d5fa00b05202a0c2a0b';
+(node/*: any*/).hash = 'd9b337ba9c043a47ee0b88ebe2136dc6';
 
 module.exports = node;

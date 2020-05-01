@@ -2,7 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { graphql, commitMutation } from "react-relay";
 import styled from "styled-components";
-import { Select, Table, Input } from "semantic-ui-react";
+import {
+  Select,
+  Table,
+  Input,
+  Button,
+  Icon,
+  Modal,
+  Image,
+} from "semantic-ui-react";
 import environment from "../../../../environment";
 
 const { preloadQuery, usePreloadedQuery } = require("react-relay/hooks");
@@ -13,6 +21,7 @@ const query = graphql`
       username
       firstName
       facebookURL
+      imageUrl
       instagramURL
       surname
       accountType
@@ -52,6 +61,7 @@ const tableHeaders = [
   { key: "Region", value: "region", text: "Region" },
   { key: "Instagram", value: "instagramURL", text: "Instagram" },
   { key: "Facebook", value: "facebookURL", text: "Facebook" },
+  { key: "imageUrl", value: "imageUrl", text: "Image" },
   { key: "Status", value: "status", text: "Status" },
 ];
 
@@ -60,6 +70,7 @@ export default () => {
   const [searchType, setSearchType] = useState("accountType");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [imageModal, setImageModal] = useState("");
 
   useEffect(() => {
     setFilteredUsers(
@@ -132,6 +143,7 @@ export default () => {
                   facebookURL,
                   status,
                   instagramURL,
+                  imageUrl,
                   region,
                 },
                 i
@@ -144,6 +156,13 @@ export default () => {
                   <Table.Cell>{region || "NA"}</Table.Cell>
                   <Table.Cell>{instagramURL}</Table.Cell>
                   <Table.Cell>{facebookURL}</Table.Cell>
+                  <Table.Cell>
+                    <Button size='mini' onClick={() => setImageModal(imageUrl)}>
+                      <Button.Content>
+                        <Icon name='picture' />
+                      </Button.Content>
+                    </Button>
+                  </Table.Cell>
                   <Table.Cell>
                     <Select
                       className='ml-2'
@@ -166,6 +185,29 @@ export default () => {
           </Table.Body>
         </Table>
       </UsersContainer>
+
+      <Modal
+        size='mini'
+        dimmer='inverted'
+        onClose={() => setImageModal("")}
+        open={imageModal !== ""}
+      >
+        <Modal.Header>User Photo</Modal.Header>
+        <Modal.Content>
+          {imageModal === null ? (
+            <div>This user has no uploaded photo.</div>
+          ) : (
+            <Image
+              style={{
+                margin: "auto",
+              }}
+              wrapped
+              size='medium'
+              src={imageModal}
+            />
+          )}
+        </Modal.Content>
+      </Modal>
     </div>
   );
 };

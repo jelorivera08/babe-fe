@@ -85,8 +85,8 @@ export default ({ accountType }) => {
           return (
             <div className='w-full h-screen'>
               <div className='mt-8 mx-6 pt-4 text-xl flex justify-between items-center'>
-                <div>
-                  <div> Stockists</div>
+                <div className='flex'>
+                  <div>Stockists</div>
 
                   {headerTitle.map((title) => (
                     <div key={title} className='flex items-center'>

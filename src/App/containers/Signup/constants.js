@@ -18,43 +18,33 @@ export const options = [
 
 export const regionOptions = [
   {
-    key: "Illocos Region",
-    value: "Illocos Region",
-    text: "Illocos Region",
+    key: "Region 1",
+    value: "Region 1",
+    text: "Region 1",
   },
   {
-    key: "Cagayan Valley",
-    value: "Cagayan Valley",
-    text: "Cagayan Valley",
+    key: "Region 2",
+    value: "Region 2",
+    text: "Region 2",
   },
   {
-    key: "Central Luzon",
-    value: "Central Luzon",
-    text: "Central Luzon",
+    key: "Region 3",
+    value: "Region 3",
+    text: "Region 3",
   },
   {
-    key: "CALABARZON",
-    value: "CALABARZON",
-    text: "CALABARZON",
+    key: "NCR 1",
+    value: "NCR 1",
+    text: "NCR 1",
   },
   {
-    key: "Bicol Region",
-    value: "Bicol Region",
-    text: "Bicol Region",
+    key: "NCR 2",
+    value: "NCR 2",
+    text: "NCR 2",
   },
   {
-    key: "NCR",
-    value: "NCR",
-    text: "NCR",
-  },
-  {
-    key: "Cordillera Region",
-    value: "Cordillera Region",
-    text: "Cordillera Region",
-  },
-  {
-    key: "MIMAROPA Region",
-    value: "MIMAROPA Region",
-    text: "MIMAROPA Region",
+    key: "Region 4a",
+    value: "Region 4a",
+    text: "Region 4a",
   },
 ];

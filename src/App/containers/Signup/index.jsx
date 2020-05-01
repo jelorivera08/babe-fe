@@ -83,6 +83,7 @@ const SignUp = () => {
       variables: { ...values },
       onCompleted: (response, errors) => {
         if (response && response.userCreate && response.userCreate.username) {
+          if (imgFile === "") return null;
           const formData = new FormData();
           formData.append("file", imgFile);
           formData.append("username", credentials.username);

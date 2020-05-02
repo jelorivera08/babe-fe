@@ -10,7 +10,7 @@ import Header from "../../components/Header";
 import environment from "../../../environment";
 import axios from "axios";
 
-import { DEV_API } from "../../../constants";
+import { PROD_API } from "../../../constants";
 
 import { options, regionOptions } from "./constants";
 
@@ -89,7 +89,7 @@ const SignUp = () => {
           formData.append("username", credentials.username);
 
           axios
-            .post(`${DEV_API}/upload`, formData, {})
+            .post(`${PROD_API}/upload`, formData, {})
             .then(() => {
               setRegistrationSucess(true);
             })

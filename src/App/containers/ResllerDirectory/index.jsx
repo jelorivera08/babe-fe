@@ -21,6 +21,7 @@ const query = graphql`
       surname
       description
       imageUrl
+      hasStock
     }
   }
 `;
@@ -43,6 +44,7 @@ const ResllerDirectory = () => {
               firstName,
               surname,
               facebookURL,
+              hasStock,
               instagramURL,
               imageUrl,
               description,
@@ -67,6 +69,17 @@ const ResllerDirectory = () => {
                       {description}
                     </Card.Description>
                   </Card.Content>
+
+                  {hasStock ? (
+                    <Card.Content className='flex justify-center text-green-500'>
+                      <div>Stocks Available</div>
+                    </Card.Content>
+                  ) : (
+                    <Card.Content className='flex justify-center text-red-500'>
+                      <div>Stocks Unavailable</div>
+                    </Card.Content>
+                  )}
+
                   <Card.Content extra className='flex justify-between'>
                     <div className='w-1/2 text-center'>
                       <Icon name='instagram' />

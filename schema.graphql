@@ -35,6 +35,7 @@ type Mutation {
     resellerAmount: Int!
   ): [productType]
   updateOrderNote(dateOrdered: String!, note: String!, user: String!): orderType
+  updateResellerStock(hasStockStatus: Boolean!): userType
 }
 
 type orderType {
@@ -66,6 +67,7 @@ type Query {
   products: [productType]
   activeResellers: [userType]
   yourOrders(username: String): [orderType]
+  userInfo: userType
 }
 
 type UserRegistrationType {
@@ -93,4 +95,5 @@ type userType {
   description: String
   region: String
   imageUrl: String
+  hasStock: Boolean
 }

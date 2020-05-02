@@ -109,9 +109,18 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
       updater: (store) => {
         const payload = store.getRootField("updateOrder");
         const root = store.getRoot();
-        const stockistsProxy = root.getLinkedRecords(
-          `stockists(accountType:"${accountType}",region:"${region}")`
-        );
+        let stockistsProxy = {};
+
+        if (region === null) {
+          stockistsProxy = root.getLinkedRecords(
+            `stockists(accountType:"${accountType}")`
+          );
+        } else {
+          stockistsProxy = root.getLinkedRecords(
+            `stockists(accountType:"${accountType}",region:"${region}")`
+          );
+        }
+
         const stockistProxy = stockistsProxy.find(
           (val) => val.getValue("username") === values.user
         );
@@ -153,9 +162,17 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
       updater: (store) => {
         const payload = store.getRootField("addOrder");
         const root = store.getRoot();
-        const stockistsProxy = root.getLinkedRecords(
-          `stockists(accountType:"${accountType}",region:"${region}")`
-        );
+        let stockistsProxy = {};
+
+        if (region === null) {
+          stockistsProxy = root.getLinkedRecords(
+            `stockists(accountType:"${accountType}")`
+          );
+        } else {
+          stockistsProxy = root.getLinkedRecords(
+            `stockists(accountType:"${accountType}",region:"${region}")`
+          );
+        }
 
         const stockistProxy = stockistsProxy.find(
           (val) => val.getValue("username") === values.user
@@ -237,7 +254,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
   };
 
   return (
-    <OrdersContainer className="h-full overflow-y-auto pr-4">
+    <OrdersContainer className='h-full overflow-y-auto pr-4'>
       {orders.length > 0 ? (
         orders.map((order) => {
           const formattedDateOrdered = dayjs(order.dateOrdered).format(
@@ -248,20 +265,20 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
           return (
             <div
               key={order.dateOrdered}
-              className="mb-8 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4"
+              className='mb-8 w-full border bg-gray-200 border-gray-400 border-solid rounded p-4'
             >
-              <div className="flex justify-between">
-                <div className="w-1/2">
-                  <div className="flex">
+              <div className='flex justify-between'>
+                <div className='w-1/2'>
+                  <div className='flex'>
                     <div>Order Date:</div>
-                    <div className="ml-2">{formattedDateOrdered}</div>
+                    <div className='ml-2'>{formattedDateOrdered}</div>
                   </div>
 
-                  <div className="w-full pt-8 pr-20 pl-4 h-full">
-                    <div className="bg-white h-full border border-gray-400 rounded">
-                      <div className="mt-2 ml-2 mb-1 relative">Notes</div>
+                  <div className='w-full pt-8 pr-20 pl-4 h-full'>
+                    <div className='bg-white h-full border border-gray-400 rounded'>
+                      <div className='mt-2 ml-2 mb-1 relative'>Notes</div>
                       <textarea
-                        className="pl-2 outline-none resize-none w-full overflow-hidden"
+                        className='pl-2 outline-none resize-none w-full overflow-hidden'
                         rows={5}
                         cols={5}
                         onChange={(e) => {
@@ -277,17 +294,17 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                   </div>
                 </div>
 
-                <div className="w-1/2 flex justify-end">
-                  <table className="table-auto w-full">
+                <div className='w-1/2 flex justify-end'>
+                  <table className='table-auto w-full'>
                     <thead>
                       <tr>
-                        <th className="border border-black  px-4 py-2">
+                        <th className='border border-black  px-4 py-2'>
                           Product
                         </th>
-                        <th className="border border-black px-4 py-2">
+                        <th className='border border-black px-4 py-2'>
                           Quantity
                         </th>
-                        <th className="border border-black px-4 py-2">
+                        <th className='border border-black px-4 py-2'>
                           Amount
                         </th>
                       </tr>
@@ -299,7 +316,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                         return (
                           <tr
                             key={product.name}
-                            className="cursor-pointer hover:bg-gray-400"
+                            className='cursor-pointer hover:bg-gray-400'
                           >
                             <td
                               onClick={() => {
@@ -313,13 +330,13 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                                   name: product.name,
                                 });
                               }}
-                              className="border border-black px-4 py-2 text-center"
+                              className='border border-black px-4 py-2 text-center'
                             >
                               {editOrder.currentOrder === order.dateOrdered &&
                               editOrder.productIndex === i &&
                               editOrder.editIndex > 0 ? (
                                 <Select
-                                  placeholder="Select Product"
+                                  placeholder='Select Product'
                                   options={products
                                     .map((prod) => {
                                       if (
@@ -363,7 +380,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                             </td>
 
                             <td
-                              className="border border-black px-4 py-2 text-center cursor-text"
+                              className='border border-black px-4 py-2 text-center cursor-text'
                               onClick={() => {
                                 setEditOrder({
                                   ...editOrder,
@@ -380,9 +397,9 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                               editOrder.productIndex === i &&
                               editOrder.editIndex > 0 ? (
                                 <input
-                                  tabIndex="0"
+                                  tabIndex='0'
                                   ref={inputEl}
-                                  className="bg-transparent outline-none w-4"
+                                  className='bg-transparent outline-none w-4'
                                   value={editOrder.quantity}
                                   onKeyDown={({ keyCode }) => {
                                     if (keyCode === 9) {
@@ -412,7 +429,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                               )}
                             </td>
 
-                            <td className="border border-black px-4 py-2 text-center">
+                            <td className='border border-black px-4 py-2 text-center'>
                               {`₱ ${formatNumber(
                                 (product.amount * product.quantity).toFixed(2)
                               )}`}
@@ -423,10 +440,10 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                       {additionalOrder.editIndex &&
                       order.dateOrdered === additionalOrder.currentOrder ? (
                         <tr>
-                          <td className="border border-black px-4 py-2 text-center">
+                          <td className='border border-black px-4 py-2 text-center'>
                             {additionalOrder.editIndex ? (
                               <Select
-                                placeholder="Select Product"
+                                placeholder='Select Product'
                                 options={products
                                   .map((product) => {
                                     if (
@@ -469,7 +486,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                             )}
                           </td>
                           <td
-                            className="border border-black px-4 py-2 text-center cursor-text"
+                            className='border border-black px-4 py-2 text-center cursor-text'
                             onClick={() => {
                               setAdditionalOrder({
                                 ...additionalOrder,
@@ -479,9 +496,9 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                           >
                             {additionalOrder.editIndex === 2 ? (
                               <input
-                                tabIndex="0"
+                                tabIndex='0'
                                 ref={inputEl}
-                                className="bg-transparent outline-none w-4"
+                                className='bg-transparent outline-none w-4'
                                 value={additionalOrder.quantity}
                                 onKeyDown={({ keyCode }) => {
                                   if (keyCode === 9) {
@@ -510,7 +527,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                               <div>{additionalOrder.quantity}</div>
                             )}
                           </td>
-                          <td className="border border-black px-4 py-2 text-center">
+                          <td className='border border-black px-4 py-2 text-center'>
                             {`₱ ${formatNumber(
                               (
                                 additionalOrder.amount *
@@ -522,12 +539,12 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                       ) : null}
                       <tr>
                         <td
-                          colSpan="2"
-                          className="border border-black px-4 py-2"
+                          colSpan='2'
+                          className='border border-black px-4 py-2'
                         >
                           Total Amount
                         </td>
-                        <td className="border border-black px-4 py-2 text-center">
+                        <td className='border border-black px-4 py-2 text-center'>
                           {`₱ ${formatNumber(totalAmount.toFixed(2))}`}
                         </td>
                       </tr>
@@ -536,7 +553,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                 </div>
               </div>
 
-              <div className="flex justify-end mt-4">
+              <div className='flex justify-end mt-4'>
                 {(additionalOrder.editIndex > 0 &&
                   order.dateOrdered === additionalOrder.currentOrder) ||
                 (editOrder.editIndex > 0 &&
@@ -564,14 +581,14 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
                         });
                       }
                     }}
-                    color="red"
+                    color='red'
                   >
                     Cancel
                   </Button>
                 ) : null}
 
                 <Button
-                  tabIndex="-1"
+                  tabIndex='-1'
                   onClick={() => {
                     if (
                       editOrder.editIndex > 0 &&
@@ -653,7 +670,7 @@ const StockistOrders = ({ orders, user, accountType, region }) => {
           );
         })
       ) : (
-        <div className="text-xl mt-4">No orders from this user yet.</div>
+        <div className='text-xl mt-4'>No orders from this user yet.</div>
       )}
     </OrdersContainer>
   );

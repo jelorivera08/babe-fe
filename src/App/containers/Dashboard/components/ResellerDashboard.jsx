@@ -1,13 +1,35 @@
-import React, { useState, useContext, Suspense } from "react";
+import React, { useState, useContext, Suspense, useEffect } from "react";
 import styled from "styled-components";
 import cx from "classnames";
 import { MdMenu } from "react-icons/md";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { Icon, Dropdown } from "semantic-ui-react";
 import YourOrders from "../sections/YourOrders";
+import environment from "../../../../environment";
+
+import { fetchQuery, graphql } from "relay-runtime";
+
+import { commitMutation } from "react-relay";
 
 import logo1 from "../../../../assets/images/logo1.PNG";
 import AppContext from "../../../context";
+
+const query = graphql`
+  query ResellerDashboardUserInfoQuery {
+    userInfo {
+      hasStock
+    }
+  }
+`;
+
+const mutation = graphql`
+  mutation ResellerDashboardHasStockUpdateMutation($hasStockStatus: Boolean!) {
+    updateResellerStock(hasStockStatus: $hasStockStatus) {
+      username
+      hasStock
+    }
+  }
+`;
 
 const PrimaryBar = styled.div`
   background-color: #f9c5d1;
@@ -48,10 +70,42 @@ const Provincial = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(true);
   const { username } = useContext(AppContext);
+  const [hasStock, setHasStock] = useState(false);
 
   const [selectedMenu, setSelectedMenu] = useState(
     history.location.pathname.split("/")[2]
   );
+
+  useEffect(() => {
+    fetchQuery(environment, query, {}).then((data) => {
+      if (data) {
+        setHasStock(data.userInfo.hasStock);
+      }
+    });
+  }, []);
+
+  const toggleHasStock = (hasStock) => {
+    commitMutation(environment, {
+      mutation,
+      variables: {
+        hasStockStatus: hasStock,
+      },
+      updater: (store) => {
+        const hasStockPayload = store
+          .getRootField("updateResellerStock")
+          .getValue("hasStock");
+
+        const userInfo = store.getRoot().getLinkedRecord("userInfo");
+
+        userInfo.setValue(hasStockPayload, "hasStock");
+        setHasStock(hasStockPayload);
+      },
+      optimisticUpdater: () => {
+        setHasStock(hasStock);
+      },
+      onError: (err) => console.error(err),
+    });
+  };
 
   return (
     <div className='w-full flex'>
@@ -119,7 +173,11 @@ const Provincial = () => {
       <Suspense fallback={<div>loading...</div>}>
         <Switch>
           <Route path='/dashboard/yourOrders'>
-            <YourOrders username={username} />
+            <YourOrders
+              username={username}
+              hasStock={hasStock}
+              toggleHasStock={toggleHasStock}
+            />
           </Route>
 
           <Route>

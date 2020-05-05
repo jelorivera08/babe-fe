@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eb93399a8a2fe80625c27ae8e63c4f1a
+ * @relayHash bcebe6ff2556944794624ab082c957f2
  */
 
 /* eslint-disable */
@@ -17,7 +17,8 @@ export type SignupMutationVariables = {|
   accountType: string,
   facebookURL: string,
   instagramURL: string,
-  description: string,
+  areaOfDistribution: string,
+  address: string,
   region: string,
 |};
 export type SignupMutationResponse = {|
@@ -41,10 +42,11 @@ mutation SignupMutation(
   $accountType: String!
   $facebookURL: String!
   $instagramURL: String!
-  $description: String!
+  $areaOfDistribution: String!
+  $address: String!
   $region: String!
 ) {
-  userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL, description: $description, region: $region) {
+  userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL, address: $address, areaOfDistribution: $areaOfDistribution, region: $region) {
     username
     id
   }
@@ -97,7 +99,13 @@ var v0 = [
   },
   {
     "kind": "LocalArgument",
-    "name": "description",
+    "name": "areaOfDistribution",
+    "type": "String!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "address",
     "type": "String!",
     "defaultValue": null
   },
@@ -116,8 +124,13 @@ v1 = [
   },
   {
     "kind": "Variable",
-    "name": "description",
-    "variableName": "description"
+    "name": "address",
+    "variableName": "address"
+  },
+  {
+    "kind": "Variable",
+    "name": "areaOfDistribution",
+    "variableName": "areaOfDistribution"
   },
   {
     "kind": "Variable",
@@ -215,12 +228,12 @@ return {
     "operationKind": "mutation",
     "name": "SignupMutation",
     "id": null,
-    "text": "mutation SignupMutation(\n  $username: String!\n  $password: String!\n  $firstName: String!\n  $surname: String!\n  $accountType: String!\n  $facebookURL: String!\n  $instagramURL: String!\n  $description: String!\n  $region: String!\n) {\n  userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL, description: $description, region: $region) {\n    username\n    id\n  }\n}\n",
+    "text": "mutation SignupMutation(\n  $username: String!\n  $password: String!\n  $firstName: String!\n  $surname: String!\n  $accountType: String!\n  $facebookURL: String!\n  $instagramURL: String!\n  $areaOfDistribution: String!\n  $address: String!\n  $region: String!\n) {\n  userCreate(username: $username, password: $password, firstName: $firstName, surname: $surname, accountType: $accountType, facebookURL: $facebookURL, instagramURL: $instagramURL, address: $address, areaOfDistribution: $areaOfDistribution, region: $region) {\n    username\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5eedb299776bcccb1ffa8a99955701ca';
+(node/*: any*/).hash = '190b02abf57a3bf09fab7e599ffa8454';
 
 module.exports = node;

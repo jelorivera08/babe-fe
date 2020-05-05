@@ -23,7 +23,8 @@ const mutation = graphql`
     $accountType: String!
     $facebookURL: String!
     $instagramURL: String!
-    $description: String!
+    $areaOfDistribution: String!
+    $address: String!
     $region: String!
   ) {
     userCreate(
@@ -34,7 +35,8 @@ const mutation = graphql`
       accountType: $accountType
       facebookURL: $facebookURL
       instagramURL: $instagramURL
-      description: $description
+      address: $address
+      areaOfDistribution: $areaOfDistribution
       region: $region
     ) {
       username
@@ -52,7 +54,8 @@ const SignUp = () => {
     facebookURL: "",
     region: "",
     instagramURL: "",
-    description: "",
+    areaOfDistribution: "",
+    address: "",
   });
   const [error, setError] = useState("");
   const [registrationSucess, setRegistrationSucess] = useState(false);
@@ -320,7 +323,7 @@ const SignUp = () => {
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   id='facebookURL'
                   type='text'
-                  placeholder='BabeDelaCruz'
+                  placeholder='BabeDelaCruzFB'
                   value={credentials.facebookURL}
                   onChange={(e) =>
                     setCredentials({
@@ -342,7 +345,7 @@ const SignUp = () => {
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   id='instagramURL'
                   type='text'
-                  placeholder='BabeDelaCruz'
+                  placeholder='BabeDelaCruzIG'
                   value={credentials.instagramURL}
                   onChange={(e) =>
                     setCredentials({
@@ -359,20 +362,44 @@ const SignUp = () => {
                 className='block text-gray-700 text-sm font-bold mb-2'
                 htmlFor='username'
               >
-                Description
+                Area of Distribution
               </label>
               <input
                 className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 id='facebookURL'
                 type='text'
-                placeholder='Brief description of yourself'
-                value={credentials.description}
+                placeholder='Maginhawa, Quezon City'
+                value={credentials.areaOfDistribution}
                 onChange={(e) => {
-                  if (credentials.description.length >= 100) return null;
+                  if (credentials.areaOfDistribution.length >= 100) return null;
 
                   return setCredentials({
                     ...credentials,
-                    description: e.target.value,
+                    areaOfDistribution: e.target.value,
+                  });
+                }}
+              />
+            </div>
+
+            <div className='mb-6 mr-2 w-full'>
+              <label
+                className='block text-gray-700 text-sm font-bold mb-2'
+                htmlFor='username'
+              >
+                Address
+              </label>
+              <input
+                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                id='facebookURL'
+                type='text'
+                placeholder='Complete Address'
+                value={credentials.address}
+                onChange={(e) => {
+                  if (credentials.address.length >= 100) return null;
+
+                  return setCredentials({
+                    ...credentials,
+                    address: e.target.value,
                   });
                 }}
               />

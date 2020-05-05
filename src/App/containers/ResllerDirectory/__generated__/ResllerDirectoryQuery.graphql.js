@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4c2f4cfd9f66bc367fc1d2e7c496c22d
+ * @relayHash 0e3e10d9e52b2f44ab62c880baf314b0
  */
 
 /* eslint-disable */
@@ -16,7 +16,6 @@ export type ResllerDirectoryQueryResponse = {|
     +facebookURL: ?string,
     +instagramURL: ?string,
     +surname: ?string,
-    +description: ?string,
     +imageUrl: ?string,
     +hasStock: ?boolean,
   |}>
@@ -35,7 +34,6 @@ query ResllerDirectoryQuery {
     facebookURL
     instagramURL
     surname
-    description
     imageUrl
     hasStock
     id
@@ -75,18 +73,11 @@ v3 = {
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "description",
-  "args": null,
-  "storageKey": null
-},
-v5 = {
-  "kind": "ScalarField",
-  "alias": null,
   "name": "imageUrl",
   "args": null,
   "storageKey": null
 },
-v6 = {
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "hasStock",
@@ -116,8 +107,7 @@ return {
           (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/)
+          (v5/*: any*/)
         ]
       }
     ]
@@ -142,7 +132,6 @@ return {
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
-          (v6/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -158,12 +147,12 @@ return {
     "operationKind": "query",
     "name": "ResllerDirectoryQuery",
     "id": null,
-    "text": "query ResllerDirectoryQuery {\n  activeResellers {\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    description\n    imageUrl\n    hasStock\n    id\n  }\n}\n",
+    "text": "query ResllerDirectoryQuery {\n  activeResellers {\n    firstName\n    facebookURL\n    instagramURL\n    surname\n    imageUrl\n    hasStock\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '45d058f538db926d1da81d723b1d5b17';
+(node/*: any*/).hash = '9257d9e5b54b83f1e0d17d6d0e6f9b7f';
 
 module.exports = node;

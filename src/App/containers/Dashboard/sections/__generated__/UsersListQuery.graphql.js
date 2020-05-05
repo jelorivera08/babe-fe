@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 93c63cc32a5ad67fa36bda5659426398
+ * @relayHash 3c1583c56afea177c8309c3a6e8d7832
  */
 
 /* eslint-disable */
@@ -19,6 +19,8 @@ export type UsersListQueryResponse = {|
     +instagramURL: ?string,
     +surname: ?string,
     +accountType: ?string,
+    +address: ?string,
+    +areaOfDistribution: ?string,
     +status: ?string,
     +region: ?string,
   |}>
@@ -40,6 +42,8 @@ query UsersListQuery {
     instagramURL
     surname
     accountType
+    address
+    areaOfDistribution
     status
     region
     id
@@ -100,11 +104,25 @@ v6 = {
 v7 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "status",
+  "name": "address",
   "args": null,
   "storageKey": null
 },
 v8 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "areaOfDistribution",
+  "args": null,
+  "storageKey": null
+},
+v9 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "status",
+  "args": null,
+  "storageKey": null
+},
+v10 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "region",
@@ -137,7 +155,9 @@ return {
           (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
-          (v8/*: any*/)
+          (v8/*: any*/),
+          (v9/*: any*/),
+          (v10/*: any*/)
         ]
       }
     ]
@@ -165,6 +185,8 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
+          (v10/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -180,12 +202,12 @@ return {
     "operationKind": "query",
     "name": "UsersListQuery",
     "id": null,
-    "text": "query UsersListQuery {\n  users {\n    username\n    firstName\n    facebookURL\n    imageUrl\n    instagramURL\n    surname\n    accountType\n    status\n    region\n    id\n  }\n}\n",
+    "text": "query UsersListQuery {\n  users {\n    username\n    firstName\n    facebookURL\n    imageUrl\n    instagramURL\n    surname\n    accountType\n    address\n    areaOfDistribution\n    status\n    region\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd9b337ba9c043a47ee0b88ebe2136dc6';
+(node/*: any*/).hash = '1b2c4b331de0d91311c3be6b2f8ab8c3';
 
 module.exports = node;

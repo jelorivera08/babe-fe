@@ -7,6 +7,7 @@ import {
   Table,
   Input,
   Button,
+  Header,
   Icon,
   Modal,
   Image,
@@ -25,6 +26,8 @@ const query = graphql`
       instagramURL
       surname
       accountType
+      address
+      areaOfDistribution
       status
       region
     }
@@ -59,9 +62,6 @@ const tableHeaders = [
   { key: "First Name", value: "firstName", text: "First Name" },
   { key: "Surname", value: "surname", text: "Surname" },
   { key: "Region", value: "region", text: "Region" },
-  { key: "Instagram", value: "instagramURL", text: "Instagram" },
-  { key: "Facebook", value: "facebookURL", text: "Facebook" },
-  { key: "imageUrl", value: "imageUrl", text: "Image" },
   { key: "Status", value: "status", text: "Status" },
 ];
 
@@ -70,7 +70,7 @@ export default () => {
   const [searchType, setSearchType] = useState("accountType");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [imageModal, setImageModal] = useState("");
+  const [modalInfo, setModalInfo] = useState({});
 
   useEffect(() => {
     setFilteredUsers(
@@ -133,36 +133,26 @@ export default () => {
           </Table.Header>
 
           <Table.Body>
-            {filteredUsers.map(
-              (
-                {
-                  firstName,
-                  username,
-                  surname,
-                  accountType,
-                  facebookURL,
-                  status,
-                  instagramURL,
-                  imageUrl,
-                  region,
-                },
-                i
-              ) => (
-                <Table.Row key={username}>
+            {filteredUsers.map((user, i) => {
+              const {
+                firstName,
+                username,
+                surname,
+                accountType,
+                status,
+                region,
+              } = user;
+              return (
+                <Table.Row
+                  key={username}
+                  onClick={() => setModalInfo(user)}
+                  className='cursor-pointer'
+                >
                   <Table.Cell>{accountType}</Table.Cell>
                   <Table.Cell>{username}</Table.Cell>
                   <Table.Cell>{firstName}</Table.Cell>
                   <Table.Cell>{surname}</Table.Cell>
                   <Table.Cell>{region || "NA"}</Table.Cell>
-                  <Table.Cell>{instagramURL}</Table.Cell>
-                  <Table.Cell>{facebookURL}</Table.Cell>
-                  <Table.Cell>
-                    <Button size='mini' onClick={() => setImageModal(imageUrl)}>
-                      <Button.Content>
-                        <Icon name='picture' />
-                      </Button.Content>
-                    </Button>
-                  </Table.Cell>
                   <Table.Cell>
                     <Select
                       className='ml-2'
@@ -175,8 +165,8 @@ export default () => {
                     />
                   </Table.Cell>
                 </Table.Row>
-              )
-            )}
+              );
+            })}
             {filteredUsers.length <= 0 ? (
               <Table.Row className='cursor-pointer'>
                 <Table.Cell colSpan={7}>No results found</Table.Cell>
@@ -187,25 +177,64 @@ export default () => {
       </UsersContainer>
 
       <Modal
-        size='mini'
         dimmer='inverted'
-        onClose={() => setImageModal("")}
-        open={imageModal !== ""}
+        onClose={() => setModalInfo({})}
+        open={modalInfo.hasOwnProperty("username")}
       >
-        <Modal.Header>User Photo</Modal.Header>
-        <Modal.Content>
-          {imageModal === null ? (
-            <div>This user has no uploaded photo.</div>
-          ) : (
+        <Modal.Header>User details</Modal.Header>
+        <Modal.Content image>
+          {modalInfo.imageUrl ? (
             <Image
-              style={{
-                margin: "auto",
-              }}
               wrapped
-              size='medium'
-              src={imageModal}
+              size='bold'
+              style={{
+                maxHeight: "25rem",
+                maxWidth: "25rem",
+              }}
+              src={modalInfo.imageUrl}
             />
+          ) : (
+            <div
+              style={{
+                width: "25rem",
+                height: "25rem",
+              }}
+              className='p-4'
+            >
+              No Image Available
+            </div>
           )}
+          <Modal.Description
+            className='overflow-auto'
+            style={{ maxWidth: "50%" }}
+          >
+            <div className='font-bold py-4'>Username</div>
+            <div>{modalInfo.username}</div>
+            <div className='text-xl font-bold py-4'>Name</div>
+            <div className='flex'>
+              <div>{`${modalInfo.firstName} ${modalInfo.surname}`}</div>
+            </div>
+            <div className='text-xl font-bold py-4'>Account Type</div>
+            <div>{modalInfo.accountType}</div>
+
+            <div className='text-xl font-bold py-4'>Region</div>
+            <div>{modalInfo.region}</div>
+
+            <div className='text-xl font-bold py-4'>Status</div>
+            <div>{modalInfo.status}</div>
+
+            <div className='text-xl font-bold py-4'>Area of Distribution</div>
+            <div>{modalInfo.areaOfDistribution || "NA"}</div>
+
+            <div className='text-xl font-bold py-4'>Address</div>
+            <div>{modalInfo.address || "NA"}</div>
+
+            <div className='text-xl font-bold py-4'>Facebook</div>
+            <div>{modalInfo.facebookURL || "NA"}</div>
+
+            <div className='text-xl font-bold py-4'>Instagram</div>
+            <div>{modalInfo.instagramURL || "NA"}</div>
+          </Modal.Description>
         </Modal.Content>
       </Modal>
     </div>

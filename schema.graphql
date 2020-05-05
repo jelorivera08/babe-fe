@@ -7,7 +7,8 @@ type Mutation {
     accountType: String!
     facebookURL: String!
     instagramURL: String!
-    description: String!
+    areaOfDistribution: String!
+    address: String!
     region: String!
   ): UserRegistrationType
   changeUserStatus(username: String!, status: String!): userType
@@ -92,7 +93,8 @@ type userType {
   instagramURL: String
   status: String
   orders: [orderType]
-  description: String
+  address: String
+  areaOfDistribution: String
   region: String
   imageUrl: String
   hasStock: Boolean

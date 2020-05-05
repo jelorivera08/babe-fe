@@ -19,7 +19,6 @@ const query = graphql`
       facebookURL
       instagramURL
       surname
-      description
       imageUrl
       hasStock
     }
@@ -47,7 +46,6 @@ const ResllerDirectory = () => {
               hasStock,
               instagramURL,
               imageUrl,
-              description,
             }) => (
               <div key={facebookURL} className='m-2'>
                 <Card>
@@ -65,9 +63,6 @@ const ResllerDirectory = () => {
                     <Card.Meta>
                       <span className='date'>Reseller</span>
                     </Card.Meta>
-                    <Card.Description className='h-8 flex items-center'>
-                      {description}
-                    </Card.Description>
                   </Card.Content>
 
                   {hasStock ? (
@@ -80,14 +75,23 @@ const ResllerDirectory = () => {
                     </Card.Content>
                   )}
 
-                  <Card.Content extra className='flex justify-between'>
-                    <div className='w-1/2 text-center'>
+                  <Card.Content extra>
+                    <div className='w-full flex text-center'>
                       <Icon name='instagram' />
-                      {instagramURL}
+                      <textarea
+                        className='w-full resize-none'
+                        defaultValue={instagramURL}
+                      />
                     </div>
-                    <div className='w-1/2 text-center'>
+                  </Card.Content>
+
+                  <Card.Content extra>
+                    <div className='w-full flex text-center'>
                       <Icon name='facebook' />
-                      {facebookURL}
+                      <textarea
+                        className='w-full resize-none'
+                        defaultValue={facebookURL}
+                      />
                     </div>
                   </Card.Content>
                 </Card>

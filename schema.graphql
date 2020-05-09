@@ -44,6 +44,7 @@ type Mutation {
   ): productType
   updateResellerStock(hasStockStatus: Boolean!): userType
   deleteProduct(name: String!): productType
+  deleteUser(username: String!): userType
 }
 
 type orderType {

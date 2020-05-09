@@ -7,7 +7,6 @@ import {
   Table,
   Input,
   Button,
-  Header,
   Icon,
   Modal,
   Image,
@@ -45,6 +44,14 @@ const mutation = graphql`
   }
 `;
 
+const deleteUserMutation = graphql`
+  mutation UsersListDeleteMutation($username: String!) {
+    deleteUser(username: $username) {
+      username
+    }
+  }
+`;
+
 const UsersContainer = styled.div`
   overflow-y: scroll;
   height: calc(100vh - 94px);
@@ -63,6 +70,7 @@ const tableHeaders = [
   { key: "Surname", value: "surname", text: "Surname" },
   { key: "Region", value: "region", text: "Region" },
   { key: "Status", value: "status", text: "Status" },
+  { key: "Actions", value: "Actions", text: "Actions" },
 ];
 
 export default () => {
@@ -71,6 +79,28 @@ export default () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [modalInfo, setModalInfo] = useState({});
+  const [deleteUser, setDeleteUser] = useState({ username: null });
+
+  const deleteUserCommit = (username) => {
+    commitMutation(environment, {
+      mutation: deleteUserMutation,
+      variables: { username },
+      updater: (store) => {
+        const payload = store.getRootField("deleteUser");
+        const root = store.getRoot();
+        const usersProxy = root.getLinkedRecords("users");
+
+        const newUsers = usersProxy.filter(
+          (user) => user.getValue("username") !== payload.getValue("username")
+        );
+
+        root.setLinkedRecords(newUsers, "users");
+
+        setDeleteUser({ username: null });
+      },
+      onError: (err) => console.log(err),
+    });
+  };
 
   useEffect(() => {
     setFilteredUsers(
@@ -164,6 +194,17 @@ export default () => {
                       options={options}
                     />
                   </Table.Cell>
+
+                  <Table.Cell>
+                    <Icon
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        setDeleteUser({ username });
+                      }}
+                      name='trash'
+                    />
+                  </Table.Cell>
                 </Table.Row>
               );
             })}
@@ -186,7 +227,6 @@ export default () => {
           {modalInfo.imageUrl ? (
             <Image
               wrapped
-              size='bold'
               style={{
                 maxHeight: "25rem",
                 maxWidth: "25rem",
@@ -236,6 +276,30 @@ export default () => {
             <div>{modalInfo.instagramURL || "NA"}</div>
           </Modal.Description>
         </Modal.Content>
+      </Modal>
+
+      <Modal
+        dimmer='inverted'
+        size='tiny'
+        onClose={() => setDeleteUser({ username: null })}
+        open={deleteUser.username !== null}
+      >
+        <Modal.Header>Delete This Account</Modal.Header>
+        <Modal.Content>
+          <p>{`Are you sure you want to delete ${deleteUser.username}'s account`}</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={() => setDeleteUser({ username: null })} negative>
+            No
+          </Button>
+          <Button
+            onClick={() => deleteUserCommit(deleteUser.username)}
+            positive
+            icon='checkmark'
+            labelPosition='right'
+            content='Yes'
+          />
+        </Modal.Actions>
       </Modal>
     </div>
   );

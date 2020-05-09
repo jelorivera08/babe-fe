@@ -36,7 +36,14 @@ type Mutation {
     resellerAmount: Int!
   ): [productType]
   updateOrderNote(dateOrdered: String!, note: String!, user: String!): orderType
+  updateProduct(
+    name: String!
+    regionalAmount: Int!
+    resellerAmount: Int!
+    provincialAmount: Int!
+  ): productType
   updateResellerStock(hasStockStatus: Boolean!): userType
+  deleteProduct(name: String!): productType
 }
 
 type orderType {

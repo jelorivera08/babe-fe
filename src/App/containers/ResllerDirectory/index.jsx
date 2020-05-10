@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Card, Icon, Image } from "semantic-ui-react";
+import { Card, Icon, Image, Input } from "semantic-ui-react";
 import { graphql, preloadQuery, usePreloadedQuery } from "react-relay/hooks";
 
 import Background from "../../components/Background";
@@ -19,6 +19,7 @@ const query = graphql`
       facebookURL
       instagramURL
       surname
+      areaOfDistribution
       imageUrl
       hasStock
     }
@@ -28,76 +29,120 @@ const query = graphql`
 // Note: call in an event-handler or similar, not during render
 const result = preloadQuery(AppEnvironment, query);
 
+const restrictLongStrings = (str) =>
+  str.length >= 75
+    ? [
+        ...str
+          .split("")
+          .map((v, i) => (i < 50 ? v : null))
+          .filter((v) => v !== null),
+        "...",
+      ].join("")
+    : str;
+
 const ResllerDirectory = () => {
   const history = useHistory();
   const { activeResellers } = usePreloadedQuery(query, result);
+  const [searchKey, setSearchKey] = useState("");
 
   return (
     <Background>
       <div className='h-full w-full bg-transparent'>
         <Header history={history} />
 
-        <ResellersContainer className='mt-12 p-32 flex justify-center flex-wrap overflow-y-scroll relative z-10'>
-          {activeResellers.map(
-            ({
-              firstName,
-              surname,
-              facebookURL,
-              hasStock,
-              instagramURL,
-              imageUrl,
-            }) => (
-              <div key={facebookURL} className='m-2'>
-                <Card>
-                  <div
-                    style={{
-                      height: "26rem",
-                    }}
-                    className='flex justify-center items-center  overflow-hidden bg-black'
-                  >
-                    <Image src={imageUrl} wrapped ui={false} />
-                  </div>
-
-                  <Card.Content>
-                    <Card.Header>{`${firstName} ${surname}`}</Card.Header>
-                    <Card.Meta>
-                      <span className='date'>Reseller</span>
-                    </Card.Meta>
-                  </Card.Content>
-
-                  {hasStock ? (
-                    <Card.Content className='flex justify-center text-green-500'>
-                      <div>Stocks Available</div>
-                    </Card.Content>
-                  ) : (
-                    <Card.Content className='flex justify-center text-red-500'>
-                      <div>Stocks Unavailable</div>
-                    </Card.Content>
-                  )}
-
-                  <Card.Content extra>
-                    <div className='w-full flex text-center'>
-                      <Icon name='instagram' />
-                      <textarea
-                        className='w-full resize-none'
-                        defaultValue={instagramURL}
-                      />
-                    </div>
-                  </Card.Content>
-
-                  <Card.Content extra>
-                    <div className='w-full flex text-center'>
-                      <Icon name='facebook' />
-                      <textarea
-                        className='w-full resize-none'
-                        defaultValue={facebookURL}
-                      />
-                    </div>
-                  </Card.Content>
-                </Card>
-              </div>
+        <ResellersContainer className='mt-4 p-32 flex justify-center flex-wrap overflow-y-scroll relative z-10'>
+          <div
+            className='flex justify-end w-full mx-2 my-4 '
+            style={{ maxHeight: "38px" }}
+          >
+            <Input
+              placeholder='Search'
+              value={searchKey}
+              onChange={(e) => setSearchKey(e.target.value)}
+              icon={{ name: "search", circular: true, link: true }}
+            />
+          </div>
+          {activeResellers
+            .filter((val) =>
+              `${val.firstName} ${val.surname}`
+                .toLowerCase()
+                .includes(searchKey.toLowerCase())
             )
-          )}
+            .map(
+              ({
+                firstName,
+                surname,
+                facebookURL,
+                hasStock,
+                instagramURL,
+                areaOfDistribution,
+                imageUrl,
+              }) => (
+                <div key={facebookURL} className='m-2 w-full'>
+                  <Card fluid>
+                    <div className='flex'>
+                      <div
+                        style={{
+                          width: "26rem",
+                        }}
+                        className='flex justify-center items-center  overflow-hidden bg-black'
+                      >
+                        {imageUrl !== null ? (
+                          <Image src={imageUrl} wrapped ui={false} />
+                        ) : (
+                          <div
+                            style={{
+                              width: "26rem",
+                            }}
+                          />
+                        )}
+                      </div>
+
+                      <div className='w-full m-4'>
+                        <div className='flex justify-between'>
+                          <Card.Header>{`${firstName} ${surname}`}</Card.Header>
+                          {hasStock ? (
+                            <Card.Content className='flex justify-center text-green-500'>
+                              <div>Stocks Available</div>
+                            </Card.Content>
+                          ) : (
+                            <Card.Content className='flex justify-center text-red-500'>
+                              <div>Stocks Unavailable</div>
+                            </Card.Content>
+                          )}
+                        </div>
+
+                        <Card.Meta>
+                          <span className='date'>Reseller</span>
+                        </Card.Meta>
+
+                        <div className='w-full mb-2 mt-4 flex'>
+                          <Icon name='find' />
+                          <div>
+                            {restrictLongStrings(areaOfDistribution || "") ||
+                              "Ask your friendly reseller directly!"}
+                          </div>
+                        </div>
+
+                        <div className='w-full my-2 flex'>
+                          <Icon name='instagram' />
+                          <a href={instagramURL}>
+                            {restrictLongStrings(instagramURL || "")}
+                          </a>
+                        </div>
+
+                        <div className='w-full my-2 flex'>
+                          <Icon name='facebook' />
+                          <a href={facebookURL}>
+                            {restrictLongStrings(facebookURL || "")}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              )
+            )}
         </ResellersContainer>
       </div>
     </Background>

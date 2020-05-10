@@ -123,7 +123,8 @@ export default ({ accountType }) => {
                 open={createOrderOpen}
                 handleClose={setCreateOrderOpen}
                 users={stockists.map((stockist) => ({
-                  name: stockist.username,
+                  username: stockist.username,
+                  name: `${stockist.firstName} ${stockist.surname}`,
                   accountType: stockist.accountType,
                 }))}
                 accountType={accountType}

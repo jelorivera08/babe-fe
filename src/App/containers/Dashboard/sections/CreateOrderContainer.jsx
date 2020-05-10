@@ -119,7 +119,7 @@ const CreateOrderContainer = ({
                   options={users.map((user) => ({
                     key: user.name,
                     text: user.name,
-                    value: user.name,
+                    value: user.username,
                   }))}
                   value={selectedUser}
                   onChange={(e, { value }) => {

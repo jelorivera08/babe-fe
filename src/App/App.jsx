@@ -4,7 +4,8 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import Login from "./containers/Login";
 import AboutUs from "./containers/AboutUs";
 import Background from "./components/Background";
-import Header from "./components/Header/index";
+import Header from "./components/Header";
+import Profile from "./containers/Profile";
 
 import jwtDecode from "jwt-decode";
 
@@ -59,6 +60,10 @@ function App() {
         </Route>
         <Route path='/resellers'>
           <ResllerDirectoryComponent />
+        </Route>
+
+        <Route path='/profile'>
+          <Profile />
         </Route>
         <Route>
           <Background>

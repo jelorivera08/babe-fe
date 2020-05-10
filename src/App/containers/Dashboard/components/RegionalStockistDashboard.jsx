@@ -75,6 +75,19 @@ const Regional = () => {
             <Dropdown.Menu>
               <Dropdown.Item
                 onClick={() => {
+                  history.push("/dashboard");
+                }}
+                text='Dashboard'
+              />
+
+              <Dropdown.Item
+                onClick={() => {
+                  history.push("/profile");
+                }}
+                text='Profile'
+              />
+              <Dropdown.Item
+                onClick={() => {
                   window.localStorage.removeItem("accessToken");
                   history.push("/");
                   window.location.reload();

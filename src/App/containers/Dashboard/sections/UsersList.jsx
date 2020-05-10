@@ -110,7 +110,7 @@ export default () => {
     );
   }, [searchKeyword, users, searchType]);
 
-  const handleStatusChange = (values, i) => {
+  const handleStatusChange = (values) => {
     commitMutation(environment, {
       mutation,
       variables: { ...values },
@@ -118,7 +118,9 @@ export default () => {
         const payload = store.getRootField("changeUserStatus");
         const root = store.getRoot();
         const usersProxy = root.getLinkedRecords("users");
-        const userProxy = usersProxy[i];
+        const userProxy = usersProxy.find(
+          (val) => val.getValue("username") === payload.getValue("username")
+        );
 
         userProxy.setValue(payload.getValue("status"), "status");
       },

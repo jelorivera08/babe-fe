@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { graphql, commitMutation } from "react-relay";
+import axios from "axios";
+import { API } from "../../../../constants";
 import styled from "styled-components";
 import {
   Select,
@@ -128,6 +130,17 @@ export default () => {
     });
   };
 
+  const handlePhotoUpload = (e) => {
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    formData.append("username", modalInfo.username);
+
+    axios
+      .post(`${API}/upload`, formData, {})
+      .then(() => window.location.reload(false))
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className='w-full'>
       <div className='m-8 pt-4 text-xl flex justify-between items-center'>
@@ -226,26 +239,41 @@ export default () => {
       >
         <Modal.Header>User details</Modal.Header>
         <Modal.Content image>
-          {modalInfo.imageUrl ? (
-            <Image
-              wrapped
-              style={{
-                maxHeight: "25rem",
-                maxWidth: "25rem",
-              }}
-              src={modalInfo.imageUrl}
-            />
-          ) : (
-            <div
-              style={{
-                width: "25rem",
-                height: "25rem",
-              }}
-              className='p-4'
-            >
-              No Image Available
+          <div className='w-1/2'>
+            {modalInfo.imageUrl ? (
+              <Image
+                wrapped
+                style={{
+                  width: "100%",
+                  padding: "1rem",
+                }}
+                src={modalInfo.imageUrl}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                }}
+                className='p-4'
+              >
+                No Image Available
+              </div>
+            )}
+
+            <div className='px-4'>
+              <div className='mt-8 font-bold '>Upload new photo</div>
+              <div className='mb-2 text-xs text-gray-500 '>
+                Uploading a photo will refresh the page
+              </div>
+              <input
+                className='appearance-none w-1/2 py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline'
+                name='userPhoto'
+                type='file'
+                placeholder='Change User Photo'
+                onChange={handlePhotoUpload}
+              />
             </div>
-          )}
+          </div>
           <Modal.Description
             className='overflow-auto'
             style={{ maxWidth: "50%" }}

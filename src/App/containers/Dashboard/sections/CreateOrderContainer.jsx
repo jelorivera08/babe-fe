@@ -116,6 +116,7 @@ const CreateOrderContainer = ({
               <div className='mb-1'>Select Stockist</div>
               <div className='mb-2'>
                 <Select
+                  search
                   options={users.map((user) => ({
                     key: user.name,
                     text: user.name,

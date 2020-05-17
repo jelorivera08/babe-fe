@@ -136,7 +136,7 @@ export default ({ accountType }) => {
                 </Button>
               </div>
 
-              <RegionalStockistsContainer className='w-full h-full p-6'>
+              <RegionalStockistsContainer className='w-full h-full p-6 overflow-auto'>
                 <Switch>
                   <Route exact path='/dashboard/orders'>
                     <Table celled selectable striped>

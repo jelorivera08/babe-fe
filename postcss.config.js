@@ -1,10 +1,11 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-extraneous-dependencies */
-const tailwindcss = require('tailwindcss');
+const tailwindcss = require("tailwindcss");
 
 module.exports = {
   plugins: [
-    tailwindcss('./tailwind.js'),
-    require('autoprefixer'),
+    require("postcss-preset-env")({ stage: 0 }),
+    tailwindcss("./tailwind.js")("./tailwindcss-config.js"),
+    require("autoprefixer"),
   ],
 };

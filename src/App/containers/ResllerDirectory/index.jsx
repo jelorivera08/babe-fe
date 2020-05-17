@@ -50,7 +50,7 @@ const ResllerDirectory = () => {
       <div className='h-full w-full bg-transparent'>
         <Header history={history} />
 
-        <ResellersContainer className='mt-4 p-32 flex justify-center flex-wrap overflow-y-scroll relative z-10'>
+        <ResellersContainer className='px-4 mt-16 md:mt-4 md:p-32 flex justify-center flex-wrap overflow-y-scroll relative z-10'>
           <div
             className='flex justify-end w-full mx-2 my-4 '
             style={{ maxHeight: "38px" }}
@@ -81,24 +81,15 @@ const ResllerDirectory = () => {
                 <div key={facebookURL} className='m-2 w-full'>
                   <Card fluid>
                     <div className='flex'>
-                      <div
-                        style={{
-                          width: "26rem",
-                        }}
-                        className='flex justify-center items-center  overflow-hidden bg-black'
-                      >
+                      <div className='w-2/5 flex justify-center items-center  overflow-hidden bg-black'>
                         {imageUrl !== null ? (
                           <Image src={imageUrl} wrapped ui={false} />
                         ) : (
-                          <div
-                            style={{
-                              width: "26rem",
-                            }}
-                          />
+                          <div className='w-3/5' />
                         )}
                       </div>
 
-                      <div className='w-full m-4'>
+                      <div className='w-3/5 m-4'>
                         <div className='flex justify-between'>
                           <Card.Header>{`${firstName} ${surname}`}</Card.Header>
                           {hasStock ? (
@@ -118,7 +109,7 @@ const ResllerDirectory = () => {
 
                         <div className='w-full mb-2 mt-4 flex'>
                           <Icon name='find' />
-                          <div>
+                          <div className='break-all'>
                             {restrictLongStrings(areaOfDistribution || "") ||
                               "Ask your friendly reseller directly!"}
                           </div>
@@ -126,14 +117,14 @@ const ResllerDirectory = () => {
 
                         <div className='w-full my-2 flex'>
                           <Icon name='instagram' />
-                          <a href={instagramURL}>
+                          <a href={instagramURL} className='break-all'>
                             {restrictLongStrings(instagramURL || "")}
                           </a>
                         </div>
 
                         <div className='w-full my-2 flex'>
                           <Icon name='facebook' />
-                          <a href={facebookURL}>
+                          <a href={facebookURL} className='break-all'>
                             {restrictLongStrings(facebookURL || "")}
                           </a>
                         </div>

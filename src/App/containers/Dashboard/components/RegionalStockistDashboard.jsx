@@ -1,6 +1,8 @@
 import React, { useState, useContext, Suspense } from "react";
 import styled from "styled-components";
 import cx from "classnames";
+import RequestOrder from "../sections/RequestOrder";
+
 import { MdMenu } from "react-icons/md";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { Icon, Dropdown } from "semantic-ui-react";
@@ -148,6 +150,23 @@ const Regional = () => {
             {showMenu ? "Your Orders" : <Icon name='shopping cart' />}
           </div>
         </div>
+
+        <div
+          tabIndex='0'
+          role='button'
+          onClick={() => {
+            setSelectedMenu("requestOrder");
+            history.push("/dashboard/requestOrder");
+          }}
+          className={cx(
+            "m-2 text-base rounded cursor-pointer outline-none",
+            { "p-2": showMenu },
+            { "pb-2": !showMenu },
+            { "bg-gray-400": selectedMenu === "requestOrder" }
+          )}
+        >
+          {showMenu ? "Request Order" : <Icon name='plus cart' />}
+        </div>
       </SecondaryBar>
       <Suspense fallbacke={<div>loading</div>}>
         <Switch>
@@ -157,6 +176,10 @@ const Regional = () => {
 
           <Route path='/dashboard/yourOrders'>
             <YourOrders username={username} />
+          </Route>
+
+          <Route path='/dashboard/requestOrder'>
+            <RequestOrder />
           </Route>
 
           <Route>

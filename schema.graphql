@@ -56,6 +56,12 @@ type Mutation {
     areaOfDistribution: String
     region: String
   ): userType
+  addRequestOrder(
+    notes: String
+    dateOrdered: String!
+    orders: [RequestOrderInputType]!
+    stockist: String!
+  ): RequestOrderType
 }
 
 type orderType {
@@ -88,6 +94,22 @@ type Query {
   activeResellers: [userType]
   yourOrders(username: String): [orderType]
   userInfo: userType
+  requestOrderStockists: [userType]
+}
+
+input RequestOrderInputType {
+  name: String
+  amount: Int
+  quantity: Int
+}
+
+type RequestOrderType {
+  orderedBy: String
+  notes: String
+  dateOrdered: String
+  orders: [productType]
+  stockist: String
+  status: String
 }
 
 type UserRegistrationType {

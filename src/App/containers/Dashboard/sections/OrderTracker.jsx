@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-named-as-default */
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, lazy } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useHistory, Switch, Route } from "react-router-dom";
 import { graphql } from "react-relay/hooks";
@@ -11,7 +11,6 @@ import { Button } from "semantic-ui-react";
 import styled from "styled-components";
 
 import StockistOrders from "./StockistOrders";
-import CreateOrderContainer from "./CreateOrderContainer";
 
 import AppContext from "../../../context";
 import environment from "../../../../environment";
@@ -19,6 +18,8 @@ import environment from "../../../../environment";
 const RegionalStockistsContainer = styled.div`
   height: calc(100% - 7rem);
 `;
+
+const CreateOrderContainer = lazy(() => import("./CreateOrderContainer"));
 
 const query = graphql`
   query OrderTrackerQuery($accountType: String!, $region: String) {

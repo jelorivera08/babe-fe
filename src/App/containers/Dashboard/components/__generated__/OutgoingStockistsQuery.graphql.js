@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a10111abb8d9ab4aacbc9ed78b55e6da
+ * @relayHash 7ec10000d24eedc43638bf21b8a93ef5
  */
 
 /* eslint-disable */
@@ -17,6 +17,17 @@ export type OutgoingStockistsQueryResponse = {|
   +products: ?$ReadOnlyArray<?{|
     +name: ?string,
     +amount: ?number,
+  |}>,
+  +requestOrders: ?$ReadOnlyArray<?{|
+    +dateOrdered: ?string,
+    +stockist: ?string,
+    +notes: ?string,
+    +status: ?string,
+    +orders: ?$ReadOnlyArray<?{|
+      +name: ?string,
+      +amount: ?number,
+      +quantity: ?number,
+    |}>,
   |}>,
 |};
 export type OutgoingStockistsQuery = {|
@@ -36,6 +47,17 @@ query OutgoingStockistsQuery {
     name
     amount
   }
+  requestOrders {
+    dateOrdered
+    stockist
+    notes
+    status
+    orders {
+      name
+      amount
+      quantity
+    }
+  }
 }
 */
 
@@ -48,6 +70,20 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "amount",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "products",
@@ -56,19 +92,66 @@ v1 = {
   "concreteType": "productType",
   "plural": true,
   "selections": [
+    (v1/*: any*/),
+    (v2/*: any*/)
+  ]
+},
+v4 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "requestOrders",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "RequestOrderType",
+  "plural": true,
+  "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "name",
+      "name": "dateOrdered",
       "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "amount",
+      "name": "stockist",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "notes",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "status",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "orders",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "productType",
+      "plural": true,
+      "selections": [
+        (v1/*: any*/),
+        (v2/*: any*/),
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "quantity",
+          "args": null,
+          "storageKey": null
+        }
+      ]
     }
   ]
 };
@@ -93,7 +176,8 @@ return {
           (v0/*: any*/)
         ]
       },
-      (v1/*: any*/)
+      (v3/*: any*/),
+      (v4/*: any*/)
     ]
   },
   "operation": {
@@ -120,19 +204,20 @@ return {
           }
         ]
       },
-      (v1/*: any*/)
+      (v3/*: any*/),
+      (v4/*: any*/)
     ]
   },
   "params": {
     "operationKind": "query",
     "name": "OutgoingStockistsQuery",
     "id": null,
-    "text": "query OutgoingStockistsQuery {\n  requestOrderStockists {\n    username\n    id\n  }\n  products {\n    name\n    amount\n  }\n}\n",
+    "text": "query OutgoingStockistsQuery {\n  requestOrderStockists {\n    username\n    id\n  }\n  products {\n    name\n    amount\n  }\n  requestOrders {\n    dateOrdered\n    stockist\n    notes\n    status\n    orders {\n      name\n      amount\n      quantity\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '6b62359d46263a39e1ab44fed0eb9011';
+(node/*: any*/).hash = 'b52fb51d5a9bdc0a6a15fc4900badc43';
 
 module.exports = node;

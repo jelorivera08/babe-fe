@@ -22,12 +22,12 @@ const mutation = graphql`
       notes: $notes
     ) {
       notes
+      dateOrdered
       orders {
         name
         amount
       }
       stockist
-      status
     }
   }
 `;
@@ -77,8 +77,6 @@ export default () => {
       },
       onError: (err) => console.error(err),
     });
-
-    console.log(newOrderInfo);
   };
 
   return (
@@ -94,11 +92,24 @@ export default () => {
             name
             amount
           }
+
+          requestOrders {
+            dateOrdered
+            stockist
+            notes
+            status
+            orders {
+              name
+              amount
+              quantity
+            }
+          }
         }
       `}
       render={({ error, props }) => {
         if (props) {
-          const { requestOrderStockists, products } = props;
+          const { requestOrderStockists, products, requestOrders } = props;
+
           return (
             <>
               <Tab.Pane>
@@ -118,11 +129,18 @@ export default () => {
                     </Table.Header>
 
                     <Table.Body>
-                      <Table.Row className='cursor-pointer'>
-                        <Table.Cell>Friday</Table.Cell>
-                        <Table.Cell>Paula</Table.Cell>
-                        <Table.Cell>Delivered</Table.Cell>
-                      </Table.Row>
+                      {requestOrders.map(
+                        ({ dateOrdered, stockist, status }, i) => (
+                          <Table.Row
+                            key={dateOrdered + i}
+                            className='cursor-pointer'
+                          >
+                            <Table.Cell>{dateOrdered}</Table.Cell>
+                            <Table.Cell>{stockist}</Table.Cell>
+                            <Table.Cell>{status}</Table.Cell>
+                          </Table.Row>
+                        )
+                      )}
                     </Table.Body>
                   </Table>
                 </div>
@@ -292,7 +310,10 @@ export default () => {
                   </div>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button color='red' onClick={() => {}}>
+                  <Button
+                    color='red'
+                    onClose={() => setOpenRequestOrder(false)}
+                  >
                     Cancel
                   </Button>
                   <Button

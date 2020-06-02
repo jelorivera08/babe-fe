@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8ef1237ea279be9e30e3f4de2ff3ec78
+ * @relayHash 763e655522c9890f4ac7d6d1da98c055
  */
 
 /* eslint-disable */
@@ -23,12 +23,12 @@ export type OutgoingAddRequestOrderMutationVariables = {|
 export type OutgoingAddRequestOrderMutationResponse = {|
   +addRequestOrder: ?{|
     +notes: ?string,
+    +dateOrdered: ?string,
     +orders: ?$ReadOnlyArray<?{|
       +name: ?string,
       +amount: ?number,
     |}>,
     +stockist: ?string,
-    +status: ?string,
   |}
 |};
 export type OutgoingAddRequestOrderMutation = {|
@@ -47,12 +47,12 @@ mutation OutgoingAddRequestOrderMutation(
 ) {
   addRequestOrder(stockist: $stockist, orders: $orders, dateOrdered: $dateOrdered, notes: $notes) {
     notes
+    dateOrdered
     orders {
       name
       amount
     }
     stockist
-    status
   }
 }
 */
@@ -123,6 +123,13 @@ v1 = [
         "storageKey": null
       },
       {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "dateOrdered",
+        "args": null,
+        "storageKey": null
+      },
+      {
         "kind": "LinkedField",
         "alias": null,
         "name": "orders",
@@ -153,13 +160,6 @@ v1 = [
         "name": "stockist",
         "args": null,
         "storageKey": null
-      },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "status",
-        "args": null,
-        "storageKey": null
       }
     ]
   }
@@ -184,12 +184,12 @@ return {
     "operationKind": "mutation",
     "name": "OutgoingAddRequestOrderMutation",
     "id": null,
-    "text": "mutation OutgoingAddRequestOrderMutation(\n  $orders: [RequestOrderInputType]!\n  $dateOrdered: String!\n  $notes: String!\n  $stockist: String!\n) {\n  addRequestOrder(stockist: $stockist, orders: $orders, dateOrdered: $dateOrdered, notes: $notes) {\n    notes\n    orders {\n      name\n      amount\n    }\n    stockist\n    status\n  }\n}\n",
+    "text": "mutation OutgoingAddRequestOrderMutation(\n  $orders: [RequestOrderInputType]!\n  $dateOrdered: String!\n  $notes: String!\n  $stockist: String!\n) {\n  addRequestOrder(stockist: $stockist, orders: $orders, dateOrdered: $dateOrdered, notes: $notes) {\n    notes\n    dateOrdered\n    orders {\n      name\n      amount\n    }\n    stockist\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c2464025bf03a681580fe412f9638e06';
+(node/*: any*/).hash = 'cf777eb72ca389b763060d0f604b28cc';
 
 module.exports = node;

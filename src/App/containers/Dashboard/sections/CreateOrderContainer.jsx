@@ -108,14 +108,14 @@ const CreateOrderContainer = ({
   };
 
   return (
-    <Modal dimmer='inverted' open={open} onClose={() => {}}>
+    <Modal dimmer="inverted" open={open} onClose={() => {}}>
       <Modal.Header>{`Create an Order`}</Modal.Header>
       <Modal.Content>
-        <div className='flex items-center justify-between'>
-          <div className='w-1/2'>
+        <div className="flex items-center justify-between">
+          <div className="w-1/2">
             <div>
-              <div className='mb-1'>Select Stockist</div>
-              <div className='mb-2'>
+              <div className="mb-1">Select Stockist</div>
+              <div className="mb-2">
                 <Select
                   search
                   options={users.map((user) => ({
@@ -130,19 +130,19 @@ const CreateOrderContainer = ({
                 />
               </div>
 
-              <div className='mb-1'>Select Order Date</div>
+              <div className="mb-1">Select Order Date</div>
               <DatePicker
-                className='outline-none border border-gray-700 p-2 rounded'
+                className="outline-none border border-gray-700 p-2 rounded"
                 selected={orderDate}
                 onChange={setOrderDate}
-                dateFormat='MMMM d, yyyy'
+                dateFormat="MMMM d, yyyy"
               />
 
-              <div className='w-full pt-8 pr-20 h-full'>
-                <div className='bg-white h-full border border-gray-600 rounded'>
-                  <div className='mt-2 ml-2 mb-1 relative'>Notes</div>
+              <div className="w-full pt-8 pr-20 h-full">
+                <div className="bg-white h-full border border-gray-600 rounded">
+                  <div className="mt-2 ml-2 mb-1 relative">Notes</div>
                   <textarea
-                    className='pl-2 outline-none resize-none w-full overflow-hidden'
+                    className="pl-2 outline-none resize-none w-full overflow-hidden"
                     rows={5}
                     cols={5}
                     onChange={(e) => {
@@ -154,7 +154,7 @@ const CreateOrderContainer = ({
               </div>
             </div>
           </div>
-          <div className='w-1/2'>
+          <div className="w-1/2">
             <Table celled>
               <Table.Header>
                 <Table.Row>
@@ -177,8 +177,8 @@ const CreateOrderContainer = ({
                       <Table.Cell>{product.name}</Table.Cell>
                       <Table.Cell>
                         <input
-                          tabIndex='0'
-                          className='bg-transparent outline-none'
+                          tabIndex="0"
+                          className="bg-transparent outline-none"
                           value={
                             orderProducts[product.name]
                               ? orderProducts[product.name].quantity
@@ -212,7 +212,7 @@ const CreateOrderContainer = ({
               </Table.Body>
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan='2'>Total</Table.HeaderCell>
+                  <Table.HeaderCell colSpan="2">Total</Table.HeaderCell>
                   <Table.HeaderCell>{`₱ ${formatNumber(
                     totalAmount.toFixed(2)
                   )}`}</Table.HeaderCell>
@@ -224,7 +224,7 @@ const CreateOrderContainer = ({
       </Modal.Content>
       <Modal.Actions>
         <Button
-          color='red'
+          color="red"
           onClick={() => {
             setOrderProducts({});
             handleClose(false);
@@ -243,9 +243,9 @@ const CreateOrderContainer = ({
                 Number.isNaN(Number.parseInt(v.quantity, 10))
             ).length > 0
           }
-          icon='checkmark'
-          labelPosition='right'
-          content='Confirm Order'
+          icon="checkmark"
+          labelPosition="right"
+          content="Confirm Order"
           onClick={() =>
             handleConfirmClick({
               products: orderProducts,

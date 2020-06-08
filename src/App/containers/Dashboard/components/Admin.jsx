@@ -10,6 +10,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { Icon, Dropdown } from "semantic-ui-react";
 import logo1 from "../../../../assets/images/logo1.PNG";
 
+const RequestOrder = React.lazy(() => import("../sections/RequestOrder"));
 const OrderTracker = React.lazy(() => import("../sections/OrderTracker"));
 const UsersList = React.lazy(() => import("../sections/UsersList"));
 const ProductsList = React.lazy(() => import("../sections/ProductsList"));
@@ -57,36 +58,36 @@ const Admin = () => {
   );
 
   return (
-    <div className='w-full flex'>
-      <PrimaryBar className='h-screen w-16 p-2 flex flex-col justify-between'>
+    <div className="w-full flex">
+      <PrimaryBar className="h-screen w-16 p-2 flex flex-col justify-between">
         <img
-          className='cursor-pointer'
+          className="cursor-pointer"
           src={logo1}
-          alt='logo1'
+          alt="logo1"
           onClick={() => {
             setSelectedMenu("");
             history.push("/dashboard");
           }}
         />
         <div
-          role='button'
-          tabIndex='0'
-          className='flex justify-center items-center mt-1 mb-2'
+          role="button"
+          tabIndex="0"
+          className="flex justify-center items-center mt-1 mb-2"
         >
-          <Dropdown pointing='left' icon='user circle'>
+          <Dropdown pointing="left" icon="user circle">
             <Dropdown.Menu>
               <Dropdown.Item
                 onClick={() => {
                   history.push("/dashboard");
                 }}
-                text='Dashboard'
+                text="Dashboard"
               />
 
               <Dropdown.Item
                 onClick={() => {
                   history.push("/profile");
                 }}
-                text='Profile'
+                text="Profile"
               />
               <Dropdown.Item
                 onClick={() => {
@@ -94,7 +95,7 @@ const Admin = () => {
                   history.push("/");
                   window.location.reload();
                 }}
-                text='Log out'
+                text="Log out"
               />
             </Dropdown.Menu>
           </Dropdown>
@@ -103,20 +104,20 @@ const Admin = () => {
       <SecondaryBar
         className={cx("h-screen bg-gray-200 p-4", { "show-menu": showMenu })}
       >
-        <div className='flex items-center cursor-pointer'>
+        <div className="flex items-center cursor-pointer">
           <MdMenu
-            size='1.5em'
+            size="1.5em"
             onClick={() => {
               setShowMenu(!showMenu);
             }}
           />
-          {showMenu ? <p className='text-xl ml-2 text-center'> Menu</p> : null}
+          {showMenu ? <p className="text-xl ml-2 text-center"> Menu</p> : null}
         </div>
 
-        <div className='mt-8'>
+        <div className="mt-8">
           <div
-            tabIndex='0'
-            role='button'
+            tabIndex="0"
+            role="button"
             onClick={() => {
               setSelectedMenu("orders");
               history.push("/dashboard/orders");
@@ -128,11 +129,11 @@ const Admin = () => {
               { "bg-gray-400": selectedMenu === "orders" }
             )}
           >
-            {showMenu ? "Order Tracker" : <Icon name='address card' />}
+            {showMenu ? "Order Tracker" : <Icon name="address card" />}
           </div>
           <div
-            tabIndex='0'
-            role='button'
+            tabIndex="0"
+            role="button"
             onClick={() => {
               setSelectedMenu("users");
               history.push("/dashboard/users");
@@ -144,12 +145,12 @@ const Admin = () => {
               { "bg-gray-400": selectedMenu === "users" }
             )}
           >
-            {showMenu ? "Users" : <Icon name='users' />}
+            {showMenu ? "Users" : <Icon name="users" />}
           </div>
 
           <div
-            tabIndex='0'
-            role='button'
+            tabIndex="0"
+            role="button"
             onClick={() => {
               setSelectedMenu("products");
               history.push("/dashboard/products");
@@ -161,27 +162,47 @@ const Admin = () => {
               { "bg-gray-400": selectedMenu === "products" }
             )}
           >
-            {showMenu ? "Products" : <Icon name='add to cart' />}
+            {showMenu ? "Products" : <Icon name="add to cart" />}
+          </div>
+
+          <div
+            tabIndex="0"
+            role="button"
+            onClick={() => {
+              setSelectedMenu("requestOrder");
+              history.push("/dashboard/requestOrder");
+            }}
+            className={cx(
+              "m-2 text-base rounded cursor-pointer outline-none",
+              { "p-2": showMenu },
+              { "pb-2": !showMenu },
+              { "bg-gray-400": selectedMenu === "requestOrder" }
+            )}
+          >
+            {showMenu ? "Request Order" : <Icon name="plus cart" />}
           </div>
         </div>
       </SecondaryBar>
 
       <Suspense fallback={<div>loading</div>}>
         <Switch>
-          <Route path='/dashboard/orders'>
-            <OrderTracker accountType='Regional Stockist' />
+          <Route path="/dashboard/orders">
+            <OrderTracker accountType="Regional Stockist" />
           </Route>
-          <Route path='/dashboard/users'>
+          <Route path="/dashboard/users">
             <UsersList />
           </Route>
+          <Route path="/dashboard/requestOrder">
+            <RequestOrder />
+          </Route>
 
-          <Route path='/dashboard/products'>
+          <Route path="/dashboard/products">
             <ProductsList />
           </Route>
 
           <Route>
-            <div className='body-gradient w-full h-screen flex justify-center items-center'>
-              <BreadText className='text-2xl'>Let's get this bread.</BreadText>
+            <div className="body-gradient w-full h-screen flex justify-center items-center">
+              <BreadText className="text-2xl">Let's get this bread.</BreadText>
             </div>
           </Route>
         </Switch>

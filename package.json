@@ -50,7 +50,7 @@
     "react-dom": "^16.13.0",
     "react-https-redirect": "^1.1.0",
     "react-icons": "^3.9.0",
-    "react-relay": "^0.0.0-experimental-8cc94ddc",
+    "react-relay": "^0.0.0-experimental-94e87455",
     "react-router-dom": "^5.1.2",
     "relay": "^0.8.0-1",
     "relay-runtime": "^9.0.0",

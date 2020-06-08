@@ -1,11 +1,34 @@
 import React, { useState } from "react";
-import { graphql, QueryRenderer } from "react-relay";
+import { graphql, QueryRenderer, commitMutation } from "react-relay";
 import { Select, Button, Table, Tab, Modal } from "semantic-ui-react";
 
 import environment from "../../../../environment";
 
 export const formatNumber = (num) =>
   num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+const mutation = graphql`
+  mutation IncomingUpdateOrderRequestMutation(
+    $orderedBy: String!
+    $status: String!
+    $dateOrdered: String!
+  ) {
+    updateRequestOrder(
+      orderedBy: $orderedBy
+      status: $status
+      dateOrdered: $dateOrdered
+    ) {
+      status
+      orderedBy
+      dateOrdered
+      orders {
+        name
+        amount
+        quantity
+      }
+    }
+  }
+`;
 
 export default () => {
   const [incomingRequestOrderModal, setIncomingRequestOrderModal] = useState({
@@ -17,8 +40,46 @@ export default () => {
   const [orderStatusChange, setOrderStatusChange] = useState(null);
 
   const handleConfirmClick = () => {
-    console.log(incomingRequestOrderModal);
-    console.log(orderStatusChange);
+    const variables = {
+      ...incomingRequestOrderModal,
+      status: orderStatusChange,
+    };
+
+    commitMutation(environment, {
+      mutation,
+      variables,
+      onCompleted: (response, errors) => {
+        setIncomingRequestOrderModal({
+          orders: [],
+          orderedBy: "",
+          status: "",
+        });
+
+        setOrderStatusChange(null);
+      },
+      onError: (err) => console.error(err),
+      updater: (store) => {
+        const payload = store.getRootField("updateRequestOrder");
+
+        const root = store.getRoot();
+        const incomingRequestOrders = root.getLinkedRecords(
+          "incomingRequestOrders"
+        );
+
+        const payloadProxyIndex = incomingRequestOrders.findIndex(
+          (val) =>
+            val.getValue("orderedBy") === payload.getValue("orderedBy") &&
+            val.getValue("dateOrdered") === payload.getValue("dateOrdered")
+        );
+
+        const newRequestOrders = [...incomingRequestOrders];
+        newRequestOrders[payloadProxyIndex] = payload;
+
+        payload.getValue("status");
+
+        root.setLinkedRecords(newRequestOrders, "incomingRequestOrders");
+      },
+    });
   };
 
   return (
@@ -47,7 +108,7 @@ export default () => {
           return (
             <>
               <Tab.Pane>
-                <div className='p-1'>
+                <div className="p-1">
                   <Table selectable celled>
                     <Table.Header>
                       <Table.Row>
@@ -68,7 +129,7 @@ export default () => {
                         return (
                           <Table.Row
                             key={JSON.stringify(requestOrders)}
-                            className='cursor-pointer'
+                            className="cursor-pointer"
                             onClick={() =>
                               setIncomingRequestOrderModal({ ...requestOrders })
                             }
@@ -95,8 +156,8 @@ export default () => {
 
                   setOrderStatusChange(null);
                 }}
-                dimmer='inverted'
-                size='small'
+                dimmer="inverted"
+                size="small"
               >
                 <Modal.Header>Order details</Modal.Header>
                 <Modal.Content>
@@ -126,10 +187,10 @@ export default () => {
                     </Table.Body>
                     <Table.Footer>
                       <Table.Row>
-                        <Table.HeaderCell colSpan='2'>
+                        <Table.HeaderCell colSpan="2">
                           Order Status
                         </Table.HeaderCell>
-                        <Table.HeaderCell colSpan='1'>
+                        <Table.HeaderCell colSpan="1">
                           <Select
                             options={[
                               {

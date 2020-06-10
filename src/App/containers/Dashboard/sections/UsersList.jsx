@@ -106,8 +106,10 @@ export default () => {
 
   useEffect(() => {
     setFilteredUsers(
-      users.filter((user) =>
-        user[searchType].toLowerCase().includes(searchKeyword.toLowerCase())
+      users.filter(
+        (user) =>
+          user[searchType] &&
+          user[searchType].toLowerCase().includes(searchKeyword.toLowerCase())
       )
     );
   }, [searchKeyword, users, searchType]);
@@ -142,14 +144,14 @@ export default () => {
   };
 
   return (
-    <div className='w-full'>
-      <div className='m-8 pt-4 text-xl flex justify-between items-center'>
+    <div className="w-full">
+      <div className="m-8 pt-4 text-xl flex justify-between items-center">
         <div>Review registered accounts</div>
 
         <div>
           <Select
-            className='mr-1'
-            placeholder='Select Search Type'
+            className="mr-1"
+            placeholder="Select Search Type"
             style={{
               minWidth: "10rem",
               fontSize: "1rem",
@@ -161,13 +163,13 @@ export default () => {
           />
           <Input
             onChange={(e) => setSearchKeyword(e.target.value)}
-            icon='search'
-            size='mini'
-            placeholder='Search...'
+            icon="search"
+            size="mini"
+            placeholder="Search..."
           />
         </div>
       </div>
-      <UsersContainer className='w-full p-6'>
+      <UsersContainer className="w-full p-6">
         <Table celled selectable striped>
           <Table.Header>
             <Table.Row>
@@ -191,7 +193,7 @@ export default () => {
                 <Table.Row
                   key={username}
                   onClick={() => setModalInfo(user)}
-                  className='cursor-pointer'
+                  className="cursor-pointer"
                 >
                   <Table.Cell>{accountType}</Table.Cell>
                   <Table.Cell>{username}</Table.Cell>
@@ -200,12 +202,12 @@ export default () => {
                   <Table.Cell>{region || "NA"}</Table.Cell>
                   <Table.Cell>
                     <Select
-                      className='ml-2'
+                      className="ml-2"
                       onChange={(e, { value }) =>
                         handleStatusChange({ username, status: value }, i)
                       }
                       value={status}
-                      placeholder='Select Status'
+                      placeholder="Select Status"
                       options={options}
                     />
                   </Table.Cell>
@@ -217,14 +219,14 @@ export default () => {
 
                         setDeleteUser({ username });
                       }}
-                      name='trash'
+                      name="trash"
                     />
                   </Table.Cell>
                 </Table.Row>
               );
             })}
             {filteredUsers.length <= 0 ? (
-              <Table.Row className='cursor-pointer'>
+              <Table.Row className="cursor-pointer">
                 <Table.Cell colSpan={7}>No results found</Table.Cell>
               </Table.Row>
             ) : null}
@@ -233,13 +235,13 @@ export default () => {
       </UsersContainer>
 
       <Modal
-        dimmer='inverted'
+        dimmer="inverted"
         onClose={() => setModalInfo({})}
         open={modalInfo.hasOwnProperty("username")}
       >
         <Modal.Header>User details</Modal.Header>
         <Modal.Content image>
-          <div className='w-1/2'>
+          <div className="w-1/2">
             {modalInfo.imageUrl ? (
               <Image
                 wrapped
@@ -254,63 +256,63 @@ export default () => {
                 style={{
                   width: "100%",
                 }}
-                className='p-4'
+                className="p-4"
               >
                 No Image Available
               </div>
             )}
 
-            <div className='px-4'>
-              <div className='mt-8 font-bold '>Upload new photo</div>
-              <div className='mb-2 text-xs text-gray-500 '>
+            <div className="px-4">
+              <div className="mt-8 font-bold ">Upload new photo</div>
+              <div className="mb-2 text-xs text-gray-500 ">
                 Uploading a photo will refresh the page
               </div>
               <input
-                className='appearance-none w-1/2 py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline'
-                name='userPhoto'
-                type='file'
-                placeholder='Change User Photo'
+                className="appearance-none w-1/2 py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline"
+                name="userPhoto"
+                type="file"
+                placeholder="Change User Photo"
                 onChange={handlePhotoUpload}
               />
             </div>
           </div>
           <Modal.Description
-            className='overflow-auto'
+            className="overflow-auto"
             style={{ maxWidth: "50%" }}
           >
-            <div className='font-bold py-4'>Username</div>
+            <div className="font-bold py-4">Username</div>
             <div>{modalInfo.username}</div>
-            <div className='text-xl font-bold py-4'>Name</div>
-            <div className='flex'>
+            <div className="text-xl font-bold py-4">Name</div>
+            <div className="flex">
               <div>{`${modalInfo.firstName} ${modalInfo.surname}`}</div>
             </div>
-            <div className='text-xl font-bold py-4'>Account Type</div>
+            <div className="text-xl font-bold py-4">Account Type</div>
             <div>{modalInfo.accountType}</div>
 
-            <div className='text-xl font-bold py-4'>Region</div>
+            <div className="text-xl font-bold py-4">Region</div>
             <div>{modalInfo.region}</div>
 
-            <div className='text-xl font-bold py-4'>Status</div>
+            <div className="text-xl font-bold py-4">Status</div>
             <div>{modalInfo.status}</div>
 
-            <div className='text-xl font-bold py-4'>Area of Distribution</div>
+            <div className="text-xl font-bold py-4">Area of Distribution</div>
             <div>{modalInfo.areaOfDistribution || "NA"}</div>
 
-            <div className='text-xl font-bold py-4'>Address</div>
+            <div className="text-xl font-bold py-4">Address</div>
             <div>{modalInfo.address || "NA"}</div>
 
-            <div className='text-xl font-bold py-4'>Facebook</div>
+            <div className="text-xl font-bold py-4">Facebook</div>
             <div>{modalInfo.facebookURL || "NA"}</div>
 
-            <div className='text-xl font-bold py-4'>Instagram</div>
+            <div className="text-xl font-bold py-4">Instagram</div>
             <div>{modalInfo.instagramURL || "NA"}</div>
           </Modal.Description>
         </Modal.Content>
       </Modal>
 
       <Modal
-        dimmer='inverted'
-        size='tiny'
+        dimmer="inverted"
+        size="tiny"
         onClose={() => setDeleteUser({ username: null })}
         open={deleteUser.username !== null}
       >
@@ -325,9 +327,9 @@ export default () => {
           <Button
             onClick={() => deleteUserCommit(deleteUser.username)}
             positive
-            icon='checkmark'
-            labelPosition='right'
-            content='Yes'
+            icon="checkmark"
+            labelPosition="right"
+            content="Yes"
           />
         </Modal.Actions>
       </Modal>

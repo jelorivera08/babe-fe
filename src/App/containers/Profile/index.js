@@ -1,3 +1,5 @@
+/* eslint-disable  no-restricted-globals */
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Dropdown, Input, Card, Image, Button, Modal } from "semantic-ui-react";
@@ -7,6 +9,9 @@ import { QueryRenderer, graphql, commitMutation } from "react-relay";
 
 import logo1 from "../../../assets/images/logo1.PNG";
 import environment from "../../../environment";
+import axios from "axios";
+
+import { API } from "../../../constants";
 
 const PrimaryBar = styled.div`
   background-color: #f9c5d1;
@@ -54,8 +59,17 @@ export default () => {
   const history = useHistory();
   const [userInfoToBeUpdated, setUserInfoToBeUpdated] = useState({});
   const [updateComplete, setUpdateComplete] = useState(false);
+  const [imgFileToUpload, setImgFileToUpload] = useState({});
 
   const commitUpdateUser = (values) => {
+    if (imgFileToUpload.src) {
+      const formData = new FormData();
+      formData.append("file", imgFileToUpload.imgFile);
+      formData.append("username", values.username);
+
+      axios.post(`${API}/upload`, formData, {});
+    }
+
     return commitMutation(environment, {
       mutation: updateUserMutation,
       variables: { ...values },
@@ -114,10 +128,10 @@ export default () => {
           } = props.userInfo;
 
           return (
-            <div className='w-full flex'>
+            <div className="w-full flex">
               <Modal
-                size='tiny'
-                dimmer='inverted'
+                size="tiny"
+                dimmer="inverted"
                 open={updateComplete}
                 onClose={() => setUpdateComplete(false)}
               >
@@ -134,9 +148,9 @@ export default () => {
                 <Modal.Actions>
                   <Button
                     positive
-                    icon='checkmark'
-                    labelPosition='right'
-                    content='Okay'
+                    icon="checkmark"
+                    labelPosition="right"
+                    content="Okay"
                     onClick={() => {
                       setUpdateComplete(false);
 
@@ -147,28 +161,28 @@ export default () => {
                 </Modal.Actions>
               </Modal>
 
-              <PrimaryBar className='h-screen w-16 p-2 flex flex-col justify-between'>
-                <img className='cursor-pointer' src={logo1} alt='logo1' />
+              <PrimaryBar className="h-screen w-16 p-2 flex flex-col justify-between">
+                <img className="cursor-pointer" src={logo1} alt="logo1" />
 
                 <div
-                  role='button'
-                  tabIndex='0'
-                  className='flex justify-center items-center mt-1 mb-2'
+                  role="button"
+                  tabIndex="0"
+                  className="flex justify-center items-center mt-1 mb-2"
                 >
-                  <Dropdown pointing='left' icon='user circle'>
+                  <Dropdown pointing="left" icon="user circle">
                     <Dropdown.Menu>
                       <Dropdown.Item
                         onClick={() => {
                           history.push("/dashboard");
                         }}
-                        text='Dashboard'
+                        text="Dashboard"
                       />
 
                       <Dropdown.Item
                         onClick={() => {
                           history.push("/profile");
                         }}
-                        text='Profile'
+                        text="Profile"
                       />
                       <Dropdown.Item
                         onClick={() => {
@@ -176,18 +190,18 @@ export default () => {
                           history.push("/");
                           window.location.reload();
                         }}
-                        text='Log out'
+                        text="Log out"
                       />
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
               </PrimaryBar>
-              <div className='w-full h-full overflow-auto p-16'>
-                <div className='text-2xl font-bold'>Your Profile</div>
+              <div className="w-full h-full overflow-auto p-16">
+                <div className="text-2xl font-bold">Your Profile</div>
 
-                <div className='flex'>
+                <div className="flex">
                   <div>
-                    <div className='my-2 flex'>
+                    <div className="my-2 flex">
                       <div>
                         <div>First Name</div>
                         <div>
@@ -202,7 +216,7 @@ export default () => {
                           />
                         </div>
                       </div>
-                      <div className='ml-12'>
+                      <div className="ml-12">
                         <div>
                           <div>Surname</div>
                           <div>
@@ -219,7 +233,7 @@ export default () => {
                         </div>
                       </div>
                     </div>
-                    <div className='my-2 flex'>
+                    <div className="my-2 flex">
                       <div>
                         <div>Username</div>
                         <div>
@@ -227,7 +241,7 @@ export default () => {
                         </div>
                       </div>
 
-                      <div className='ml-12'>
+                      <div className="ml-12">
                         <div>Account Type</div>
                         <div>
                           <Input
@@ -245,7 +259,7 @@ export default () => {
                       </div>
                     </div>
 
-                    <div className='my-2 flex'>
+                    <div className="my-2 flex">
                       <div>
                         <div>Facebook URL</div>
                         <div>
@@ -262,7 +276,7 @@ export default () => {
                           />
                         </div>
                       </div>
-                      <div className='ml-12'>
+                      <div className="ml-12">
                         <div>Instagram URL</div>
                         <div>
                           <Input
@@ -280,7 +294,7 @@ export default () => {
                       </div>
                     </div>
 
-                    <div className='my-2 flex'>
+                    <div className="my-2 flex">
                       <div>
                         <div>Address</div>
                         <div>
@@ -295,7 +309,7 @@ export default () => {
                           />
                         </div>
                       </div>
-                      <div className='ml-12'>
+                      <div className="ml-12">
                         <div>Area of Distribution</div>
                         <div>
                           <Input
@@ -313,7 +327,7 @@ export default () => {
                         </div>
                       </div>
                     </div>
-                    <div className='my-2'>
+                    <div className="my-2">
                       <div>Region</div>
                       <div>
                         <Input
@@ -329,25 +343,36 @@ export default () => {
                     </div>
                   </div>
 
-                  <div className='my-2 ml-8'>
+                  <div className="my-2 ml-8">
                     <Card>
-                      <Image src={imageUrl} alt='user profile' />
+                      <Image
+                        src={imgFileToUpload.src || imageUrl}
+                        alt="user profile"
+                      />
                       <Card.Content extra>
                         <input
-                          className='appearance-none w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline'
-                          name='userPhoto'
-                          type='file'
-                          // onChange={(e) => {
-                          //   setImgFile(e.target.files[0]);
-                          // }}
+                          className="appearance-none w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline"
+                          name="userPhoto"
+                          type="file"
+                          onChange={(e) => {
+                            const file = event.target.files[0];
+
+                            setImgFileToUpload({
+                              imgFile: file,
+                              src: URL.createObjectURL(file),
+                            });
+                          }}
                         />
                       </Card.Content>
                     </Card>
                   </div>
                 </div>
-                <div className='flex justify-start mt-8'>
+                <div className="flex justify-start mt-8">
                   <Button
-                    disabled={Object.keys(userInfoToBeUpdated).length <= 0}
+                    disabled={
+                      Object.keys(userInfoToBeUpdated).length <= 0 &&
+                      !imgFileToUpload.src
+                    }
                     positive
                     onClick={() =>
                       commitUpdateUser({ username, ...userInfoToBeUpdated })

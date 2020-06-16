@@ -103,7 +103,7 @@ const SignUp = () => {
           setError(errors[0].message);
         }
       },
-      onError: (err) => setError(err),
+      onError: (err) => setError("Unable to process. Please try again."),
     });
   };
 

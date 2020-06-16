@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { graphql, QueryRenderer, commitMutation } from "react-relay";
 import { Select, Button, Table, Tab, Modal } from "semantic-ui-react";
-
+import dayjs from "dayjs";
 import environment from "../../../../environment";
 
 export const formatNumber = (num) =>
@@ -134,7 +134,12 @@ export default () => {
                               setIncomingRequestOrderModal({ ...requestOrders })
                             }
                           >
-                            <Table.Cell>{dateOrdered}</Table.Cell>
+                            <Table.Cell>
+                              {" "}
+                              {dayjs(dateOrdered).format(
+                                "MMMM DD, YYYY (h:mm:ss A)"
+                              )}
+                            </Table.Cell>
                             <Table.Cell>{orderedBy}</Table.Cell>
                             <Table.Cell>{status}</Table.Cell>
                           </Table.Row>

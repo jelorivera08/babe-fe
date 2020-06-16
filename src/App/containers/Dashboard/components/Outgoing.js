@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Table, Tab, Modal, Select } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import { QueryRenderer, graphql, commitMutation } from "react-relay";
+import dayjs from "dayjs";
 
 import environment from "../../../../environment";
 
@@ -133,7 +134,11 @@ export default () => {
                             onClick={() => setShowOrders(orders)}
                             className="cursor-pointer"
                           >
-                            <Table.Cell>{dateOrdered}</Table.Cell>
+                            <Table.Cell>
+                              {dayjs(dateOrdered).format(
+                                "MMMM DD, YYYY (h:mm:ss A)"
+                              )}
+                            </Table.Cell>
                             <Table.Cell>{stockist}</Table.Cell>
                             <Table.Cell>{status}</Table.Cell>
                           </Table.Row>

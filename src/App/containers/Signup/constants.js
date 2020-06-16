@@ -14,6 +14,11 @@ export const options = [
     value: "Provincial Stockist",
     text: "Provincial Stockist",
   },
+  {
+    key: "Sub-reseller",
+    value: "Sub-reseller",
+    text: "Sub-reseller",
+  },
 ];
 
 export const regionOptions = [

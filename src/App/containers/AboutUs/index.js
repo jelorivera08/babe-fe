@@ -42,13 +42,8 @@ export default () => {
         <img src={page1} alt="page1" />
       </ContentContainer>
       <ContentContainer color="#a0a3bb" className="flex" isImg={true}>
-        <div
-          style={{
-            backgroundColor: "#a0a3bb",
-          }}
-          className="w-1/2"
-        >
-          <img src={page2} alt="page-2" />
+        <div className="w-1/2">
+          <img className="w-full" src={page2} alt="page-2" />
         </div>
         <div className="w-1/2 bg-white flex flex-col justify-center">
           <div className="text-center">

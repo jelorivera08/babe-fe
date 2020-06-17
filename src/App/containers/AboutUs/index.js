@@ -1,182 +1,287 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import cx from "classnames";
-import { Icon } from "semantic-ui-react";
+import { Divider, Button, Icon } from "semantic-ui-react";
+import Header from "../../components/Header";
 
-import girl1 from "../../../assets/images/girl1.png";
-import product1 from "../../../assets/images/product1.png";
-import product2 from "../../../assets/images/product2.png";
-import product3 from "../../../assets/images/product3.png";
+import page1 from "../../../assets/aboutUs/Page1.png";
+import page2 from "../../../assets/aboutUs/Page2.png";
+import page3 from "../../../assets/aboutUs/Page3.png";
+import product1 from "../../../assets/aboutUs/product1.png";
+import product2 from "../../../assets/aboutUs/product2.png";
+import product3 from "../../../assets/aboutUs/product3.png";
+import page5 from "../../../assets/aboutUs/Page5.png";
+import page7 from "../../../assets/aboutUs/Page7.png";
 
-const BackgroundContainer = styled.div`
-  background: linear-gradient(-45deg, #f9c5d1, #e73c7e, #23a6d5, #9795ef);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+function importAll(r) {
+  return r.keys().map(r);
+}
 
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-`;
+const feedbackImages = importAll(
+  require.context("../../../assets/feedback", false, /\.(PNG|png|jpe?g|svg)$/)
+);
 
-const Babe = styled.span`
-  font-family: "Lobster", cursive;
-`;
-
-const ImageContainer = styled.div`
-  height: 30rem;
-`;
-
-const Img = styled.img`
-  height: 35rem;
-  border-radius: 5rem;
-  position: absolute;
-  left: -100%;
-  transition: 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-  &.slide {
-    left: 10%;
-  }
-`;
-
-const TextSlideContainer = styled.div`
-  transition: 2s ease-in;
-  opacity: 0;
-
-  &.fadeIn {
-    opacity: 1;
-  }
-`;
-
-const TextContainer = styled.div`
-  z-index: 1;
-`;
-
-const ImgProduct = styled.img`
-  padding: 2rem;
-  border-radius: 5rem;
-  opacity: 0;
-  transition: 2s ease-out;
-
-  &.popIn {
-    opacity: 1;
-  }
+const ContentContainer = styled.div`
+  background-color: ${(props) => props.color};
+  height: ${(props) =>
+    !props.isImg && (props.height === "half" ? "20rem" : "40rem")};
 `;
 
 export default () => {
-  const [aboutUsContainer, setAboutUsContainer] = useState(null);
-  const [animate, setAnimate] = useState([]);
-
-  useEffect(() => {
-    setAboutUsContainer(document.getElementById("aboutUs"));
-  }, []);
-
-  useEffect(() => {
-    if (aboutUsContainer) {
-      aboutUsContainer.addEventListener("scroll", () => {
-        if (aboutUsContainer.scrollTop >= 500 && !animate.includes(1)) {
-          setAnimate([...animate, 1]);
-        }
-
-        if (aboutUsContainer.scrollTop >= 1300 && !animate.includes(2)) {
-          setAnimate([...animate, 2]);
-        }
-      });
-
-      return () => aboutUsContainer.removeEventListener("scroll", () => {});
-    }
-  }, [aboutUsContainer, animate]);
-
+  const history = useHistory();
+  const [feedbackToDisplay, setFeedbackToDisplay] = useState([0, 1, 2]);
   return (
-    <BackgroundContainer id='aboutUs' className='h-screen overflow-y-auto'>
-      <div className='flex flex-col justify-center text-white h-full'>
-        <div className='m-64'>
-          <div className='text-6xl'>
-            {`Hey, `}
-            <Babe>babe</Babe>.
+    <div>
+      {" "}
+      <Header history={history} />
+      <ContentContainer
+        color="#fae0e0"
+        className="flex justify-center flex-col"
+        isImg={true}
+      >
+        <img src={page1} alt="page1" />
+      </ContentContainer>
+      <ContentContainer color="#a0a3bb" className="flex" isImg={true}>
+        <div
+          style={{
+            backgroundColor: "#a0a3bb",
+          }}
+          className="w-1/2"
+        >
+          <img src={page2} alt="page-2" />
+        </div>
+        <div className="w-1/2 bg-white flex flex-col justify-center">
+          <div className="text-center">
+            <div className="font-bold text-4xl">your hair's main babe. </div>{" "}
+            <div className="text-lg font-medium m-auto w-1/2 mt-4">
+              Babe Formula is your hair's new best friend. All our hair potions
+              are infused with rich-for-you ingredients guaranteed to make your
+              hair, smooth and shiny. We especially crafted our products to suit
+              all hair types so you can rock your inner babe all-day-everyday
+            </div>
           </div>
 
-          <div className='text-3xl w-4/5'>
-            Meet our babe-inducing treats that'll satisfy your hair's cravings.
+          <div className="flex justify-center mt-4">
+            <Button
+              style={{
+                backgroundColor: " #f9c5d1",
+                "background-image":
+                  " linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%)",
+                color: "#fff",
+              }}
+              onClick={() => {
+                history.push("/aboutUs/learnMore");
+              }}
+            >
+              Learn more
+            </Button>
           </div>
-
+        </div>
+      </ContentContainer>
+      <ContentContainer
+        color="#fae0e0"
+        className="flex justify-center flex-col"
+        isImg={true}
+      >
+        <img src={page3} alt="page3" />
+      </ContentContainer>
+      <ContentContainer
+        color="#fff"
+        className="flex justify-around items-center"
+      >
+        <div className="bg-teal-500  m-24 rounded relative">
+          <img src={product1} alt="product1" />
           <div
             style={{
-              width: "max-content",
+              "background-color": " #f9c5d1",
+              "background-image":
+                " linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%)",
             }}
-            onClick={() =>
-              aboutUsContainer.scrollTo({
-                top: 800,
-                behavior: "smooth",
-              })
-            }
-            className='border flex border-gray-200 py-4 px-8 text-center mt-8 cursor-pointer rounded hover:bg-teal-400'
+            className="h-full w-full opacity-0 hover:opacity-100 flex flex-col justify-center absolute top-0"
           >
-            <div> Get to know our products now</div>
-            <div className='ml-2'>
-              <Icon name='arrow circle down' />
+            <div className="font-bold text-lg text-center">
+              babe nectar shampoo and conditioner
+            </div>
+
+            <div className="px-4 mt-4 text-center text-sm">
+              You like sweets? You won't get enough of nectar's rich, saccharine
+              scent! It's like treating your hair with candy -- only difference
+              is, this one's perfectly healthy -- for your hair, that is!
             </div>
           </div>
         </div>
-      </div>
+        <div className="bg-teal-500 m-24 rounded relative">
+          <img src={product2} alt="product2" />
+          <div
+            style={{
+              "background-color": " #f9c5d1",
+              "background-image":
+                " linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%)",
+            }}
+            className="h-full w-full opacity-0 hover:opacity-100 flex flex-col justify-center absolute top-0"
+          >
+            <div className="font-bold text-lg text-center">
+              babe gleam and hair spray
+            </div>
 
-      <div className='py-32 h-full'>
-        <div className='flex justify-around'>
-          <ImageContainer className={cx("w-1/2 flex relative justify-center")}>
-            <Img
-              src={girl1}
-              className={cx({ slide: animate.includes(1) })}
-              alt='babe-1'
-            />
-          </ImageContainer>
-
-          <TextContainer className={cx("w-1/2 mt-24 relative")}>
-            <TextSlideContainer className={cx({ fadeIn: animate.includes(1) })}>
-              <div className='text-white text-4xl'>Your hair's main babe.</div>
-              <div className='text-white w-4/5 mt-4 text-xl text-left'>
-                Babe Formula is your hair's new best friend. All our hair
-                potions are infused with rich-for-you ingredients guaranteed to
-                make your hair soft, smooth and shiny. We especially crafted our
-                products to suit all hair types so you can rock your inner babe
-                all-day everyday!
-              </div>
-            </TextSlideContainer>
-          </TextContainer>
-        </div>
-      </div>
-
-      <div className='h-1/2 pb-24'>
-        <div className='flex justiy-around'>
-          <div>
-            <ImgProduct
-              className={cx({ popIn: animate.includes(2) })}
-              alt='product1'
-              src={product1}
-            ></ImgProduct>
+            <div className="px-4 mt-4 text-center  text-sm">
+              Frizz no more! Tame those treses with a few spritz of this hair
+              spray! Guaranteed to resists humidity, add shine to your hair and
+              hold for a silky, lustrous feel you can't get your hands off!
+            </div>
           </div>
-          <div>
-            <ImgProduct
-              className={cx({ popIn: animate.includes(2) })}
-              alt='product2'
-              src={product2}
-            ></ImgProduct>
-          </div>
-          <div>
-            <ImgProduct
-              className={cx({ popIn: animate.includes(2) })}
-              alt='product3'
-              src={product3}
-            ></ImgProduct>
+        </div>{" "}
+        <div className="bg-teal-500 m-24 rounded relative">
+          <img src={product3} alt="product3" />
+          <div
+            style={{
+              "background-color": " #f9c5d1",
+              "background-image":
+                " linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%)",
+            }}
+            className="h-full w-full opacity-0 hover:opacity-100 flex flex-col justify-center absolute top-0"
+          >
+            <div className="font-bold text-lg text-center">
+              babe blossom shampoo and conditioner
+            </div>
+
+            <div className="px-4 mt-4 text-center text-sm">
+              If you're into velvet flowery fragrances, this set is perfect for
+              you! These babes boast of hydrolyzed keratin and
+              double-moisturizing action that feels oh so light and oh so right!
+              it would be a crime not to let your hair down.
+            </div>
           </div>
         </div>
-      </div>
-    </BackgroundContainer>
+      </ContentContainer>
+      <ContentContainer
+        color="#fae0e0"
+        className="flex justify-center flex-col cursor-pointer"
+        isImg={true}
+      >
+        <img
+          src={page5}
+          alt="page-5"
+          onClick={() => {
+            history.push("/aboutUs/resellersClub");
+          }}
+        />
+      </ContentContainer>
+      <ContentContainer
+        color="#fff"
+        className="flex justify-around items-center my-32"
+      >
+        <div className="w-1/12 ml-4">
+          <Icon
+            onClick={() => {
+              setFeedbackToDisplay((feedbackToDisplay) =>
+                feedbackToDisplay.map((fi, i) =>
+                  fi - 3 <= -1 ? feedbackImages.length - 1 - i : fi - 3
+                )
+              );
+            }}
+            size="big"
+            name="angle left"
+            className="cursor-pointer"
+          />{" "}
+        </div>
+        <div className="flex justify-around items-center w-10/12">
+          {feedbackImages.map(
+            (feedbackImage, i) =>
+              feedbackToDisplay.includes(i) && (
+                <div
+                  key={feedbackImage}
+                  className="bg-teal-500 w-1/3 m-8 rounded"
+                >
+                  <img src={feedbackImage} alt="feedback-image" />
+                </div>
+              )
+          )}
+        </div>
+        <div className="w-1/12 flex justify-end mr-4">
+          <Icon
+            onClick={() => {
+              setFeedbackToDisplay((feedbackToDisplay) =>
+                feedbackToDisplay.map((fi, i) =>
+                  fi + 3 > feedbackImages.length - 1 ? i : fi + 3
+                )
+              );
+            }}
+            size="big"
+            name="angle right"
+            className="cursor-pointer"
+          />{" "}
+        </div>
+      </ContentContainer>
+      <ContentContainer
+        color="#fae0e0"
+        className="flex justify-center flex-col"
+        isImg={true}
+      >
+        <img src={page7} alt="page-7" />
+      </ContentContainer>
+      <ContentContainer
+        height="screen"
+        color="#fae0e0"
+        className="flex justify-center items-center"
+      >
+        <div className="font-bold text-4xl w-1/4 flex justify-center">
+          <div className="flex">
+            <div>say hi!</div>
+
+            <div className="ml-4">
+              <Icon color="teal" name="heart" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex mt-4 justify-start">
+            <div>
+              <Icon
+                size="huge"
+                name="facebook"
+                className="cursor-pointer"
+                onClick={() => {
+                  window.location.replace(
+                    "https://www.facebook.com/babeformula/"
+                  );
+                }}
+              />
+            </div>
+            <div className="flex items-center font-bold ml-4 text-lg">
+              Babe formula
+            </div>
+          </div>
+
+          <div className="flex mt-4 justify-start">
+            <div>
+              <Icon
+                onClick={() => {
+                  window.location.replace(
+                    "https://www.instagram.com/babe.formula"
+                  );
+                }}
+                className="cursor-pointer"
+                size="huge"
+                name="instagram"
+              />
+            </div>
+            <div className="flex items-center font-bold ml-4 text-lg">
+              @babe.formula
+            </div>
+          </div>
+
+          <div className="flex mt-4 justify-start">
+            <div>
+              <Icon size="huge" name="mail" />
+            </div>
+            <div className="flex items-center font-bold ml-4 text-lg">
+              hello@babe-formula.com
+            </div>
+          </div>
+        </div>
+      </ContentContainer>
+    </div>
   );
 };

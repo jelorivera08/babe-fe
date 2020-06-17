@@ -5,48 +5,46 @@ import React from "react";
 import logo1 from "../../../assets/images/logo1.PNG";
 
 const HeaderContainer = ({ history }) => (
-  <div className='fixed w-full bg-transparent h-12 flex justify-between items-center pr-8 top-0'>
+  <div className="fixed w-full bg-transparent h-12 flex justify-between items-center pr-8 top-0">
     <div>
       <img
-        role='button'
+        role="button"
         onClick={() => history.push("/")}
-        className='h-12 ml-2 cursor-pointer'
+        className="h-12 ml-2 cursor-pointer"
         src={logo1}
-        alt='logo1'
+        alt="logo1"
       />
     </div>
 
-    <div className='flex '>
-      {/* <div
-
+    <div className="flex ">
+      <div
         role="button"
         tabIndex="0"
-        onClick={
-      () => { history.push('/aboutUs'); }
-      }
+        onClick={() => {
+          history.push("/aboutUs");
+        }}
         className="mr-4 hover:underline cursor-pointer"
       >
         About us
-
-      </div> */}
+      </div>
       <div
-        role='button'
-        tabIndex='0'
+        role="button"
+        tabIndex="0"
         onClick={() => {
           history.push("/resellers");
         }}
-        className='hover:underline cursor-pointer mr-4'
+        className="hover:underline cursor-pointer mr-4"
       >
         Resellers
       </div>
 
       <div
-        role='button'
-        tabIndex='0'
+        role="button"
+        tabIndex="0"
         onClick={() => {
           history.push("/signup");
         }}
-        className='hover:underline cursor-pointer'
+        className="hover:underline cursor-pointer"
       >
         Sign up
       </div>

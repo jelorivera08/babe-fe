@@ -6,6 +6,8 @@ import AboutUs from "./containers/AboutUs";
 import Background from "./components/Background";
 import Header from "./components/Header";
 import Profile from "./containers/Profile";
+import LearnMore from "./containers/LearnMore";
+import ResellersClub from "./containers/ResellersClub";
 
 import jwtDecode from "jwt-decode";
 
@@ -45,34 +47,43 @@ function App() {
       }}
     >
       <Switch>
-        <Route exact path='/'>
+        <Route exact path="/">
           <Header history={history} />
           <Login />
         </Route>
-        <Route exact path='/signup'>
+        <Route exact path="/signup">
           <SignUpComponent />
         </Route>
-        <Route path='/dashboard'>
+        <Route path="/dashboard">
           <DashBoardComponent />
         </Route>
-        <Route path='/aboutUs'>
+
+        <Route path="/aboutUs/learnMore">
+          <LearnMore />
+        </Route>
+        <Route path="/aboutUs/resellersClub">
+          <ResellersClub />
+        </Route>
+
+        <Route path="/aboutUs" exact>
           <AboutUs />
         </Route>
-        <Route path='/resellers'>
+
+        <Route path="/resellers">
           <ResllerDirectoryComponent />
         </Route>
 
-        <Route path='/profile'>
+        <Route path="/profile">
           <Profile />
         </Route>
         <Route>
           <Background>
             <div
               onKeyDown={() => {}}
-              role='button'
-              tabIndex='0'
+              role="button"
+              tabIndex="0"
               onClick={() => history.push("/")}
-              className='text-3xl cursor-pointer'
+              className="text-3xl cursor-pointer"
             >
               Hi, Babe. Are you lost? Click here to go back home.
             </div>
